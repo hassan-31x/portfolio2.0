@@ -17,8 +17,9 @@ import { Inter } from 'next/font/google'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import { Navbar } from '@/components/custom/navbar'
 
-const inter = Inter({ weight: ['400', '500', '600', '700', '800', '900'] })
+const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -30,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className={`antialiased ${inter.className}`}>
+      <body className={`${inter.className} antialiased bg-white dark:bg-black`}>
         <Providers>
           <AdminBar
             adminBarProps={{
@@ -38,7 +39,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }}
           />
 
-          <Header />
+          {/* <Header /> */}
+          <Navbar />
           {children}
           <Footer />
         </Providers>
