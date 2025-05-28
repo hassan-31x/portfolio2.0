@@ -35,9 +35,9 @@ export const Navbar = () => {
         }}
         transition={{
           duration: 0.3,
-          ease: "easeInOut",
+          ease: "linear",
         }}
-        className="fixed inset-x-0 top-0 z-50 mx-auto flex max-w-4xl items-center justify-between rounded-full px-4 py-2 dark:bg-neutral-800 dark:text-white">
+        className="bg-white fixed inset-x-0 top-0 z-50 mx-auto flex max-w-4xl items-center justify-between rounded-full px-3 py-2 dark:bg-neutral-800 dark:text-white">
         <img
           className="h-10 w-10 rounded-full"
           src="/avatar.webp"
