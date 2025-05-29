@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Container } from "./container"
-import { motion, useMotionValueEvent, useScroll } from "framer-motion"
+import { motion, useMotionTemplate, useMotionValueEvent, useScroll, useTransform } from "framer-motion"
 import Link from "next/link";
 
 export const Navbar = () => {
@@ -18,6 +18,13 @@ export const Navbar = () => {
 
   const [scrolled, setScrolled] = useState<boolean>(false);
 
+  const y = useTransform(scrollY, [0, 100], [0, 10])
+  const width = useTransform(scrollY, [0, 100], ["58%", "52%"])
+  const opacity = useTransform(scrollY, [0, 100], [1, 0.8])
+
+  const filter = useMotionTemplate`blur(${useTransform(scrollY, [0, 100], [0, 10])}px)`
+
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 20) {
       setScrolled(true);
@@ -28,10 +35,12 @@ export const Navbar = () => {
   return (
     <Container>
       <motion.nav
-        animate={{
+        style={{
           boxShadow: scrolled ? "var(--shadow-custom)" : "none",
-          width: scrolled ? "60%" : "100%",
-          y: scrolled ? 10 : 0,
+          width,
+          y,
+          // opacity,
+          // filter,
         }}
         transition={{
           duration: 0.3,
