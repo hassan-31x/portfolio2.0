@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Container } from "./container"
 import { motion, useMotionTemplate, useMotionValueEvent, useScroll, useTransform } from "framer-motion"
+// TODO: use this
+// import Link from "next-view-transitions";
 import Link from "next/link";
 
 export const Navbar = () => {

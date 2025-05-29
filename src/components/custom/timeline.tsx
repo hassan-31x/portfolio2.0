@@ -95,7 +95,7 @@ export const Timeline = () => {
 
   return (
   <div ref={ref} className="py-10">
-    {data.map((year, idx) => (
+    {data.map((year, index) => (
       <div key={year.title} className="mb-4">
         <motion.h2
           animate={{
@@ -105,7 +105,7 @@ export const Timeline = () => {
           transition={{
             duration: 0.3,
             ease: "easeInOut",
-            delay: 0.1 * idx,
+            delay: 0.1 * index,
           }}
           className="font-bold text-black w-fit rounded-md px-2 py-0.5 mb-2"
           style={{
