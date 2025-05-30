@@ -5,7 +5,6 @@ import { Container } from '@/components/custom/container'
 import { Heading } from '@/components/custom/heading';
 import { Subheading } from '@/components/custom/subheading';
 import { projects } from '@/constants/project';
-import SectionHeading from '@/components/custom/section-heading';
 
 export default function Home() {
   return (
@@ -18,7 +17,6 @@ export default function Home() {
           I'm a software engineer with a passion for building scalable and efficient systems. I'm currently working as a software engineer at Google.
         </Subheading>
 
-        <SectionHeading delay={0.2}>A lifetime in Projects</SectionHeading>
         <Projects projects={projects.slice(0, 3)} />
       </Container>
     </div>

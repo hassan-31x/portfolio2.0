@@ -16,9 +16,7 @@ const Projects = ({ projects }: Props) => {
   
   return (
     <div className="py-10">
-  <SectionHeading>
-    I love building web apps and products that can impact millions of lives
-  </SectionHeading >
+  <SectionHeading delay={0.2}>A lifetime in Projects</SectionHeading>
   <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3">
     {projects.map((project, idx) => (
       <motion.div
