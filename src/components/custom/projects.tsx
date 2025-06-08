@@ -1,11 +1,12 @@
-"use client"
+ "use client"
 
 import Image from 'next/image'
 import React from 'react'
-import { motion } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import Link from 'next/link'
 import SectionHeading from './section-heading'
 import { ProjectTypes } from '@/constants/project'
+import StackItem from './stack-item'
 
 type Props = {
   projects: ProjectTypes
@@ -16,7 +17,7 @@ const Projects = ({ projects }: Props) => {
   
   return (
   <div className="my-4 border-y border-neutral-100 px-4 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
-    <SectionHeading delay={0.2}>A lifetime in Projects</SectionHeading>
+    <SectionHeading delay={0.2}>I love building things</SectionHeading>
     <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3">
       {projects.map((project, idx) => (
         <motion.div
@@ -46,8 +47,8 @@ const Projects = ({ projects }: Props) => {
             </p>
             <div className='mt-2 flex max-w-[14rem] flex-wrap gap-1'>
               <LayoutGroup>
-              {projects.stack.map((stack) => (
-                <StackItem 
+              {project.stack.map((stack: string) => (
+                <StackItem
                   key={stack}
                   technology={stack}
                   className='-mr-3 hover:z-10'
