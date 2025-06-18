@@ -4,6 +4,8 @@ import { generateMetadata } from './[slug]/page'
 import { Container } from '@/components/custom/container'
 import { Heading } from '@/components/custom/heading';
 import { Subheading } from '@/components/custom/subheading';
+import WorkExperience from '@/components/custom/work-experience';
+
 import { projects } from '@/constants/project';
 
 export default function Home() {
@@ -18,6 +20,8 @@ export default function Home() {
         </Subheading>
 
         <Projects projects={projects.slice(0, 3)} />
+
+        <WorkExperience />
       </Container>
     </div>
   );
