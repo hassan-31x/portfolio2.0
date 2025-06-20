@@ -14,7 +14,7 @@ type Props = {
 
 const Projects = ({ projects }: Props) => {
   return (
-  <div className="my-4 border-y border-neutral-100 px-4 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
+  <div className="my-4 border-y border-neutral-100 px-4 py-6 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
     <SectionHeading delay={0.2}>I love building things</SectionHeading>
     <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-3">
       {projects.map((project, idx) => (
@@ -29,7 +29,7 @@ const Projects = ({ projects }: Props) => {
           key={project.title}
           className="relative mb-4"
         >
-          <Link href={project.href}>
+          <Link href={project.href} className='group'>
             <Image
               src={project.src}
               alt={project.title}

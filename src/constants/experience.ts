@@ -20,6 +20,7 @@ export type WorkExperience = {
   start: string;
   end: string;
   description: string;
+  skills: string[];
 }
 
 export const workExperience: WorkExperience[] = [
@@ -33,7 +34,8 @@ export const workExperience: WorkExperience[] = [
     start: "May 2021",
     end: "Oct 2022",
     description:
-      "Implemented the Bitcoin discreet log contract (DLC) protocol specifications as an open source Typescript SDK. Dockerized all microservices and setup production kubernetes cluster. Architected a data lake using AWS S3 and Athena for historical backtesting of bitcoin trading strategies. Built a mobile app using react native and typescript.",
+      "Implemented the Bitcoin discreet log contract (DLC) protocol specifications as an open source Typescript SDK.",
+    skills: ["Typescript", "Kubernetes", "Docker", "Bitcoin", "Go"],
   },
   {
     company: "Shopify",
@@ -45,12 +47,13 @@ export const workExperience: WorkExperience[] = [
     start: "January 2021",
     end: "April 2021",
     description:
-      "Implemented a custom Kubernetes controller in Go to automate the deployment of MySQL and ProxySQL custom resources in order to enable 2,000+ internal developers to instantly deploy their app databases to production. Wrote several scripts in Go to automate MySQL database failovers while maintaining master-slave replication topologies and keeping Zookeeper nodes consistent with changes.",
+      "Implemented a custom Kubernetes controller in Go to automate the deployment of MySQL and ProxySQL custom resources.",
+    skills: ["Go", "Kubernetes", "MySQL", "ProxySQL"],
   },
   {
     company: "Nvidia",
     href: "https://nvidia.com/",
-    badges: [],
+    badges: ["Best Intern"],
     location: "Santa Clara, CA",
     title: "Software Engineer",
     logoUrl: "/nvidia.png",
@@ -58,6 +61,7 @@ export const workExperience: WorkExperience[] = [
     end: "April 2020",
     description:
       "Architected and wrote the entire MVP of the GeForce Now Cloud Gaming internal admin and A/B testing dashboard using React, Redux, TypeScript, and Python.",
+    skills: ["React", "Redux", "Typescript", "Python"],
   },
   {
     company: "Splunk",
@@ -69,6 +73,7 @@ export const workExperience: WorkExperience[] = [
     start: "January 2019",
     end: "April 2019",
     description:
-      "Co-developed a prototype iOS app with another intern in Swift for the new Splunk Phantom security orchestration product (later publicly demoed and launched at .conf annual conference in Las Vegas). Implemented a realtime service for the iOS app in Django (Python) and C++; serialized data using protobufs transmitted over gRPC resulting in an approximate 500% increase in data throughput.",
+      "Co-developed a prototype iOS app with another intern in Swift for the new Splunk Phantom security orchestration product.",
+    skills: ["Swift", "Django", "Python", "C++", "gRPC"],
   },
 ]

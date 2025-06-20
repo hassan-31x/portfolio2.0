@@ -4,10 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/utilities/ui";
-import { motion } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import StackItem from "./stack-item";
 
 interface ResumeCardProps {
   logoUrl: string;
@@ -18,6 +19,7 @@ interface ResumeCardProps {
   badges?: readonly string[];
   period: string;
   description?: string;
+  skills?: string[];
 }
 export const ResumeCard = ({
   logoUrl,
@@ -28,6 +30,7 @@ export const ResumeCard = ({
   badges,
   period,
   description,
+  skills,
 }: ResumeCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -58,7 +61,7 @@ export const ResumeCard = ({
               {description}
             </p>
           )}
-          {badges && (
+          {/* {badges && (
             <div className="mt-4 flex flex-wrap gap-2">
               {badges.map((badge, index) => (
                 <div
@@ -71,6 +74,19 @@ export const ResumeCard = ({
                   </span>
                 </div>
               ))}
+            </div>
+          )} */}
+          {skills && (
+            <div className='mt-2 flex max-w-[14rem] flex-wrap gap-1'>
+              <LayoutGroup>
+              {skills.map((stack: string) => (
+                <StackItem
+                  key={stack}
+                  technology={stack}
+                  className='mr-[-10px] hover:z-10'
+                />
+              ))}
+              </LayoutGroup>
             </div>
           )}
         </div>

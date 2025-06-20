@@ -10,7 +10,7 @@ type Props = {
 
 const SectionHeading = ({ children, delay=0 }: Props) => {
   return (
-  <h2 className="max-w-lg relative mt-4 w-fit text-sm font-normal md:text-sm">
+  <h2 className="max-w-lg relative mt-4 mb-4 w-fit text-sm font-normal md:text-sm">
     <Background />
     {children.split(" ").map((word, idx) => (
       <motion.span

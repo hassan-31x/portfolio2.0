@@ -1,19 +1,24 @@
 import { 
     IconBrandCss3, 
+    IconBrandDjango, 
     IconBrandDocker, 
     IconBrandFramer, 
     IconBrandGit, 
     IconBrandGithub, 
+    IconBrandGolang, 
     IconBrandHtml5, 
     IconBrandJavascript, 
     IconBrandMongodb, 
     IconBrandMysql, 
     IconBrandNextjs, 
     IconBrandNodejs, 
+    IconBrandPython, 
     IconBrandReact, 
+    IconBrandRedux, 
+    IconBrandSwift, 
     IconBrandTailwind, 
     IconBrandTypescript, 
-    IconCode 
+    IconCode,
 } from "@tabler/icons-react"
 
 export const getLogoForTechnology = (tech: string) => {
@@ -21,11 +26,13 @@ export const getLogoForTechnology = (tech: string) => {
         React: <IconBrandReact className="h-4 w-4 shrink-0 text-[#61DBFB] dark:text-neutral-200" />,
         Next: <IconBrandNextjs className="h-4 w-4 shrink-0 text-[#000000] dark:text-neutral-200" />,
         Tailwind: <IconBrandTailwind className="h-4 w-4 shrink-0 text-[#38BDF8] dark:text-neutral-200" />,
-        TypeScript: <IconBrandTypescript className="h-4 w-4 shrink-0 text-[#3178C6] dark:text-neutral-200" />,
+        Typescript: <IconBrandTypescript className="h-4 w-4 shrink-0 text-[#3178C6] dark:text-neutral-200" />,
         JavaScript: <IconBrandJavascript className="h-4 w-4 shrink-0 text-[#F7DF1E] dark:text-neutral-200" />,
         HTML: <IconBrandHtml5 className="h-4 w-4 shrink-0 text-[#E34F26] dark:text-neutral-200" />,
         CSS: <IconBrandCss3 className="h-4 w-4 shrink-0 text-[#1572B6] dark:text-neutral-200" />,
         'Node.js': <IconBrandNodejs className="h-4 w-4 shrink-0 text-[#339933] dark:text-neutral-200" />,
+        Redux: <IconBrandRedux className="h-4 w-4 shrink-0 text-[#764ABC] dark:text-neutral-200" />,
+        Python: <IconBrandPython className="h-4 w-4 shrink-0 text-[#3776AB] dark:text-neutral-200" />,
         // Express: <IconBrandExpressjs />,
         MongoDB: <IconBrandMongodb className="h-4 w-4 shrink-0 text-[#47A248] dark:text-neutral-200" />,
         // PostgreSQL: <IconBrandPostgresql />,
@@ -34,6 +41,10 @@ export const getLogoForTechnology = (tech: string) => {
         Git: <IconBrandGit className="h-4 w-4 shrink-0 text-[#F05032] dark:text-neutral-200" />,
         GitHub: <IconBrandGithub className="h-4 w-4 shrink-0 text-[#181717] dark:text-neutral-200" />,
         'Framer Motion': <IconBrandFramer className="h-4 w-4 shrink-0 text-[#000000] dark:text-neutral-200" />,
+        // Kubernetes: <IconBrandKubernetes className="h-4 w-4 shrink-0 text-[#326CE5] dark:text-neutral-200" />,
+        Go: <IconBrandGolang className="h-4 w-4 shrink-0 text-[#00ADD8] dark:text-neutral-200" />,
+        Swift: <IconBrandSwift className="h-4 w-4 shrink-0 text-[#FFAC45] dark:text-neutral-200" />,
+        Django: <IconBrandDjango className="h-4 w-4 shrink-0 text-[#092E20] dark:text-neutral-200" />,
     }
 
     return logoMap[tech] || <IconCode className="h-4 w-4 text-neutral-600 shrink-0 dark:text-neutral-200" />;
