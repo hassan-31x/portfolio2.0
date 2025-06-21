@@ -7,6 +7,7 @@ import { Subheading } from '@/components/custom/subheading';
 import WorkExperience from '@/components/custom/work-experience';
 
 import { projects } from '@/constants/project';
+import Contact from '@/components/custom/contact-form';
 
 export default function Home() {
   return (
@@ -22,6 +23,8 @@ export default function Home() {
         <Projects projects={projects.slice(0, 3)} />
 
         <WorkExperience />
+
+        <Contact />
       </Container>
     </div>
   );
