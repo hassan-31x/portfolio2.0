@@ -13,18 +13,16 @@ export default function Contact() {
       <div className="border border-gray-200 dark:border-gray-600 w-full my-8" />
     );
   };
-  const [form, setForm] = useState(false);
-  const inputEl = useRef(null);
-  //   const { data } = useSWR("/api/subscribers", fetcher);
-  //   const subscriberCount = format(data?.count);
+  const [form, setForm] = useState<{ state: string; message: string }>({ state: "idle", message: "" });
+  const inputEl = useRef<HTMLInputElement>(null);
 
   const subscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setForm({ state: "loading" });
+    setForm({ state: "loading", message: "" });
 
     const res = await fetch("/api/sendgrid", {
       body: JSON.stringify({
-        email: inputEl.current.value,
+        email: inputEl.current?.value,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +40,9 @@ export default function Contact() {
     }
 
     // trackGoal("JYFUFMSF", 0);
-    inputEl.current.value = "";
+    if (inputEl.current) {
+      inputEl.current.value = "";
+    }
     setForm({
       state: "success",
       message: `Hooray! You're now on the list. Check your inbox or promotions for a mail.`,
@@ -58,7 +58,7 @@ export default function Contact() {
         Drop your message and let's discuss about your project.
       </p>
       <a
-        href="https://wa.me/919587738861?text=I want to work on a project with you"
+        href="https://wa.me/923132508277?text=I want to work on a project with you"
         className="mt-4 px-4 text-center w-full font-bold h-8 bg-green-400 dark:bg-green-400 text-gray-900 py-1 dark:text-gray-900 rounded"
         type="submit"
       >
