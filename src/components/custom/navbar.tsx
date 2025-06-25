@@ -6,13 +6,18 @@ import { motion, useMotionTemplate, useMotionValueEvent, useScroll, useTransform
 // TODO: use this
 // import Link from "next-view-transitions";
 import Link from "next/link";
+import { IconBriefcase, IconDownload, IconFile, IconFolder, IconMail, IconUser } from "@tabler/icons-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Button } from "../ui/button";
+import { DockIcon } from "./dock";
+import { ModeToggle } from "../ui/mode-toggle";
 
 export const Navbar = () => {
   const navItems = [
-    { title: "About", href: "/about" },
-    { title: "Projects", href: "/projects" },
-    { title: "Contact", href: "/contact" },
-    { title: "Blog", href: "/blog" },
+    { title: "Projects", href: "/projects", icon: <IconFolder className="size-5 text-neutral-800 dark:text-neutral-100" /> },
+    { title: "Experience", href: "/about", icon: <IconBriefcase className="size-5 text-neutral-800 dark:text-neutral-100" /> },
+    { title: "Contact", href: "/contact", icon: <IconMail className="size-5 text-neutral-800 dark:text-neutral-100" /> },
+    { title: "Blog", href: "/blog", icon: <IconFile className="size-5 text-neutral-800 dark:text-neutral-100" /> },
   ];
 
   const [hovered, setHovered] = useState<number | null>(null)
@@ -48,14 +53,37 @@ export const Navbar = () => {
           duration: 0.3,
           ease: "linear",
         }}
-        className="bg-white fixed inset-x-0 top-0 z-50 mx-auto flex max-w-4xl items-center justify-between rounded-full px-3 py-2 dark:bg-neutral-800 dark:text-white">
-        <img
-          className="h-10 w-10 rounded-full"
-          src="/avatar.webp"
-          height="100"
-          width="100"
-          alt="Avatar"
-        />
+        className="bg-white/50 backdrop-blur-sm fixed inset-x-0 top-0 z-50 mx-auto flex max-w-4xl items-center justify-between rounded-full px-3 py-2 dark:bg-neutral-800 dark:text-white">
+        <div className="flex items-center gap-2">
+          <div className="flex aspect-square cursor-pointer items-center justify-center rounded-full">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <ModeToggle />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Theme</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+
+          <div className="flex aspect-square cursor-pointer items-center justify-center rounded-full">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" className="outline-none shadow-xs border-[1px] rounded-md size-9 border-neutral-200 dark:border-neutral-700">
+                    <IconDownload className="size-4 text-neutral-500 dark:text-neutral-400" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Download Resume</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+
+        </div>
         <div className="flex items-center">
           {navItems.map((item, idx) => (
             <Link
@@ -66,14 +94,26 @@ export const Navbar = () => {
               onMouseLeave={() => setHovered(null)}
             >
               {hovered === idx && (
-                  <motion.span
-                    layoutId="hovered-span"
-                    className="absolute inset-0 h-full w-full rounded-md bg-neutral-100 dark:bg-neutral-800"
-                  />
-                )}
-                <span className="relative z-10">
-                  {item.title}
-                </span>
+                <motion.span
+                  layoutId="hovered-span"
+                  className="absolute inset-0 h-full w-full rounded-md bg-neutral-100 dark:bg-neutral-800"
+                />
+              )}
+              {/* <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="relative z-10">
+                      {item.icon}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {item.title}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider> */}
+              <span className="relative z-10">
+                {item.title}
+              </span>
             </Link>
           ))}
         </div>
