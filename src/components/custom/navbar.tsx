@@ -72,7 +72,7 @@ export const Navbar = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="outline" size="icon" className="outline-none shadow-xs border-[1px] rounded-md size-9 border-neutral-200 dark:border-neutral-700">
+                  <Button variant="outline" size="icon" className="outline-none shadow-xs border-[1px] rounded-md size-9 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700">
                     <IconDownload className="size-4 text-neutral-500 dark:text-neutral-400" />
                   </Button>
                 </TooltipTrigger>
