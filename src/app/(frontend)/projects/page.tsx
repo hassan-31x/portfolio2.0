@@ -7,7 +7,7 @@ import { projects } from "@/constants/project";
 export default function ProjectsPage() {
   return (
     <div className="flex min-h-screen items-start justify-start">
-      <Container className="min-h-screen px-10 md:pt-20 md:pb-10">
+      <Container className="min-h-screen px-10 md:pt-2 md:pb-10">
         <Heading>Projects</Heading>
         <Subheading>
           I&apos;m a passionate software engineer dedicated to crafting elegant
@@ -15,7 +15,7 @@ export default function ProjectsPage() {
           development, I enjoy building user-centric applications that make a
           difference.
         </Subheading>
-        <Projects projects={projects } />
+        <Projects projects={projects} />
       </Container>
     </div>
   );

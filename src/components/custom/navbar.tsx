@@ -17,7 +17,7 @@ export const Navbar = () => {
     { title: "Projects", href: "/projects", icon: <IconFolder className="size-5 text-neutral-800 dark:text-neutral-100" /> },
     { title: "Experience", href: "/about", icon: <IconBriefcase className="size-5 text-neutral-800 dark:text-neutral-100" /> },
     { title: "Contact", href: "/contact", icon: <IconMail className="size-5 text-neutral-800 dark:text-neutral-100" /> },
-    { title: "Blog", href: "/blog", icon: <IconFile className="size-5 text-neutral-800 dark:text-neutral-100" /> },
+    { title: "Blog", href: "/blogs", icon: <IconFile className="size-5 text-neutral-800 dark:text-neutral-100" /> },
   ];
 
   const [hovered, setHovered] = useState<number | null>(null)

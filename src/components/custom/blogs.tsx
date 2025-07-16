@@ -39,7 +39,15 @@ const Blogs = ({ blogs }: Props) => {
                     {blog.description}
                   </p>
                 </div>
-                {/* <p className="text-gray-500 dark:text-gray-400 text-sm">{'company'}</p> */}
+                {blog.publishedAt && (
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
+                    {new Date(blog.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                )}
               </div>
             </Link>
 
