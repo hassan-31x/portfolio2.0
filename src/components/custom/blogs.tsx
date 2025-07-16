@@ -11,7 +11,6 @@ type Props = {
 }
 
 const Blogs = ({ blogs }: Props) => {
-  console.log("🚀 ~ Blogs ~ blogs:", blogs)
   return (
     <div className="my-4 border-y border-neutral-100 px-4 py-6 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
       <SectionHeading delay={0.2}>Sharing knowledge as I learn</SectionHeading>
@@ -28,8 +27,11 @@ const Blogs = ({ blogs }: Props) => {
             key={blog.title}
             className="relative mb-4 w-full"
           >
-            <Link href={`/blog/${blog.id}`} className='group w-full flex flex-col md:flex-row space-x-0 md:space-x-4 mb-10'>
-              <img src={blog.heroImage.url} className="rounded-md w-72 mb-4 md:mb-0" />
+            <Link href={`/blogs/${blog.slug}`} className='group w-full flex flex-col md:flex-row space-x-0 md:space-x-4 mb-10'>
+              <img
+                src={blog.heroImage.url}
+                className="rounded-md w-72 mb-4 md:mb-0 transition duration-200 group-hover:scale-[1.02]"
+              />
               <div className="flex flex-col justify-between">
                 <div className='w-full md:w-3/4'>
                   <h4 className="font-bold text-base md:text-xl tracking-tight text-black dark:text-white">
@@ -50,7 +52,6 @@ const Blogs = ({ blogs }: Props) => {
                 )}
               </div>
             </Link>
-
           </motion.div>
         ))}
       </div>
