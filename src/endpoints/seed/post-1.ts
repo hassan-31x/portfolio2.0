@@ -7,6 +7,7 @@ export type PostArgs = {
   author: User
 }
 
+// @ts-ignore
 export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> = ({
   heroImage,
   blockImage,

@@ -52,10 +52,10 @@ export default function Contact() {
   return (
     <div className="border border-blue-200 rounded p-6 my-4 w-full dark:border-gray-800 bg-blue-50 dark:bg-blue-opaque">
       <h5 className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100">
-        Want to hire me as a freelancer? Let's discuss.
+        Want to hire me as a freelancer? Let&apos;s discuss.
       </h5>
       <p className="my-1 text-gray-800 dark:text-gray-200">
-        Drop your message and let's discuss about your project.
+        Drop your message and let&apos;s discuss about your project.
       </p>
       <a
         href="https://wa.me/923132508277?text=I want to work on a project with you"
