@@ -69,7 +69,7 @@ export const Timeline = () => {
   ];
 
   return (
-    <div ref={ref} className="shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset] border-y border-neutral-100 my-6 px-4 py-4">
+    <div ref={ref} className="shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset] border-y border-neutral-100 dark:border-neutral-700 my-6 px-4 py-4">
       {data.map((year, index) => (
         <div key={year.title} className="mb-4">
           <motion.h2
@@ -86,7 +86,7 @@ export const Timeline = () => {
               ease: "easeInOut",
               delay: 0.1 * index,
             }}
-            className="font-bold text-black w-fit rounded-md px-2 py-0.5 mb-2"
+            className="font-bold text-black dark:text-neutral-200 w-fit rounded-md px-2 py-0.5 mb-2"
             style={{
               boxShadow: "var(--shadow-custom)",
             }}
@@ -111,7 +111,7 @@ export const Timeline = () => {
                       ease: "easeInOut",
                       delay: 0.2 * idx,
                     }}
-                    className="text-neutral-600"
+                    className="text-neutral-500"
                   >{item.title}</motion.h3>
                 </Step>
                 {item.description && (

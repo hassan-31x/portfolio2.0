@@ -92,6 +92,7 @@ const config = {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        "blue-opaque": "rgb(13 42 148 / 18%)",
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
