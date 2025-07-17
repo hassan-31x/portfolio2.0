@@ -44,6 +44,7 @@ export const ResumeCard = ({
   return (
     <Link
       href={href || "#"}
+      target="_blank"
       className="block cursor-pointer"
       onClick={handleClick}
     >
@@ -79,23 +80,23 @@ export const ResumeCard = ({
           {skills && (
             <div className='mt-2 flex max-w-[14rem] flex-wrap gap-1'>
               <LayoutGroup>
-              {skills.map((stack: string) => (
-                <StackItem
-                  key={stack}
-                  technology={stack}
-                  className='mr-[-10px] hover:z-10'
-                />
-              ))}
+                {skills.map((stack: string) => (
+                  <StackItem
+                    key={stack}
+                    technology={stack}
+                    className='mr-[-10px] hover:z-10'
+                  />
+                ))}
               </LayoutGroup>
             </div>
           )}
         </div>
-        <img 
-          src={logoUrl} 
-          alt={altText} 
-          width="100" 
-          height="100" 
-          className="hidden md:block" 
+        <img
+          src={logoUrl}
+          alt={altText}
+          width="100"
+          height="100"
+          className="hidden md:block"
         />
       </div>
     </Link>

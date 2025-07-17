@@ -29,7 +29,7 @@ export default async function Home() {
           Muhammad Hassan
         </Heading>
         <Subheading>
-          I&apos;m a software engineer with a passion for building scalable and efficient systems. I&apos;m currently working as a software engineer at Google.
+          I&apos;m a software engineer with a passion for building scalable and efficient systems. I&apos;m currently working as a Full Stack Engineer at a US Startup.
         </Subheading>
 
         <Projects projects={projects.slice(0, 3)} />

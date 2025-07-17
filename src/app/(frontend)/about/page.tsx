@@ -14,7 +14,7 @@ const AboutPage = () => {
           About Me
         </Heading>
         <Subheading className='text-secondary max-w-lg mt-4 text-sm md:text-sm'>
-          I&apos;m a software engineer with a passion for building scalable and efficient systems. I&apos;m currently working as a software engineer at Google. I enjoy building products that help people live better lives.
+          I&apos;m a software engineer with a passion for building scalable and efficient systems. I enjoy building products that help people live better lives.
         </Subheading>
 
         <p className='text-secondary max-w-lg mt-4 text-sm md:text-sm px-4'>

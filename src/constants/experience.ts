@@ -18,62 +18,115 @@ export type WorkExperience = {
   location: string;
   title: string;
   start: string;
-  end: string;
+  end: string | null;
   description: string;
   skills: string[];
 }
 
 export const workExperience: WorkExperience[] = [
   {
-    company: "Atomic Finance",
-    href: "https://atomic.finance",
-    badges: [],
+    company: "Useryze",
+    href: "https://useryze.com", // Placeholder, update if needed
+    badges: ["AI", "SaaS"],
     location: "Remote",
-    title: "Bitcoin Protocol Engineer",
-    logoUrl: "/atomic.png",
-    start: "May 2021",
-    end: "Oct 2022",
+    title: "Full Stack Engineer",
+    logoUrl: "/images/useryze.jpeg", // Placeholder, update with actual logo path
+    start: "Dec 2024",
+    end: null,
     description:
-      "Implemented the Bitcoin discreet log contract (DLC) protocol specifications as an open source Typescript SDK.",
-    skills: ["Typescript", "Kubernetes", "Docker", "Bitcoin", "Go"],
+      "Created an AI-powered SaaS content tool integrating PineconeDB, OpenAI API, and Deepseek models. Utilized scraped posts from social media channels for context using vector embeddings to create a complete Marketing Funnel for automated content writing. Developed the organization's landing page as CRO for A/B testing and deployed to VPS & AWS Amplify. Powered all website content through Payload CMS for dynamic content management.",
+    skills: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "OpenAI",
+      "Payload CMS",
+      "AWS Amplify",
+      "A/B Testing"
+    ],
   },
   {
-    company: "Shopify",
-    badges: [],
-    href: "https://shopify.com",
+    company: "GT Solutions USA",
+    href: "https://gtsolutionsusa.com", // Placeholder, update if needed
+    badges: ["CRM", "Mobile Apps"],
     location: "Remote",
-    title: "Software Engineer",
-    logoUrl: "/shopify.svg",
-    start: "January 2021",
-    end: "April 2021",
+    title: "Full Stack Engineer",
+    logoUrl: "/images/gtsolutions.webp", // Placeholder, update with actual logo path
+    start: "May 2024",
+    end: "June 2025",
     description:
-      "Implemented a custom Kubernetes controller in Go to automate the deployment of MySQL and ProxySQL custom resources.",
-    skills: ["Go", "Kubernetes", "MySQL", "ProxySQL"],
+      "Developed full stack web applications and mobile apps as in-house CRMs for US-based daycares and other businesses, targeting a potential 1000+ user base. Built admin portals with role-based employee management and integrated payment modules. Coded an Admin Panel for Aga Khan Hospital's food survey project, adding functionalities such as location access and offline data management to the mobile app.",
+    skills: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "React Native",
+    ],
   },
+  // {
+  //   company: "Fiverr",
+  //   href: "https://fiverr.com",
+  //   badges: ["Freelance", "Ecommerce"],
+  //   location: "Remote",
+  //   title: "Web Developer (Freelancing)",
+  //   logoUrl: "/fiverr.png", // Placeholder, update with actual logo path
+  //   start: "October 2023",
+  //   end: "August 2024",
+  //   description:
+  //     "Completed 14+ freelance projects, including multiple ecommerce and full stack applications from scratch using Next.js, Typescript, Tailwind, Next Auth, Sanity, and more. Notable projects include OkJobs, Chairlaxed, Bordsteinschwalbe, RCA Capital, Legal Crystal, and Dezgnkraft.",
+  //   skills: [
+  //     "Next.js",
+  //     "Typescript",
+  //     "Tailwind CSS",
+  //     "Next Auth",
+  //     "Sanity",
+  //     "Ecommerce",
+  //     "Full Stack Development"
+  //   ],
+  // },
   {
-    company: "Nvidia",
-    href: "https://nvidia.com/",
-    badges: ["Best Intern"],
-    location: "Santa Clara, CA",
-    title: "Software Engineer",
-    logoUrl: "/nvidia.png",
-    start: "January 2020",
-    end: "April 2020",
+    company: "Xeverse.io",
+    href: "https://xeverse.io",
+    badges: ["AI", "CRM"],
+    location: "Remote",
+    title: "Junior Full Stack Developer",
+    logoUrl: "/images/xeverse.jpeg", // Placeholder, update with actual logo path
+    start: "June 2023",
+    end: "November 2023",
     description:
-      "Architected and wrote the entire MVP of the GeForce Now Cloud Gaming internal admin and A/B testing dashboard using React, Redux, TypeScript, and Python.",
-    skills: ["React", "Redux", "Typescript", "Python"],
+      "Worked on international client projects, including the frontend of an AI chat application with multi-format responses, authentication via Next Auth, and chat history storage. Implemented features for creating charts, generating business reports, and tabular data for visualization. Developed a full stack CRM using Next.js and Typescript to manage data for 10k+ users and employees, integrating Cypress for continuous testing.",
+    skills: [
+      "React",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "MySQL",
+      "Firebase",
+      "Cypress",
+    ],
   },
-  {
-    company: "Splunk",
-    href: "https://splunk.com",
-    badges: [],
-    location: "San Jose, CA",
-    title: "Software Engineer",
-    logoUrl: "/splunk.svg",
-    start: "January 2019",
-    end: "April 2019",
-    description:
-      "Co-developed a prototype iOS app with another intern in Swift for the new Splunk Phantom security orchestration product.",
-    skills: ["Swift", "Django", "Python", "C++", "gRPC"],
-  },
+  // {
+  //   company: "Alpha College",
+  //   href: "https://alphacollege.edu.pk", // Placeholder, update if needed
+  //   badges: ["Leadership", "Olympiad"],
+  //   location: "Onsite",
+  //   title: "Co-Head IT Department",
+  //   logoUrl: "/alphacollege.png", // Placeholder, update with actual logo path
+  //   start: "October 2022",
+  //   end: "March 2023",
+  //   description:
+  //     "Built a full stack web app with a custom multi-step registration form, user portal for teams, online payment verification, and admin panel for an inter-school Science Olympiad with 100+ teams. Oversaw an automatic attendance system for 500+ participants using barcodes for verification during the 3-day competition. Utilized Vanilla JavaScript, HTML, and CSS.",
+  //   skills: [
+  //     "JavaScript",
+  //     "HTML",
+  //     "CSS",
+  //     "Full Stack Development",
+  //     "Payment Integration",
+  //     "Barcode Systems",
+  //     "Event Management"
+  //   ],
+  // },
 ]

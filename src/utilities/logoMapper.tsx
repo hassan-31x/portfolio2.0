@@ -1,4 +1,6 @@
 import {
+    IconAB,
+    IconBrandAws,
     IconBrandCss3,
     IconBrandDjango,
     IconBrandDocker,
@@ -16,6 +18,7 @@ import {
     IconBrandOpenai,
     IconBrandPython,
     IconBrandReact,
+    IconBrandReactNative,
     IconBrandRedux,
     IconBrandSwift,
     IconBrandTailwind,
@@ -49,6 +52,9 @@ export const getLogoForTechnology = (tech: string) => {
         Django: <IconBrandDjango className="h-4 w-4 shrink-0 text-[#092E20] dark:text-neutral-200" />,
         OpenAI: <IconBrandOpenai className="h-4 w-4 shrink-0 text-[#000000] dark:text-neutral-200" />,
         Firebase: <IconBrandFirebase className="h-4 w-4 shrink-0 text-[#FFCA28] dark:text-neutral-200" />,
+        'AWS Amplify': <IconBrandAws className="h-4 w-4 shrink-0 text-[#FF9900] dark:text-neutral-200" />,
+        'A/B Testing': <IconAB className="h-4 w-4 shrink-0 text-[#FF9900] dark:text-neutral-200" />,
+        'React Native': <IconBrandReactNative className="h-4 w-4 shrink-0 text-[#61DBFB] dark:text-neutral-200" />,
     }
 
     return logoMap[tech] || <IconCode className="h-4 w-4 text-neutral-600 shrink-0 dark:text-neutral-200" />;

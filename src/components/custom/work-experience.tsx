@@ -12,7 +12,7 @@ const WorkExperience = (props: Props) => {
   return (
     <div className="my-4 border-y border-neutral-100 px-4 py-6 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
       <SectionHeading delay={0.2}>Worked at Reputed Firms</SectionHeading>
-      <div className="py-4 space-y-4">
+      <div className="py-4 flex flex-col gap-8">
         {workExperience.map((work: WorkExperience, idx: number) => (
           <motion.div
             initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
