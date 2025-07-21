@@ -29,7 +29,7 @@ const Blogs = ({ blogs }: Props) => {
           >
             <Link href={`/blogs/${blog.slug}`} className='group w-full flex flex-col md:flex-row space-x-0 md:space-x-4 mb-10'>
               <img
-                src={blog.heroImage.url}
+                src={`/media/${blog.heroImage.filename}`}
                 className="rounded-md w-72 mb-4 md:mb-0 transition duration-200 group-hover:scale-[1.02]"
               />
               <div className="flex flex-col justify-between">

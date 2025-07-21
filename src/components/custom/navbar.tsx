@@ -62,6 +62,7 @@ export const Navbar = () => {
                   <ModeToggle />
                 </TooltipTrigger>
                 <TooltipContent>
+                  {/* TODO: https://21st.dev/designali-in/theme/default */}
                   <p>Theme</p>
                 </TooltipContent>
               </Tooltip>
