@@ -11,6 +11,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Button } from "../ui/button";
 import { DockIcon } from "./dock";
 import { ModeToggle } from "../ui/mode-toggle";
+import { ThemeToggleButton } from "../ui/theme-toggle-button";
 
 export const Navbar = () => {
   const navItems = [
@@ -59,7 +60,8 @@ export const Navbar = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <ModeToggle />
+                  {/* <ModeToggle /> */}
+                  <ThemeToggleButton showLabel={false} variant="circle" start="top-left" />
                 </TooltipTrigger>
                 <TooltipContent>
                   {/* TODO: https://21st.dev/designali-in/theme/default */}
