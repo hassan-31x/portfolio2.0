@@ -1,0 +1,17 @@
+{
+  "name": "Muhammad Hassan · Full Stack Engineer",
+  "short_name": "MH Portfolio",
+  "description": "Portfolio of Muhammad Hassan, Full Stack Engineer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c0d0e",
+  "theme_color": "#0c0d0e",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

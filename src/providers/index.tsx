@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { HeaderThemeProvider } from './HeaderTheme'
 // import { ThemeProvider } from './Theme'
 
 import { ThemeProvider } from "@/components/theme-provider"
@@ -13,10 +12,11 @@ export const Providers: React.FC<{
     //   <HeaderThemeProvider>{children}</HeaderThemeProvider>
     // </ThemeProvider>
     <ThemeProvider
-      // attribute="class"
+      attribute="data-theme"
       defaultTheme="light"
-      // enableSystem
+      enableSystem={false}
       disableTransitionOnChange
+      storageKey="portfolio-theme"
     >
       {children}
     </ThemeProvider>

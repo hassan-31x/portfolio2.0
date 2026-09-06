@@ -18,6 +18,7 @@ import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 import { Navbar } from '@/components/custom/navbar'
 import Footer from '@/components/custom/footer'
+// import StructuredData from '@/components/custom/structured-data'
 
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] })
 
@@ -26,6 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+      {/* <StructuredData /> */}
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />

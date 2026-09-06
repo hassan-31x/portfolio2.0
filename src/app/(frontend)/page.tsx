@@ -1,5 +1,5 @@
 import Projects from '@/components/custom/projects';
-import { generateMetadata } from './[slug]/page'
+import type { Metadata } from 'next';
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -44,5 +44,8 @@ export default async function Home() {
   );
 }
 
-
-export { generateMetadata }
+export const metadata: Metadata = {
+  title: 'Muhammad Hassan · Full Stack Engineer',
+  description: 'Full Stack Engineer building scalable web products and AI-powered systems. Explore selected projects, experience, writing, skills, and GitHub activity.',
+  alternates: { canonical: '/' },
+}
