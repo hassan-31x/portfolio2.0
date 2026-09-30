@@ -66,6 +66,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { pageNumber } = await paramsPromise
   return {
     title: `Blogs | Muhammad Hassan | Page ${pageNumber || ''}`,
+    alternates: { canonical: Number(pageNumber) === 1 ? '/blogs' : `/blogs/page/${pageNumber}` },
   }
 }
 

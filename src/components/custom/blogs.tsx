@@ -12,7 +12,7 @@ type Props = {
 
 const Blogs = ({ blogs }: Props) => {
   return (
-    <div className="my-4 border-y border-neutral-100 px-4 py-6 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
+    <div className="portfolio-section my-4 border-y border-neutral-100 px-4 py-6 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
       <SectionHeading delay={0.2}>Sharing knowledge as I learn</SectionHeading>
       <div className="py-4 flex flex-col gap-4">
         {blogs.map((blog: any, idx: number) => (

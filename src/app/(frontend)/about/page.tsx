@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import React from 'react'
 import { Container } from '@/components/custom/container'
 import { Collage } from '@/components/custom/collage'
@@ -33,3 +34,10 @@ const AboutPage = () => {
 }
 
 export default AboutPage
+
+export const metadata: Metadata = {
+  title: 'About | Muhammad Hassan',
+  description: 'Meet Muhammad Hassan, a software engineer building scalable products. Explore his background, work experience, and interests.',
+  alternates: { canonical: '/about' },
+  openGraph: { title: 'About | Muhammad Hassan', description: 'Meet Muhammad Hassan, a software engineer building scalable products. Explore his background, work experience, and interests.', url: '/about' },
+}

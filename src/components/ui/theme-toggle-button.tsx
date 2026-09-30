@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { flushSync } from "react-dom"
 import { MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -25,17 +26,15 @@ export function ThemeToggleButton({
   showLabel = false,
   url = "",
 }: ThemeToggleAnimationProps) {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
+  const transitioning = React.useRef(false)
 
   const styleId = "theme-transition-styles"
 
-  const updateStyles = React.useCallback((css: string, name: string) => {
+  const updateStyles = React.useCallback((css: string) => {
     if (typeof window === "undefined") return
 
     let styleElement = document.getElementById(styleId) as HTMLStyleElement
-
-    console.log("style ELement", styleElement)
-    console.log("name", name)
 
     if (!styleElement) {
       styleElement = document.createElement("style")
@@ -45,27 +44,36 @@ export function ThemeToggleButton({
 
     styleElement.textContent = css
 
-    console.log("content updated")
   }, [])
 
-  const toggleTheme = React.useCallback(() => {
-    const animation = createAnimation(variant, start, url)
-
-    updateStyles(animation.css, animation.name)
-
-    if (typeof window === "undefined") return
-
+  const toggleTheme = React.useCallback(async () => {
+    if (!resolvedTheme || transitioning.current) return
+    transitioning.current = true
+    const nextTheme = resolvedTheme === "dark" ? "light" : "dark"
+    let applied = false
     const switchTheme = () => {
-      setTheme(theme === "light" ? "dark" : "light")
+      if (applied) return
+      applied = true
+      // Commit the DOM before the browser captures the new-theme snapshot.
+      flushSync(() => setTheme(nextTheme))
     }
-
-    if (!document.startViewTransition) {
+    try {
+      if (!document.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        switchTheme()
+        return
+      }
+      const animation = createAnimation(variant, start, url)
+      updateStyles(animation.css)
+      const transition = document.startViewTransition(switchTheme)
+      // A skipped animation must not produce an unhandled rejection.
+      void transition.ready.catch(() => {})
+      await transition.finished
+    } catch {
       switchTheme()
-      return
+    } finally {
+      transitioning.current = false
     }
-
-    document.startViewTransition(switchTheme)
-  }, [theme, setTheme])
+  }, [resolvedTheme, setTheme, variant, start, url, updateStyles])
 
   return (
     <Button
@@ -74,6 +82,9 @@ export function ThemeToggleButton({
       size="icon"
       className="w-9 p-0 h-9 relative group outline-none shadow-xs border-[1px] rounded-md size-9 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700"
       name="Theme Toggle Button"
+      type="button"
+      aria-label={resolvedTheme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+      aria-pressed={resolvedTheme === "dark"}
     >
       <SunIcon className="size-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <MoonIcon className="absolute size-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />

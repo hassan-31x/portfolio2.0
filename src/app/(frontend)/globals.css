@@ -16,3 +16,9 @@
   --color-secondary: 0 0% 64%;
 }
 
+
+/* The preceding section owns the shared boundary. Keep the existing spacing. */
+.portfolio-section + .portfolio-section {
+  border-top-width: 0;
+  box-shadow: 0px -1px 4px 0px var(--color-neutral-100) inset;
+}

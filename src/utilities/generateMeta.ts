@@ -13,7 +13,7 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl = image.sizes?.og?.url
 
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
+    if (ogUrl || image.url) url = new URL(ogUrl || image.url!, serverUrl).href
   }
 
   return url
@@ -21,8 +21,10 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post> | null
+  path?: string
 }): Promise<Metadata> => {
   const { doc } = args
+  const path = args.path || (doc?.slug && doc.slug !== 'home' ? `/${doc.slug}` : '/')
 
   const ogImage = getImageURL(doc?.meta?.image)
 
@@ -31,6 +33,7 @@ export const generateMeta = async (args: {
     : 'Muhammad Hassan - Software Engineer'
 
   return {
+    alternates: { canonical: path },
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
@@ -42,7 +45,7 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: path,
     }),
     title,
   }

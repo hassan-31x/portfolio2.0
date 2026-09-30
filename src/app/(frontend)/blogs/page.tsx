@@ -67,6 +67,9 @@ export default async function Page() {
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Blogs | Muhammad Hassan`,
+    title: 'Blogs | Muhammad Hassan',
+    description: 'Software development articles, engineering insights, and lessons learned by Muhammad Hassan.',
+    alternates: { canonical: '/blogs' },
+    openGraph: { title: 'Blogs | Muhammad Hassan', url: '/blogs' },
   }
 }

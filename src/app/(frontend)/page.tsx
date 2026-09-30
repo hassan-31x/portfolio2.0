@@ -48,4 +48,9 @@ export const metadata: Metadata = {
   title: 'Muhammad Hassan · Full Stack Engineer',
   description: 'Full Stack Engineer building scalable web products and AI-powered systems. Explore selected projects, experience, writing, skills, and GitHub activity.',
   alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Muhammad Hassan · Full Stack Engineer',
+    description: 'Full Stack Engineer building scalable web products and AI-powered systems.',
+    url: '/',
+  },
 }

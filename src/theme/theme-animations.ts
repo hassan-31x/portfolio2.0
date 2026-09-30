@@ -72,7 +72,7 @@ export const createAnimation = (
       css: `
        ::view-transition-group(root) {
         animation-duration: 0.7s;
-        animation-timing-function: var(--expo-out);
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
       }
             
       ::view-transition-new(root) {
@@ -80,11 +80,11 @@ export const createAnimation = (
       }
 
       ::view-transition-old(root),
-      .dark::view-transition-old(root) {
+      [data-theme='dark']::view-transition-old(root) {
         animation: none;
         z-index: -1;
       }
-      .dark::view-transition-new(root) {
+      [data-theme='dark']::view-transition-new(root) {
         animation-name: reveal-dark;
       }
 
@@ -114,7 +114,7 @@ export const createAnimation = (
       css: `
        ::view-transition-group(root) {
         animation-duration: 0.7s;
-        animation-timing-function: var(--expo-out);
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
       }
             
       ::view-transition-new(root) {
@@ -122,11 +122,11 @@ export const createAnimation = (
       }
 
       ::view-transition-old(root),
-      .dark::view-transition-old(root) {
+      [data-theme='dark']::view-transition-old(root) {
         animation: none;
         z-index: -1;
       }
-      .dark::view-transition-new(root) {
+      [data-theme='dark']::view-transition-new(root) {
         animation-name: reveal-dark;
       }
 
@@ -164,7 +164,7 @@ export const createAnimation = (
 }
 
 ::view-transition-old(root),
-.dark::view-transition-old(root) {
+[data-theme='dark']::view-transition-old(root) {
   animation: scale 3s;
 }
 
@@ -189,7 +189,7 @@ export const createAnimation = (
     name: `${variant}-${start}`,
     css: `
       ::view-transition-group(root) {
-        animation-timing-function: var(--expo-out);
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
       }
       ::view-transition-new(root) {
         mask: url('${svg}') ${start.replace("-", " ")} / 0 no-repeat;
@@ -198,9 +198,8 @@ export const createAnimation = (
         transform-origin: ${transformOrigin};
       }
       ::view-transition-old(root),
-      .dark::view-transition-old(root) {
-        animation: scale-${start} 1s;
-        transform-origin: ${transformOrigin};
+      [data-theme='dark']::view-transition-old(root) {
+        animation: none;
         z-index: -1;
       }
       @keyframes scale-${start} {

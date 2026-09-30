@@ -10,7 +10,7 @@ import LoadingSpinner from "@/components/custom/LoadingSpinner";
 export default function Contact() {
   const Divider = () => {
     return (
-      <div className="border border-gray-200 dark:border-gray-600 w-full my-8" />
+      <div className="border-t border-gray-200 dark:border-gray-600 w-full my-8" />
     );
   };
   const [form, setForm] = useState<{ state: string; message: string }>({ state: "idle", message: "" });

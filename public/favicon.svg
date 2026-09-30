@@ -1,10 +1,1 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="MH Monogram / Favicon">
-<rect width="512" height="512" rx="128" fill="#0C0D0E"/>
-<g id="MH / Geometric monogram">
-<path id="Vector" d="M136 338V146L256 266L376 146V338" stroke="#F5F5F3" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M136 290H376" stroke="#F5F5F3" stroke-width="36" stroke-linecap="round"/>
-</g>
-<circle id="Accent / Signal" cx="256" cy="441" r="11" fill="#32C874"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#171717"/><path d="M12 44V20h5l8 13 8-13h5v24h-6V30l-7 11-7-11v14z" fill="#fafafa"/><path d="M34 20h6v9h8v-9h6v24h-6v-9h-8v9h-6z" fill="#fafafa"/></svg>

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Container } from "@/components/custom/container";
 import { Heading } from "@/components/custom/heading";
 import Projects from "@/components/custom/projects";
@@ -19,4 +20,11 @@ export default function ProjectsPage() {
       </Container>
     </div>
   );
+}
+
+export const metadata: Metadata = {
+  title: 'Projects | Muhammad Hassan',
+  description: 'Explore web applications and AI-powered products built by Muhammad Hassan, including selected full-stack engineering projects.',
+  alternates: { canonical: '/projects' },
+  openGraph: { title: 'Projects | Muhammad Hassan', description: 'Explore web applications and AI-powered products built by Muhammad Hassan, including selected full-stack engineering projects.', url: '/projects' },
 }
