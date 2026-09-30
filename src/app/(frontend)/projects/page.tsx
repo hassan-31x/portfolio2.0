@@ -1,30 +1,28 @@
-import type { Metadata } from 'next'
-import { Container } from "@/components/custom/container";
-import { Heading } from "@/components/custom/heading";
-import Projects from "@/components/custom/projects";
-import { Subheading } from "@/components/custom/subheading";
-import { projects } from "@/constants/project";
+import { pageMetadata } from '@/utilities/pageMetadata'
+import { Container } from '@/components/custom/container'
+import { Heading } from '@/components/custom/heading'
+import Projects from '@/components/custom/projects'
+import { Subheading } from '@/components/custom/subheading'
+import { projects } from '@/constants/project'
 
 export default function ProjectsPage() {
   return (
     <div className="flex min-h-screen items-start justify-start">
-      <Container className="min-h-screen px-10 md:pt-2 md:pb-10">
+      <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Projects</Heading>
         <Subheading>
-          I&apos;m a passionate software engineer dedicated to crafting elegant
-          solutions for complex problems. With expertise in full-stack
-          development, I enjoy building user-centric applications that make a
-          difference.
+          I&apos;m a passionate software engineer dedicated to crafting elegant solutions for
+          complex problems. With expertise in full-stack development, I enjoy building user-centric
+          applications that make a difference.
         </Subheading>
         <Projects projects={projects} />
       </Container>
     </div>
-  );
+  )
 }
 
-export const metadata: Metadata = {
-  title: 'Projects | Muhammad Hassan',
-  description: 'Explore web applications and AI-powered products built by Muhammad Hassan, including selected full-stack engineering projects.',
-  alternates: { canonical: '/projects' },
-  openGraph: { title: 'Projects | Muhammad Hassan', description: 'Explore web applications and AI-powered products built by Muhammad Hassan, including selected full-stack engineering projects.', url: '/projects' },
-}
+export const metadata = pageMetadata(
+  'Projects | Muhammad Hassan',
+  'Explore web applications and AI-powered products built by Muhammad Hassan, including selected full-stack engineering projects.',
+  '/projects',
+)

@@ -31,40 +31,40 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
     pagination: false,
     ...(query
       ? {
-        where: {
-          or: [
-            {
-              title: {
-                like: query,
+          where: {
+            or: [
+              {
+                title: {
+                  like: query,
+                },
               },
-            },
-            {
-              'meta.description': {
-                like: query,
+              {
+                'meta.description': {
+                  like: query,
+                },
               },
-            },
-            {
-              'meta.title': {
-                like: query,
+              {
+                'meta.title': {
+                  like: query,
+                },
               },
-            },
-            {
-              slug: {
-                like: query,
+              {
+                slug: {
+                  like: query,
+                },
               },
-            },
-          ],
-        },
-      }
+            ],
+          },
+        }
       : {}),
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-6 pb-10">
       <PageClient />
-      <div className="container mb-16">
+      <div className="px-4 mb-6">
         <div className="prose dark:prose-invert max-w-none text-center">
-          <h1 className="mb-8 lg:mb-16">Search</h1>
+          <h1 className="mb-4 text-xl font-medium md:text-2xl">Search</h1>
 
           <div className="max-w-[50rem] mx-auto">
             <Search />
@@ -75,7 +75,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       {posts.totalDocs > 0 ? (
         <CollectionArchive posts={posts.docs as CardPostData[]} />
       ) : (
-        <div className="container">No results found.</div>
+        <div className="px-4">No results found.</div>
       )}
     </div>
   )

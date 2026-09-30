@@ -1,99 +1,44 @@
-"use client"
-
-import { useState, useRef } from "react";
-import Link from "next/link";
-
-import SuccessMessage from "@/components/custom/SuccessMessage";
-import ErrorMessage from "@/components/custom/ErrorMessage";
-import LoadingSpinner from "@/components/custom/LoadingSpinner";
+import Link from 'next/link'
+import { profile } from '@/constants/profile'
 
 export default function Contact() {
-  const Divider = () => {
-    return (
-      <div className="border-t border-gray-200 dark:border-gray-600 w-full my-8" />
-    );
-  };
-  const [form, setForm] = useState<{ state: string; message: string }>({ state: "idle", message: "" });
-  const inputEl = useRef<HTMLInputElement>(null);
-
-  const subscribe = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setForm({ state: "loading", message: "" });
-
-    const res = await fetch("/api/sendgrid", {
-      body: JSON.stringify({
-        email: inputEl.current?.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    });
-
-    const { error } = await res.json();
-    if (error) {
-      setForm({
-        state: "error",
-        message: error,
-      });
-      return;
-    }
-
-    // trackGoal("JYFUFMSF", 0);
-    if (inputEl.current) {
-      inputEl.current.value = "";
-    }
-    setForm({
-      state: "success",
-      message: `Hooray! You're now on the list. Check your inbox or promotions for a mail.`,
-    });
-  };
-
   return (
-    <div className="border border-blue-200 rounded p-6 my-4 w-full dark:border-gray-800 bg-blue-50 dark:bg-blue-opaque">
-      <h5 className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100">
-        Want to hire me as a freelancer? Let&apos;s discuss.
-      </h5>
-      <p className="my-1 text-gray-800 dark:text-gray-200">
-        Drop your message and let&apos;s discuss about your project.
-      </p>
-      <a
-        href="https://wa.me/923132508277?text=I want to work on a project with you"
-        className="mt-4 px-4 text-center w-full font-bold h-8 bg-green-400 dark:bg-green-400 text-gray-900 py-1 dark:text-gray-900 rounded"
-        type="submit"
+    <section
+      aria-labelledby="contact-heading"
+      className="my-4 w-full rounded border border-blue-200 bg-blue-50 p-4 dark:border-gray-800 dark:bg-blue-opaque"
+    >
+      <h2
+        id="contact-heading"
+        className="text-sm font-semibold text-gray-900 md:text-base dark:text-gray-100"
       >
-        Chat on WhatsApp
-      </a>
-
-      <Divider />
-      <p className="my-1 text-gray-800 dark:text-gray-200">
-        Drop in your email ID and I will get back to you.
+        Have a project in mind? Let&apos;s discuss.
+      </h2>
+      <p className="mt-1 text-sm text-gray-800 dark:text-gray-200">
+        I&apos;m open to freelance work. Tell me what you&apos;re building.
       </p>
-      <form className="relative my-4" onSubmit={subscribe}>
-        <input
-          ref={inputEl}
-          aria-label="Email for newsletter"
-          placeholder="mohammadhassanrizwan@gmail.com"
-          type="email"
-          autoComplete="email"
-          required
-          className="px-4 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-        />
-        <button
-          className="flex items-center justify-center absolute right-1 top-1 px-4 font-bold h-8 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded w-28"
-          type="submit"
+      <div className="mt-3 flex flex-wrap gap-3">
+        <Link
+          href="/contact"
+          className="inline-flex items-center justify-center rounded bg-neutral-900 px-3 py-1.5 text-xs font-medium text-white dark:bg-neutral-100 dark:text-neutral-900"
         >
-          {form.state === "Sending" ? <LoadingSpinner /> : "Send"}
-        </button>
-      </form>
-
-      {form.state === "error" ? (
-        <ErrorMessage>{form.message}</ErrorMessage>
-      ) : form.state === "success" ? (
-        <SuccessMessage>{form.message}</SuccessMessage>
-      ) : (
-        <p className="text-sm text-gray-800 dark:text-gray-200"></p>
-      )}
-    </div>
-  );
+          Get in touch
+        </Link>
+        <a
+          href="https://wa.me/923132508277?text=I%20want%20to%20work%20on%20a%20project%20with%20you"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded bg-green-400 px-3 py-1.5 text-xs font-medium text-gray-900"
+        >
+          Chat on WhatsApp
+        </a>
+      </div>
+      <div className="my-3 border-t border-blue-200 dark:border-gray-700" />
+      <p className="break-words text-xs text-gray-800 dark:text-gray-200">
+        Prefer email?{' '}
+        <a href={`mailto:${profile.email}`} className="underline underline-offset-4">
+          {profile.email}
+        </a>
+      </p>
+    </section>
+  )
 }

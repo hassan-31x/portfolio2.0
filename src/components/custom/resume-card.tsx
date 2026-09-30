@@ -1,25 +1,21 @@
-"use client";
+'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader } from "@/components/ui/card";
-import { cn } from "@/utilities/ui";
-import { LayoutGroup, motion } from "framer-motion";
-import { ChevronRightIcon } from "lucide-react";
-import Link from "next/link";
-import React from "react";
-import StackItem from "./stack-item";
+import { LayoutGroup } from 'framer-motion'
+import Link from 'next/link'
+import Image from 'next/image'
+import React from 'react'
+import StackItem from './stack-item'
 
 interface ResumeCardProps {
-  logoUrl: string;
-  altText: string;
-  title: string;
-  subtitle?: string;
-  href?: string;
-  badges?: readonly string[];
-  period: string;
-  description?: string;
-  skills?: string[];
+  logoUrl: string
+  altText: string
+  title: string
+  subtitle?: string
+  href?: string
+  badges?: readonly string[]
+  period: string
+  description?: string
+  skills?: string[]
 }
 export const ResumeCard = ({
   logoUrl,
@@ -27,30 +23,22 @@ export const ResumeCard = ({
   title,
   subtitle,
   href,
-  badges,
   period,
   description,
   skills,
 }: ResumeCardProps) => {
-  const [isExpanded, setIsExpanded] = React.useState(false);
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    if (description) {
-      e.preventDefault();
-      setIsExpanded(!isExpanded);
-    }
-  };
-
   return (
     <Link
-      href={href || "#"}
+      href={href || '#'}
       target="_blank"
+      rel="noopener noreferrer"
       className="block cursor-pointer"
-      onClick={handleClick}
     >
       <div className="flex flex-col justify-between md:flex-row md:items-start">
         <div className="max-w-[80%]">
-          <h2 className="font-medium text-neutral-900 dark:text-neutral-100">{title}</h2>
+          <h3 className="text-[15px] font-medium text-neutral-900 dark:text-neutral-100">
+            {title}
+          </h3>
           <div className="flex flex-col gap-2 py-2 sm:flex-row sm:items-center">
             {subtitle && (
               <p className="text-sm text-neutral-800 dark:text-neutral-200">{subtitle}</p>
@@ -58,7 +46,7 @@ export const ResumeCard = ({
             <p className="text-sm text-neutral-500 dark:text-neutral-400">{period}</p>
           </div>
           {description && (
-            <p className="text-sm text-neutral-500">
+            <p className="text-[13px] leading-5 text-neutral-500 dark:text-neutral-400">
               {description}
             </p>
           )}
@@ -78,27 +66,23 @@ export const ResumeCard = ({
             </div>
           )} */}
           {skills && (
-            <div className='mt-2 flex max-w-[14rem] flex-wrap gap-1'>
+            <div className="mt-2 flex max-w-[14rem] flex-wrap gap-1">
               <LayoutGroup>
                 {skills.map((stack: string) => (
-                  <StackItem
-                    key={stack}
-                    technology={stack}
-                    className='mr-[-10px] hover:z-10'
-                  />
+                  <StackItem key={stack} technology={stack} className="mr-[-10px] hover:z-10" />
                 ))}
               </LayoutGroup>
             </div>
           )}
         </div>
-        <img
+        <Image
           src={logoUrl}
           alt={altText}
-          width="100"
-          height="100"
-          className="hidden md:block"
+          width={48}
+          height={48}
+          className="hidden size-12 shrink-0 rounded-md object-contain md:block"
         />
       </div>
     </Link>
-  );
-};
+  )
+}

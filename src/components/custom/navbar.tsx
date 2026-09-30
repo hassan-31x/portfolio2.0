@@ -1,136 +1,81 @@
-"use client"
+'use client'
 
-import { useState } from "react";
-import { Container } from "./container"
-import { motion, useMotionTemplate, useMotionValueEvent, useScroll, useTransform } from "framer-motion"
-// TODO: use this
-// import Link from "next-view-transitions";
-import Link from "next/link";
-import { IconBriefcase, IconDownload, IconFile, IconFolder, IconMail, IconUser } from "@tabler/icons-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Button } from "../ui/button";
-import { DockIcon } from "./dock";
-import { ModeToggle } from "../ui/mode-toggle";
-import { ThemeToggleButton } from "../ui/theme-toggle-button";
+import Link from 'next/link'
+import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
+import { usePathname } from 'next/navigation'
+import { Download, Search } from 'lucide-react'
+import { ThemeToggleButton } from '@/components/ui/theme-toggle-button'
+import { cn } from '@/utilities/ui'
 
-export const Navbar = () => {
-  const navItems = [
-    { title: "Projects", href: "/projects", icon: <IconFolder className="size-5 text-neutral-800 dark:text-neutral-100" /> },
-    { title: "Experience", href: "/about", icon: <IconBriefcase className="size-5 text-neutral-800 dark:text-neutral-100" /> },
-    { title: "Contact", href: "/contact", icon: <IconMail className="size-5 text-neutral-800 dark:text-neutral-100" /> },
-    { title: "Blog", href: "/blogs", icon: <IconFile className="size-5 text-neutral-800 dark:text-neutral-100" /> },
-  ];
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'Work', href: '/about' },
+  { label: 'Blogs', href: '/blogs' },
+  { label: 'Projects', href: '/projects' },
+]
 
-  const [hovered, setHovered] = useState<number | null>(null)
+export function Navbar() {
+  const pathname = usePathname()
   const { scrollY } = useScroll()
-
-  const [scrolled, setScrolled] = useState<boolean>(false);
-
+  const reduceMotion = useReducedMotion()
+  const width = useTransform(scrollY, [0, 100], ['100%', '92%'])
   const y = useTransform(scrollY, [0, 100], [0, 10])
-  const width = useTransform(scrollY, [0, 100], ["58%", "52%"])
-  const opacity = useTransform(scrollY, [0, 100], [1, 0.8])
-
-  const filter = useMotionTemplate`blur(${useTransform(scrollY, [0, 100], [0, 10])}px)`
-
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 20) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  });
+  const borderRadius = useTransform(scrollY, [0, 100], [0, 999])
+  const boxShadow = useTransform(
+    scrollY,
+    [0, 100],
+    ['0px 4px 16px rgba(0,0,0,0)', '0px 4px 16px rgba(0,0,0,0.12)'],
+  )
   return (
-    <Container>
+    <header className="sticky top-0 z-40 mx-auto h-[50px] w-full max-w-[715px]">
       <motion.nav
-        style={{
-          boxShadow: scrolled ? "var(--shadow-custom)" : "none",
-          width,
-          y,
-          // opacity,
-          // filter,
-        }}
-        transition={{
-          duration: 0.3,
-          ease: "linear",
-        }}
-        className="bg-white/50 backdrop-blur-sm fixed inset-x-0 top-0 z-50 mx-auto flex max-w-4xl items-center justify-between rounded-full px-3 py-2 dark:bg-neutral-800 dark:text-white">
-        <div className="flex items-center gap-2">
-          <div className="flex aspect-square cursor-pointer items-center justify-center rounded-full">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  {/* <ModeToggle /> */}
-                  <ThemeToggleButton showLabel={false} variant="circle" start="top-left" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  {/* TODO: https://21st.dev/designali-in/theme/default */}
-                  <p>Theme</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-
-          <div className="flex aspect-square cursor-pointer items-center justify-center rounded-full">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <a
-                    href="/resume.pdf"
-                    download="resume.pdf"
-                    tabIndex={-1}
-                  >
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="outline-none shadow-xs border-[1px] rounded-md size-9 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700"
-                    >
-                      <IconDownload className="size-4 text-neutral-500 dark:text-neutral-400" />
-                    </Button>
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Download Resume</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-
+        aria-label="Main navigation"
+        style={reduceMotion ? undefined : { width, y, borderRadius, boxShadow }}
+        className="mx-auto flex h-[50px] items-center justify-between gap-2 border border-neutral-200 bg-white/95 px-3 backdrop-blur-sm dark:border-neutral-800 dark:bg-black/95 sm:px-4"
+      >
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          {links.map((link) => {
+            const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? 'page' : undefined}
+                className={cn(
+                  'py-1 text-xs font-normal underline-offset-4 transition-colors hover:text-primary hover:underline sm:text-sm',
+                  active ? 'text-primary' : 'text-secondary',
+                )}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
         </div>
-        <div className="flex items-center">
-          {navItems.map((item, idx) => (
-            <Link
-              className="relative px-2 py-1 text-sm"
-              href={item.href}
-              key={idx}
-              onMouseEnter={() => setHovered(idx)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              {hovered === idx && (
-                <motion.span
-                  layoutId="hovered-span"
-                  className="absolute inset-0 h-full w-full rounded-md bg-neutral-100 dark:bg-neutral-800"
-                />
-              )}
-              {/* <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <span className="relative z-10">
-                      {item.icon}
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {item.title}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider> */}
-              <span className="relative z-10">
-                {item.title}
-              </span>
-            </Link>
-          ))}
+        <div className="flex shrink-0 items-center gap-1">
+          <Link
+            href="/search"
+            aria-label="Search portfolio"
+            title="Search"
+            className="flex size-8 items-center justify-center rounded-md text-secondary hover:bg-neutral-100 dark:hover:bg-neutral-900"
+          >
+            <Search className="size-3.5" aria-hidden />
+          </Link>
+          <a
+            href="/resume.pdf"
+            download
+            aria-label="Download resume"
+            title="Download resume"
+            className="hidden size-8 items-center justify-center rounded-md text-secondary hover:bg-neutral-100 sm:flex dark:hover:bg-neutral-900"
+          >
+            <Download className="size-3.5" aria-hidden />
+          </a>
+          <ThemeToggleButton
+            variant="circle"
+            start="top-right"
+            className="size-8 h-8 w-8 border-transparent bg-transparent shadow-none dark:border-transparent dark:bg-transparent [&_svg]:size-3.5"
+          />
         </div>
       </motion.nav>
-    </Container>
+    </header>
   )
 }

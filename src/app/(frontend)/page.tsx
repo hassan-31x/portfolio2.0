@@ -1,17 +1,18 @@
-import Projects from '@/components/custom/projects';
-import type { Metadata } from 'next';
+import { pageMetadata } from '@/utilities/pageMetadata'
+import Projects from '@/components/custom/projects'
+import { Suspense } from 'react'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
 import { Container } from '@/components/custom/container'
-import { Heading } from '@/components/custom/heading';
-import { Subheading } from '@/components/custom/subheading';
-import WorkExperience from '@/components/custom/work-experience';
+import Hero from '@/components/custom/hero'
+import GitHubActivity from '@/components/custom/github-activity'
+import WorkExperience from '@/components/custom/work-experience'
 
-import { projects } from '@/constants/project';
-import Contact from '@/components/custom/contact-form';
-import Blogs from '@/components/custom/blogs';
+import { projects } from '@/constants/project'
+import Contact from '@/components/custom/contact-form'
+import Blogs from '@/components/custom/blogs'
 
 export default async function Home() {
   const payload = await getPayload({ config: configPromise })
@@ -25,32 +26,37 @@ export default async function Home() {
   return (
     <div className="min-h-screen flex items-start justify-start">
       <Container className="min-h-screen md:pt-2 md:pb-10">
-        <Heading>
-          Muhammad Hassan
-        </Heading>
-        <Subheading>
-          I&apos;m a software engineer with a passion for building scalable and efficient systems. I&apos;m currently working as a Full Stack Engineer at a US Startup.
-        </Subheading>
+        <Hero />
 
-        <Projects projects={projects.slice(0, 3)} />
+        <Projects projects={projects} showAllLink />
 
         <Blogs blogs={posts?.docs} />
 
         <WorkExperience />
 
-        <Contact />
+        <Suspense
+          fallback={
+            <section
+              aria-label="Loading GitHub activity"
+              className="portfolio-section px-4 py-10 sm:px-6"
+            >
+              <div className="h-36 animate-pulse rounded-md bg-neutral-100 dark:bg-neutral-900" />
+            </section>
+          }
+        >
+          <GitHubActivity />
+        </Suspense>
+
+        <div className="px-4 sm:px-6">
+          <Contact />
+        </div>
       </Container>
     </div>
-  );
+  )
 }
 
-export const metadata: Metadata = {
-  title: 'Muhammad Hassan · Full Stack Engineer',
-  description: 'Full Stack Engineer building scalable web products and AI-powered systems. Explore selected projects, experience, writing, skills, and GitHub activity.',
-  alternates: { canonical: '/' },
-  openGraph: {
-    title: 'Muhammad Hassan · Full Stack Engineer',
-    description: 'Full Stack Engineer building scalable web products and AI-powered systems.',
-    url: '/',
-  },
-}
+export const metadata = pageMetadata(
+  'Muhammad Hassan · Full Stack Engineer',
+  'Full Stack Engineer building scalable web products and AI-powered systems. Explore selected projects, experience, writing, skills, and GitHub activity.',
+  '/',
+)

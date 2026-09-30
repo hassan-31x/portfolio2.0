@@ -1,9 +1,10 @@
+import { pageMetadata } from '@/utilities/pageMetadata'
 import type { Metadata } from 'next/types'
 
-import { Container } from "@/components/custom/container"
-import { Heading } from "@/components/custom/heading"
-import BlogPosts from "@/components/custom/blog-posts"
-import { Subheading } from "@/components/custom/subheading"
+import { Container } from '@/components/custom/container'
+import { Heading } from '@/components/custom/heading'
+import BlogPosts from '@/components/custom/blog-posts'
+import { Subheading } from '@/components/custom/subheading'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
@@ -37,11 +38,11 @@ export default async function Page() {
   return (
     <div className="flex min-h-screen items-start justify-start">
       <PageClient />
-      <Container className="min-h-screen px-10 md:pt-2 md:pb-10">
+      <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Blog Posts</Heading>
         <Subheading>
-          Sharing my thoughts, experiences, and insights on software development,
-          technology trends, and lessons learned throughout my journey as a developer.
+          Sharing my thoughts, experiences, and insights on software development, technology trends,
+          and lessons learned throughout my journey as a developer.
         </Subheading>
 
         {/* <div className="mb-8 px-4">
@@ -66,10 +67,9 @@ export default async function Page() {
 }
 
 export function generateMetadata(): Metadata {
-  return {
-    title: 'Blogs | Muhammad Hassan',
-    description: 'Software development articles, engineering insights, and lessons learned by Muhammad Hassan.',
-    alternates: { canonical: '/blogs' },
-    openGraph: { title: 'Blogs | Muhammad Hassan', url: '/blogs' },
-  }
+  return pageMetadata(
+    'Blogs | Muhammad Hassan',
+    'Software development articles, engineering insights, and lessons learned by Muhammad Hassan.',
+    '/blogs',
+  )
 }

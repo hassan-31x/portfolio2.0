@@ -1,3 +1,4 @@
+import { pageMetadata } from '@/utilities/pageMetadata'
 import type { Metadata } from 'next/types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
@@ -23,7 +24,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const sanitizedPageNumber = Number(pageNumber)
 
-  if (!Number.isInteger(sanitizedPageNumber)) notFound()
+  if (!Number.isInteger(sanitizedPageNumber) || sanitizedPageNumber < 1) notFound()
 
   const posts = await payload.find({
     collection: 'posts',
@@ -34,15 +35,15 @@ export default async function Page({ params: paramsPromise }: Args) {
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-6 pb-10">
       <PageClient />
-      <div className="container mb-16">
+      <div className="px-4 mb-6">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+          <h1 className="text-xl font-medium md:text-2xl">Blogs</h1>
         </div>
       </div>
 
-      <div className="container mb-8">
+      <div className="px-4 mb-4">
         <PageRange
           collection="posts"
           currentPage={posts.page}
@@ -53,7 +54,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <CollectionArchive posts={posts.docs} />
 
-      <div className="container">
+      <div className="px-4">
         {posts?.page && posts?.totalPages > 1 && (
           <Pagination page={posts.page} totalPages={posts.totalPages} />
         )}
@@ -64,10 +65,11 @@ export default async function Page({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
-  return {
-    title: `Blogs | Muhammad Hassan | Page ${pageNumber || ''}`,
-    alternates: { canonical: Number(pageNumber) === 1 ? '/blogs' : `/blogs/page/${pageNumber}` },
-  }
+  return pageMetadata(
+    `Blogs | Muhammad Hassan | Page ${pageNumber}`,
+    `Software development articles by Muhammad Hassan, page ${pageNumber}.`,
+    Number(pageNumber) === 1 ? '/blogs' : `/blogs/page/${pageNumber}`,
+  )
 }
 
 export async function generateStaticParams() {
@@ -77,7 +79,7 @@ export async function generateStaticParams() {
     overrideAccess: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
+  const totalPages = Math.ceil(totalDocs / 12)
 
   const pages: { pageNumber: string }[] = []
 

@@ -58,7 +58,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <Container className="min-h-screen px-10 md:pt-20 md:pb-10">
+      <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <BlogContent post={post} />
       </Container>
     </div>
