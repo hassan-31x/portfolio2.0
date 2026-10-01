@@ -10,7 +10,7 @@ import Hero from '@/components/custom/hero'
 import GitHubActivity from '@/components/custom/github-activity'
 import WorkExperience from '@/components/custom/work-experience'
 
-import { projects } from '@/constants/project'
+import { featuredProjects } from '@/constants/project'
 import Contact from '@/components/custom/contact-form'
 import Blogs from '@/components/custom/blogs'
 
@@ -28,7 +28,7 @@ export default async function Home() {
       <Container className="min-h-screen md:pt-2 md:pb-10">
         <Hero />
 
-        <Projects projects={projects} showAllLink />
+        <Projects projects={featuredProjects} showAllLink />
 
         <Blogs blogs={posts?.docs} />
 

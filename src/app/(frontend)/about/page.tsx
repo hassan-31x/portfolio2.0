@@ -17,7 +17,7 @@ const AboutPage = () => {
           enjoy building products that help people live better lives.
         </Subheading>
 
-        <p className="text-secondary max-w-lg text-sm md:text-sm px-4">
+        <p className="text-secondary max-w-lg mt-3 text-sm md:text-sm px-4">
           I like to travel and explore new places. I also like to play cricket and badminton.
         </p>
 

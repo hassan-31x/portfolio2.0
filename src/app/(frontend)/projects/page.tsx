@@ -11,9 +11,8 @@ export default function ProjectsPage() {
       <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Projects</Heading>
         <Subheading>
-          I&apos;m a passionate software engineer dedicated to crafting elegant solutions for
-          complex problems. With expertise in full-stack development, I enjoy building user-centric
-          applications that make a difference.
+          A selection of web products, Python tools, AI experiments, and engineering projects.
+          Explore the live demos, source code, and details behind each one.
         </Subheading>
         <Projects projects={projects} />
       </Container>
@@ -23,6 +22,6 @@ export default function ProjectsPage() {
 
 export const metadata = pageMetadata(
   'Projects | Muhammad Hassan',
-  'Explore web applications and AI-powered products built by Muhammad Hassan, including selected full-stack engineering projects.',
+  'Explore Muhammad Hassan’s web products, Python tools, AI research, and hardware projects, with live demos, verified technology stacks, and GitHub source code.',
   '/projects',
 )

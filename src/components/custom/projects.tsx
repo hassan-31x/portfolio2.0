@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { LayoutGroup, motion, useReducedMotion } from 'motion/react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Github } from 'lucide-react'
 import SectionHeading from './section-heading'
 import { ProjectTypes } from '@/constants/project'
 import StackItem from './stack-item'
@@ -20,13 +20,14 @@ export default function Projects({ projects, showAllLink = false }: Props) {
       <div className="project-grid grid grid-cols-1 sm:grid-cols-2">
         {projects.map((project, index) => {
           const live = project.href !== '#'
+          const primaryHref = live ? project.href : project.repository
           const preview = (
             <Image
               src={project.src}
-              alt={`${project.title} preview`}
+              alt={project.imageAlt || `${project.title} preview`}
               width={600}
               height={340}
-              sizes="(max-width: 639px) 100vw, 420px"
+              sizes="(max-width: 639px) 100vw, 324px"
               className="h-44 w-full object-cover object-top transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03] sm:h-48"
             />
           )
@@ -39,12 +40,12 @@ export default function Projects({ projects, showAllLink = false }: Props) {
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: (index % 2) * 0.08 }}
             >
-              {live ? (
+              {primaryHref ? (
                 <a
-                  href={project.href}
+                  href={primaryHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Visit ${project.title}`}
+                  aria-label={`${live ? 'Visit' : 'Source code for'} ${project.title}`}
                   className="group block overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800"
                 >
                   {preview}
@@ -56,9 +57,9 @@ export default function Projects({ projects, showAllLink = false }: Props) {
               )}
               <div className="flex items-center justify-between gap-3">
                 <h3 className="min-w-0 text-[15px] font-semibold leading-snug text-primary">
-                  {live ? (
+                  {primaryHref ? (
                     <a
-                      href={project.href}
+                      href={primaryHref}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:underline"
@@ -69,18 +70,32 @@ export default function Projects({ projects, showAllLink = false }: Props) {
                     project.title
                   )}
                 </h3>
-                {live && (
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Live site: ${project.title}`}
-                    className="inline-flex shrink-0 items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs font-medium text-primary hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
-                  >
-                    Live
-                    <ArrowUpRight className="size-3" aria-hidden />
-                  </a>
-                )}
+                <div className="flex shrink-0 items-center gap-1.5">
+                  {project.repository && (
+                    <a
+                      href={project.repository}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Source code: ${project.title}`}
+                      className="inline-flex items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs font-medium text-primary hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
+                    >
+                      <Github className="size-3" aria-hidden />
+                      Code
+                    </a>
+                  )}
+                  {live && (
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Live site: ${project.title}`}
+                      className="inline-flex shrink-0 items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs font-medium text-primary hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
+                    >
+                      Live
+                      <ArrowUpRight className="size-3" aria-hidden />
+                    </a>
+                  )}
+                </div>
               </div>
               <p
                 title={project.description}
@@ -95,6 +110,21 @@ export default function Projects({ projects, showAllLink = false }: Props) {
                   ))}
                 </LayoutGroup>
               </div>
+              {project.details && (
+                <details className="text-[13px] leading-relaxed text-secondary">
+                  <summary
+                    aria-label={`Details about ${project.title}`}
+                    className="w-fit cursor-pointer text-xs text-secondary hover:text-primary"
+                  >
+                    Details
+                  </summary>
+                  <div className="space-y-2 pt-2">
+                    {project.details.map((detail) => (
+                      <p key={detail}>{detail}</p>
+                    ))}
+                  </div>
+                </details>
+              )}
             </motion.article>
           )
         })}

@@ -1,12 +1,12 @@
-import React from "react";
-import { motion } from "framer-motion";
-import cn from "classnames";
-import { getLogoForTechnology } from "@/utilities/logoMapper";
+import React from 'react'
+import { motion } from 'framer-motion'
+import cn from 'classnames'
+import { getLogoForTechnology } from '@/utilities/logoMapper'
 
 type Props = {
-  technology: string;
-  className?: string;
-};
+  technology: string
+  className?: string
+}
 
 // const getLogoForTechnology = (tech: string) => {
 //   // You can expand this mapping as needed
@@ -41,9 +41,10 @@ const StackItem = ({ technology, className }: Props) => {
       layout
       whileHover="animate"
       whileTap="animate"
+      title={technology}
       initial="initial"
       className={cn(
-        "flex items-start justify-start rounded-full border border-neutral-200 bg-neutral-100 p-1 text-xs text-neutral-500 dark:border-neutral-700 dark:bg-neutral-800",
+        'flex items-start justify-start rounded-full border border-neutral-200 bg-neutral-100 p-1 text-xs text-neutral-500 dark:border-neutral-700 dark:bg-neutral-800',
         className,
       )}
     >
@@ -52,7 +53,7 @@ const StackItem = ({ technology, className }: Props) => {
           animate: { paddingRight: 2 },
         }}
         transition={{
-          type: "spring",
+          type: 'spring',
         }}
       >
         {getLogoForTechnology(technology)}
@@ -60,11 +61,11 @@ const StackItem = ({ technology, className }: Props) => {
       <motion.span
         variants={{
           initial: { width: 0 },
-          animate: { width: "auto" },
+          animate: { width: 'auto' },
           exit: { width: 0 },
         }}
         transition={{
-          type: "spring",
+          type: 'spring',
           stiffness: 200,
           damping: 25,
           mass: 0.5,
@@ -74,7 +75,7 @@ const StackItem = ({ technology, className }: Props) => {
         {technology}
       </motion.span>
     </motion.div>
-  );
-};
+  )
+}
 
-export default StackItem;
+export default StackItem

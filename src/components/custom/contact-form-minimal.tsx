@@ -28,7 +28,7 @@ export default function ContactFormMinimal() {
   }
 
   return (
-    <div className="my-4 border-y border-neutral-100 px-4 py-6 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
+    <div className="my-4 border-y border-neutral-200 px-4 py-6 dark:border-neutral-800">
       <motion.div
         initial={{ opacity: 0, filter: 'blur(10px)', y: 10 }}
         viewport={{ once: true }}

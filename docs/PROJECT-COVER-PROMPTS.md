@@ -1,0 +1,27 @@
+# Generated project-cover prompts
+
+Tool: built-in Codex image generation. Output: optimized WebP assets under `public/images/projects/`. No image-generation CLI/API fallback was used.
+
+## tokenizer
+
+Use case: stylized-concept. Create one polished wide 16:9 portfolio project cover for a from-scratch byte-level BPE tokenizer, not a screenshot. Visual concept: small individual graphite byte tiles progressively merge into larger organized subword tiles, arranged in three elegant horizontal stages with precise thin connecting lines. A subtle blue highlighted merge makes the idea readable. Quiet off-white studio background, charcoal and soft gray geometric objects, extremely restrained muted blue accent, soft ambient shadows, clean editorial technical illustration, crisp readable silhouette at thumbnail size. Wide horizontal composition with generous margins; all important objects inside central 80% so cropping is safe. Fits a compact minimal Satoshi typography portfolio. No text, no letters, no numbers, no logos, no watermarks, no mock browser or fake dashboard. Save the generated image as an asset for project gpt-tokenizer.
+
+## semeval
+
+Use case: stylized-concept. Create one polished wide 16:9 portfolio project cover, a conceptual illustration rather than a screenshot. Quiet off-white studio background, charcoal and soft gray geometric forms, a very restrained muted blue accent, soft ambient shadows, clean editorial technical illustration, crisp readable silhouette at thumbnail size. Generous margins; central 80% safe crop. Match a compact minimal Satoshi typography portfolio. No text, no letters, no numbers, no logos, no watermarks, no fake browser or dashboard. For a multilingual visual question-answering model evaluation pipeline: a central small framed geometric still-life image branches into three parallel neural evaluation paths, each ending in a tidy score-like stack of abstract blocks. Communicate image understanding and careful comparison, not claims of benchmark results.
+
+## road
+
+Use case: stylized-concept. Create one polished wide 16:9 portfolio project cover, a conceptual illustration rather than a screenshot. Quiet off-white studio background, charcoal and soft gray geometric forms, a very restrained muted blue accent, soft ambient shadows, clean editorial technical illustration, crisp readable silhouette at thumbnail size. Generous margins; central 80% safe crop. Match a compact minimal Satoshi typography portfolio. No text, no letters, no numbers, no logos, no watermarks, no fake browser or dashboard. For a collaborative road-crossing reinforcement learning simulation: elegant isometric miniature intersection with a zebra crossing, three simple graphite cars, one small blue pedestrian marker, and a restrained dotted route crossing safely. Include a small traffic light. Architectural model aesthetic, readable roadway, no photoreal people.
+
+## string
+
+Use case: stylized-concept. Create one polished wide 16:9 portfolio project cover, a conceptual illustration rather than a screenshot. Quiet off-white studio background, charcoal and soft gray geometric forms, a very restrained muted blue accent, soft ambient shadows, clean editorial technical illustration, crisp readable silhouette at thumbnail size. Generous margins; central 80% safe crop. Match a compact minimal Satoshi typography portfolio. No text, no letters, no numbers, no logos, no watermarks, no fake browser or dashboard. For a string-matching algorithm benchmark: five precise parallel tracks of tiny ordered graphite squares, a short subsequence highlighted in blue within each, and small differing search paths as thin gray curves. Communicate comparing pattern search methods, not unverified numerical performance.
+
+## blood
+
+Use case: stylized-concept. Create one polished wide 16:9 portfolio cover, a conceptual illustration rather than a screenshot. Quiet off-white studio background, charcoal and soft gray geometric objects, a very restrained muted blue accent, soft ambient shadows, clean editorial technical illustration, crisp readable silhouette at thumbnail size. Wide horizontal composition, generous margins, central 80% safe crop. Fits a compact minimal Satoshi typography portfolio. No text, letters, numbers, logos, watermarks, mock browser or fake dashboard. For a blood donation management system: a carefully balanced small red blood-drop-shaped object, graphite clinical inventory blocks and three connected nodes representing donors, hospitals, and a blood bank. Use one restrained muted red accent instead of blue. Clinical, thoughtful and minimal, no people or medical outcome claims.
+
+## risc
+
+Use case: stylized-concept. Create one polished wide 16:9 portfolio cover, a conceptual illustration rather than a screenshot. Quiet off-white studio background, charcoal and soft gray geometric objects, a very restrained muted blue accent, soft ambient shadows, clean editorial technical illustration, crisp readable silhouette at thumbnail size. Wide horizontal composition, generous margins, central 80% safe crop. Fits a compact minimal Satoshi typography portfolio. No text, letters, numbers, logos, watermarks, mock browser or fake dashboard. For single-cycle and pipelined RISC-V processor designs: a precise floating charcoal microchip connected to five elegant aligned small processing modules, thin traces and one muted blue signal travelling through the pipeline. Exploded architectural chip diagram rendered as sophisticated small dimensional model, no exaggerated cyberpunk effects.
