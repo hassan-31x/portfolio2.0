@@ -1,61 +1,118 @@
+import Image from 'next/image'
 import {
-    IconAB,
-    IconBrandAws,
-    IconBrandCss3,
-    IconBrandDjango,
-    IconBrandDocker,
-    IconBrandFirebase,
-    IconBrandFramer,
-    IconBrandGit,
-    IconBrandGithub,
-    IconBrandGolang,
-    IconBrandHtml5,
-    IconBrandJavascript,
-    IconBrandMongodb,
-    IconBrandMysql,
-    IconBrandNextjs,
-    IconBrandNodejs,
-    IconBrandOpenai,
-    IconBrandPython,
-    IconBrandReact,
-    IconBrandReactNative,
-    IconBrandRedux,
-    IconBrandSwift,
-    IconBrandTailwind,
-    IconBrandTypescript,
-    IconCode,
-} from "@tabler/icons-react"
+  Accessibility,
+  Atom,
+  CircuitBoard,
+  Cpu,
+  Database,
+  FileText,
+  Gauge,
+  Globe,
+  ImageIcon,
+  Soup,
+  Workflow,
+} from 'lucide-react'
+import {
+  IconAB,
+  IconBrandAws,
+  IconBrandCss3,
+  IconBrandDjango,
+  IconBrandDocker,
+  IconBrandFirebase,
+  IconBrandFramer,
+  IconBrandGit,
+  IconBrandGithub,
+  IconBrandGolang,
+  IconBrandHtml5,
+  IconBrandJavascript,
+  IconBrandMongodb,
+  IconBrandMysql,
+  IconBrandNextjs,
+  IconBrandNodejs,
+  IconBrandOpenai,
+  IconBrandPython,
+  IconBrandReact,
+  IconBrandReactNative,
+  IconBrandRedux,
+  IconBrandSwift,
+  IconBrandTailwind,
+  IconBrandTypescript,
+  IconCode,
+} from '@tabler/icons-react'
 
 export const getLogoForTechnology = (tech: string) => {
-    const logoMap: Record<string, React.ReactNode> = {
-        React: <IconBrandReact className="h-4 w-4 shrink-0 text-[#61DBFB] " />,
-        'Next.js': <IconBrandNextjs className="h-4 w-4 shrink-0 text-[#000000] dark:text-neutral-200" />,
-        Tailwind: <IconBrandTailwind className="h-4 w-4 shrink-0 text-[#38BDF8] " />,
-        TypeScript: <IconBrandTypescript className="h-4 w-4 shrink-0 text-[#3178C6] " />,
-        JavaScript: <IconBrandJavascript className="h-4 w-4 shrink-0 text-[#F7DF1E] " />,
-        HTML: <IconBrandHtml5 className="h-4 w-4 shrink-0 text-[#E34F26] " />,
-        CSS: <IconBrandCss3 className="h-4 w-4 shrink-0 text-[#1572B6] " />,
-        'Node.js': <IconBrandNodejs className="h-4 w-4 shrink-0 text-[#339933] " />,
-        Redux: <IconBrandRedux className="h-4 w-4 shrink-0 text-[#764ABC] " />,
-        Python: <IconBrandPython className="h-4 w-4 shrink-0 text-[#3776AB] " />,
-        // Express: <IconBrandExpressjs />,
-        MongoDB: <IconBrandMongodb className="h-4 w-4 shrink-0 text-[#47A248] " />,
-        // PostgreSQL: <IconBrandPostgresql />,
-        MySQL: <IconBrandMysql className="h-4 w-4 shrink-0 text-[#4479A1] " />,
-        Docker: <IconBrandDocker className="h-4 w-4 shrink-0 text-[#2496ED] " />,
-        Git: <IconBrandGit className="h-4 w-4 shrink-0 text-[#F05032] " />,
-        GitHub: <IconBrandGithub className="h-4 w-4 shrink-0 text-[#181717] " />,
-        'Framer Motion': <IconBrandFramer className="h-4 w-4 shrink-0 text-[#000000] " />,
-        // Kubernetes: <IconBrandKubernetes className="h-4 w-4 shrink-0 text-[#326CE5] " />,
-        Go: <IconBrandGolang className="h-4 w-4 shrink-0 text-[#00ADD8] " />,
-        Swift: <IconBrandSwift className="h-4 w-4 shrink-0 text-[#FFAC45] " />,
-        Django: <IconBrandDjango className="h-4 w-4 shrink-0 text-[#092E20] " />,
-        OpenAI: <IconBrandOpenai className="h-4 w-4 shrink-0 text-[#000000] dark:text-neutral-200" />,
-        Firebase: <IconBrandFirebase className="h-4 w-4 shrink-0 text-[#FFCA28] " />,
-        'AWS Amplify': <IconBrandAws className="h-4 w-4 shrink-0 text-[#FF9900] " />,
-        'A/B Testing': <IconAB className="h-4 w-4 shrink-0 text-[#FF9900] " />,
-        'React Native': <IconBrandReactNative className="h-4 w-4 shrink-0 text-[#61DBFB] " />,
-    }
+  const brand = (name: string, monochrome = false) => (
+    <Image
+      src={`/icons/technologies/${name}.svg`}
+      alt=""
+      aria-hidden
+      width={16}
+      height={16}
+      unoptimized
+      className={`h-4 w-4 shrink-0 ${monochrome ? 'dark:brightness-0 dark:invert' : ''}`}
+    />
+  )
+  const symbolClass = 'h-4 w-4 shrink-0 text-neutral-600 dark:text-neutral-200'
+  const logoMap: Record<string, React.ReactNode> = {
+    'React Flow': <Workflow className={symbolClass} />,
+    Playwright: brand('playwright'),
+    HTTPX: <Globe className={symbolClass} />,
+    'Beautiful Soup': <Soup className={symbolClass} />,
+    'JSON Schema': brand('json'),
+    PyPDF: <FileText className={symbolClass} />,
+    PyTorch: brand('pytorch'),
+    Transformers: brand('huggingface'),
+    'Hugging Face Datasets': brand('huggingface'),
+    Pillow: <ImageIcon className={symbolClass} />,
+    BERTScore: <Gauge className={symbolClass} />,
+    Gymnasium: <Accessibility className={symbolClass} />,
+    PyBullet: <Atom className={symbolClass} />,
+    NumPy: brand('numpy'),
+    Matplotlib: brand('matplotlib'),
+    Streamlit: brand('streamlit'),
+    'SQL Server': brand('sqlserver'),
+    pyodbc: <Database className={symbolClass} />,
+    Cheerio: brand('cheerio'),
+    JSDOM: <IconBrandJavascript className="h-4 w-4 shrink-0 text-[#D6B400]" />,
+    FastAPI: brand('fastapi'),
+    Prisma: brand('prisma', true),
+    Twilio: brand('twilio'),
+    Verilog: <Cpu className={symbolClass} />,
+    Vivado: <CircuitBoard className={symbolClass} />,
+    React: <IconBrandReact className="h-4 w-4 shrink-0 text-[#61DBFB] " />,
+    'Next.js': (
+      <IconBrandNextjs className="h-4 w-4 shrink-0 text-[#000000] dark:text-neutral-200" />
+    ),
+    Tailwind: <IconBrandTailwind className="h-4 w-4 shrink-0 text-[#38BDF8] " />,
+    TypeScript: <IconBrandTypescript className="h-4 w-4 shrink-0 text-[#3178C6] " />,
+    JavaScript: <IconBrandJavascript className="h-4 w-4 shrink-0 text-[#F7DF1E] " />,
+    HTML: <IconBrandHtml5 className="h-4 w-4 shrink-0 text-[#E34F26] " />,
+    CSS: <IconBrandCss3 className="h-4 w-4 shrink-0 text-[#1572B6] " />,
+    'Node.js': <IconBrandNodejs className="h-4 w-4 shrink-0 text-[#339933] " />,
+    Redux: <IconBrandRedux className="h-4 w-4 shrink-0 text-[#764ABC] " />,
+    Python: <IconBrandPython className="h-4 w-4 shrink-0 text-[#3776AB] " />,
+    // Express: <IconBrandExpressjs />,
+    MongoDB: <IconBrandMongodb className="h-4 w-4 shrink-0 text-[#47A248] " />,
+    // PostgreSQL: <IconBrandPostgresql />,
+    MySQL: <IconBrandMysql className="h-4 w-4 shrink-0 text-[#4479A1] " />,
+    Docker: <IconBrandDocker className="h-4 w-4 shrink-0 text-[#2496ED] " />,
+    Git: <IconBrandGit className="h-4 w-4 shrink-0 text-[#F05032] " />,
+    GitHub: <IconBrandGithub className="h-4 w-4 shrink-0 text-[#181717] " />,
+    'Framer Motion': <IconBrandFramer className="h-4 w-4 shrink-0 text-[#000000] " />,
+    // Kubernetes: <IconBrandKubernetes className="h-4 w-4 shrink-0 text-[#326CE5] " />,
+    Go: <IconBrandGolang className="h-4 w-4 shrink-0 text-[#00ADD8] " />,
+    Swift: <IconBrandSwift className="h-4 w-4 shrink-0 text-[#FFAC45] " />,
+    Django: <IconBrandDjango className="h-4 w-4 shrink-0 text-[#092E20] " />,
+    OpenAI: <IconBrandOpenai className="h-4 w-4 shrink-0 text-[#000000] dark:text-neutral-200" />,
+    Firebase: <IconBrandFirebase className="h-4 w-4 shrink-0 text-[#FFCA28] " />,
+    'AWS Amplify': <IconBrandAws className="h-4 w-4 shrink-0 text-[#FF9900] " />,
+    'A/B Testing': <IconAB className="h-4 w-4 shrink-0 text-[#FF9900] " />,
+    'React Native': <IconBrandReactNative className="h-4 w-4 shrink-0 text-[#61DBFB] " />,
+  }
 
-    return logoMap[tech] || <IconCode className="h-4 w-4 text-neutral-600 shrink-0 dark:text-neutral-200" />;
+  return (
+    logoMap[tech] || (
+      <IconCode className="h-4 w-4 text-neutral-600 shrink-0 dark:text-neutral-200" />
+    )
+  )
 }

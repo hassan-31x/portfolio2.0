@@ -1,6 +1,6 @@
 'use client'
 
-import { LayoutGroup } from 'framer-motion'
+import { LayoutGroup } from 'motion/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import React from 'react'

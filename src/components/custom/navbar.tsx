@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { usePathname } from 'next/navigation'
-import { Download, Search } from 'lucide-react'
+import { Download } from 'lucide-react'
+import PortfolioSearch from './portfolio-search'
 import { ThemeToggleButton } from '@/components/ui/theme-toggle-button'
 import { cn } from '@/utilities/ui'
 
@@ -52,14 +53,7 @@ export function Navbar() {
           })}
         </div>
         <div className="flex shrink-0 items-center gap-1">
-          <Link
-            href="/search"
-            aria-label="Search portfolio"
-            title="Search"
-            className="flex size-8 items-center justify-center rounded-md text-secondary hover:bg-neutral-100 dark:hover:bg-neutral-900"
-          >
-            <Search className="size-3.5" aria-hidden />
-          </Link>
+          <PortfolioSearch />
           <a
             href="/resume.pdf"
             download
@@ -72,7 +66,7 @@ export function Navbar() {
           <ThemeToggleButton
             variant="circle"
             start="top-right"
-            className="size-8 h-8 w-8 border-transparent bg-transparent shadow-none dark:border-transparent dark:bg-transparent [&_svg]:size-3.5"
+            className="size-8 h-8 w-8 border-transparent bg-transparent shadow-none dark:border-transparent dark:bg-transparent [&_svg]:size-4"
           />
         </div>
       </motion.nav>

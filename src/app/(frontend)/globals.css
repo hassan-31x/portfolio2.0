@@ -106,3 +106,23 @@ p {
     scroll-behavior: auto !important;
   }
 }
+
+.portfolio-search-dialog::backdrop {
+  background: rgb(0 0 0 / 30%);
+  backdrop-filter: blur(4px);
+  animation: search-backdrop-in 180ms ease-out both;
+}
+.portfolio-search-dialog[data-state='closed']::backdrop {
+  animation: search-backdrop-out 140ms ease-in both;
+}
+@keyframes search-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes search-backdrop-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-search-dialog::backdrop { animation: none; }
+}

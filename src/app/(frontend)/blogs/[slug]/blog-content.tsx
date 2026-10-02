@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { Heading } from '@/components/custom/heading'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'

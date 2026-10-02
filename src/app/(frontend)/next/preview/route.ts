@@ -3,20 +3,11 @@ import { getPayload } from 'payload'
 
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
+import type { NextRequest } from 'next/server'
 
 import configPromise from '@payload-config'
 
-export async function GET(
-  req: {
-    cookies: {
-      get: (name: string) => {
-        value: string
-      }
-    }
-  } & Request,
-): Promise<Response> {
-  const payload = await getPayload({ config: configPromise })
-
+export async function GET(req: NextRequest): Promise<Response> {
   const { searchParams } = new URL(req.url)
 
   const path = searchParams.get('path')
@@ -32,17 +23,19 @@ export async function GET(
     return new Response('Insufficient search params', { status: 404 })
   }
 
-  if (!path.startsWith('/')) {
+  if (!path.startsWith('/') || path.startsWith('//')) {
     return new Response('This endpoint can only be used for relative previews', { status: 500 })
   }
 
+  const payload = await getPayload({ config: configPromise })
   let user
 
   try {
-    user = await payload.auth({
+    const authentication = await payload.auth({
       req: req as unknown as PayloadRequest,
       headers: req.headers,
     })
+    user = authentication.user
   } catch (error) {
     payload.logger.error({ err: error }, 'Error verifying token for live preview')
     return new Response('You are not allowed to preview this page', { status: 403 })

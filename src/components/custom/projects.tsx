@@ -7,6 +7,7 @@ import { ArrowUpRight, Github } from 'lucide-react'
 import SectionHeading from './section-heading'
 import { ProjectTypes } from '@/constants/project'
 import StackItem from './stack-item'
+import { projectAnchor } from '@/utilities/projectAnchor'
 
 type Props = { projects: ProjectTypes; showAllLink?: boolean }
 
@@ -34,7 +35,8 @@ export default function Projects({ projects, showAllLink = false }: Props) {
           return (
             <motion.article
               key={project.title}
-              className="flex min-w-0 flex-col gap-2 p-4"
+              id={projectAnchor(project.title)}
+              className="flex min-w-0 scroll-mt-20 flex-col gap-2 p-4"
               initial={reduceMotion ? false : { opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

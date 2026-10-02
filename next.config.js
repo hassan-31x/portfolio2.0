@@ -9,6 +9,8 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    // Payload adds updatedAt query strings to uploaded media URLs.
+    localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/**', search: '' }],
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
         const url = new URL(item)

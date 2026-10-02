@@ -1,6 +1,6 @@
 import React from 'react'
-import { motion } from 'framer-motion'
-import cn from 'classnames'
+import { motion } from 'motion/react'
+import { cn } from '@/utilities/ui'
 import { getLogoForTechnology } from '@/utilities/logoMapper'
 
 type Props = {

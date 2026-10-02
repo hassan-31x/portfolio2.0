@@ -30,6 +30,8 @@ export const ThemeSelector: React.FC = () => {
 
   React.useEffect(() => {
     const preference = window.localStorage.getItem(themeLocalStorageKey)
+    // Read browser-only preferences after hydration so server and client markup agree.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setValue(preference ?? 'auto')
   }, [])
 
