@@ -14,7 +14,7 @@ export default function Contact() {
         Building something with AI? Let&apos;s talk.
       </h2>
       <p className="mt-1 text-sm text-gray-800 dark:text-gray-200">
-        From RAG pipelines to voice agents, tell me about your project or AI engineering opportunity.
+        From RAG pipelines to voice agents, tell me about your project or AI Product Engineering opportunity.
       </p>
       <div className="mt-3 flex flex-wrap gap-3">
         <Link

@@ -55,7 +55,7 @@ export default function Hero() {
       </div>
       <p className="mt-5 max-w-2xl text-sm leading-6 text-secondary">
         I build <strong className="font-medium text-primary">agents, RAG pipelines, and multimodal AI systems.</strong>{' '}
-        Currently an AI Engineer at Useryze, combining Python and LLM tooling with full-stack
+        Currently an AI Product Engineer at Useryze, combining Python and LLM tooling with full-stack
         product engineering to take AI workflows from source data to usable products.
       </p>
       <div className="mt-3 flex items-center gap-2" aria-label="Social links">

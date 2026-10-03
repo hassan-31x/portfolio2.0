@@ -64,9 +64,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
-  title: 'Muhammad Hassan · AI Engineer',
+  title: 'Muhammad Hassan · AI Product Engineer',
   description:
-    'AI Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents. Explore projects, experience, and writing by Muhammad Hassan.',
+    'AI Product Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents. Explore projects, experience, and writing by Muhammad Hassan.',
   authors: [{ name: 'Muhammad Hassan' }],
   manifest: '/site.webmanifest',
   icons: {

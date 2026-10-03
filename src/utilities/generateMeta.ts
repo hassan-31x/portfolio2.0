@@ -18,7 +18,7 @@ export const generateMeta = async ({
 }): Promise<Metadata> => {
   const path = requestedPath || (doc?.slug && doc.slug !== 'home' ? `/${doc.slug}` : '/')
   const image = getImageURL(doc?.meta?.image)
-  const sourceTitle = doc?.meta?.title || doc?.title || 'Muhammad Hassan · AI Engineer'
+  const sourceTitle = doc?.meta?.title || doc?.title || 'Muhammad Hassan · AI Product Engineer'
   const title = sourceTitle.includes('Muhammad Hassan')
     ? sourceTitle
     : `${sourceTitle} | Muhammad Hassan`

@@ -17,7 +17,7 @@ export const workExperience: WorkExperience[] = [
     href: 'https://useryze.com',
     badges: ['RAG', 'AI Content'],
     location: 'Remote',
-    title: 'AI Engineer',
+    title: 'AI Product Engineer',
     logoUrl: '/images/useryze.jpeg',
     start: 'Dec 2024',
     end: null,

@@ -2,7 +2,7 @@ export const profile = {
   name: 'Muhammad Hassan',
   email: 'mh08951@st.habib.edu.pk',
   github: 'hassan-31x',
-  roles: ['AI Engineer', 'Agentic Systems', 'Multimodal AI'],
+  roles: ['AI Product Engineer', 'Agentic Systems', 'Full Stack'],
   skills: [
     { label: 'Languages', value: 'Python, C/C++, TypeScript, JavaScript, HTML/CSS' },
     { label: 'Agents & automation', value: 'LangChain, LangGraph, LangSmith, OpenRouter, AI APIs & SDKs' },

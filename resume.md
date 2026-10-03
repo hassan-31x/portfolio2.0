@@ -1,6 +1,6 @@
 # Muhammad Hassan
 
-**AI Engineer | Agentic and Multimodal Systems**
+**AI Product Engineer | Agentic and Multimodal Systems**
 
 +92 313 2508277 | mh08951@st.habib.edu.pk | linkedin.com/in/mhassan31x | github.com/hassan-31x
 
@@ -14,7 +14,7 @@
 
 ## Experience
 
-### AI Engineer | Useryze
+### AI Product Engineer | Useryze
 **Dec 2024 – Present**
 
 - Built an end-to-end AI content system with RAG using OpenAI, LangChain, Pinecone, Next.js, and Prisma. Delivered the authenticated source-to-draft pipeline following ingestion, document splitting, vector embeddings, semantic retrieval, generation, editing, persistence, and export using scraped content from social media channels by Python scraping jobs.

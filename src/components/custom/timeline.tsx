@@ -24,7 +24,7 @@ export const Timeline = () => {
       title: '2024–Present',
       content: [
         {
-          title: 'AI Engineer at Useryze',
+          title: 'AI Product Engineer at Useryze',
           description:
             'Joined in December 2024. Built a RAG content system connecting source ingestion, semantic retrieval, generation, editing, and export.',
         },

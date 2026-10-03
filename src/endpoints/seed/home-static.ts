@@ -80,8 +80,8 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
     },
   },
   meta: {
-    description: 'AI Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents.',
-    title: 'Muhammad Hassan · AI Engineer',
+    description: 'AI Product Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents.',
+    title: 'Muhammad Hassan · AI Product Engineer',
   },
   title: 'Home',
   layout: [],

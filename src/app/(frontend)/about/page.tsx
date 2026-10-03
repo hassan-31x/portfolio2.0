@@ -14,7 +14,7 @@ const AboutPage = () => {
       <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>About Me</Heading>
         <Subheading className="text-secondary max-w-lg text-sm md:text-sm">
-          I&apos;m an AI Engineer focused on agentic and multimodal systems. I build RAG pipelines,
+          I&apos;m an AI Product Engineer focused on agentic and multimodal systems. I build RAG pipelines,
           conversational agents, and AI applications that connect language models to useful workflows.
         </Subheading>
 
@@ -63,6 +63,6 @@ export default AboutPage
 
 export const metadata = pageMetadata(
   'About | Muhammad Hassan',
-  'Meet Muhammad Hassan, an AI Engineer focused on agentic and multimodal systems. Explore his experience, technical skills, awards, and education at Habib University.',
+  'Meet Muhammad Hassan, an AI Product Engineer focused on agentic and multimodal systems. Explore his experience, technical skills, awards, and education at Habib University.',
   '/about',
 )

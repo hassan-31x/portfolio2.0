@@ -9,7 +9,7 @@ export type SearchEntry = {
 }
 
 export const portfolioEntries: SearchEntry[] = [
-  { title: 'Home', href: '/', kind: 'Page', keywords: 'portfolio introduction Muhammad Hassan AI engineer agentic multimodal RAG' },
+  { title: 'Home', href: '/', kind: 'Page', keywords: 'portfolio introduction Muhammad Hassan AI Product Engineer agentic multimodal RAG' },
   {
     title: 'Work & About',
     href: '/about',
@@ -23,7 +23,7 @@ export const portfolioEntries: SearchEntry[] = [
     keywords: 'apps agents RAG multimodal voice AI software python research github',
   },
   { title: 'Blogs', href: '/blogs', kind: 'Page', keywords: 'articles writing posts' },
-  { title: 'Contact', href: '/contact', kind: 'Page', keywords: 'email message hire AI engineering collaboration freelance' },
+  { title: 'Contact', href: '/contact', kind: 'Page', keywords: 'email message hire AI Product Engineering collaboration freelance' },
   ...projects.map(
     (project): SearchEntry => ({
       title: project.title,
