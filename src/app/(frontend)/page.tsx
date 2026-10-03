@@ -56,7 +56,7 @@ export default async function Home() {
 }
 
 export const metadata = pageMetadata(
-  'Muhammad Hassan · Full Stack Engineer',
-  'Full Stack Engineer building scalable web products and AI-powered systems. Explore selected projects, experience, writing, skills, and GitHub activity.',
+  'Muhammad Hassan · AI Engineer',
+  'AI Engineer specializing in agentic and multimodal systems. Explore RAG pipelines, voice agents, AI products, work experience, and engineering projects.',
   '/',
 )

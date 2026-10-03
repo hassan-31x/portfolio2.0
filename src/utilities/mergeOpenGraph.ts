@@ -3,17 +3,17 @@ import { getServerSideURL } from './getURL'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'Full Stack Engineer with a passion for building scalable and efficient systems.',
+  description: 'AI Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents.',
   images: [
     {
-      url: `${getServerSideURL()}/og-image.png`,
+      url: `${getServerSideURL()}/opengraph-image`,
       width: 1200,
       height: 630,
-      alt: 'Muhammad Hassan, Full Stack Engineer',
+      alt: 'Muhammad Hassan, AI Engineer',
     },
   ],
   siteName: 'Muhammad Hassan',
-  title: 'Muhammad Hassan - Software Engineer',
+  title: 'Muhammad Hassan · AI Engineer',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {

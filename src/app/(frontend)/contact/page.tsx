@@ -7,7 +7,7 @@ import ContactForm from '@/components/custom/contact-form-minimal'
 
 export const metadata = pageMetadata(
   'Contact | Muhammad Hassan',
-  'Get in touch with Muhammad Hassan for freelancing opportunities and project discussions.',
+  'Contact Muhammad Hassan to discuss AI engineering opportunities, agentic systems, and product collaborations.',
   '/contact',
 )
 
@@ -17,7 +17,8 @@ export default function ContactPage() {
       <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Contact Me</Heading>
         <Subheading>
-          I&apos;m open to freelancing offers. Reach out to me to inquire more about my work.
+          Let&apos;s talk about AI engineering, agent workflows, or your next product.
+          Share what you&apos;re building and where I can help.
         </Subheading>
 
         <ContactForm />

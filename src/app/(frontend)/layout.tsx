@@ -64,9 +64,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
-  title: 'Muhammad Hassan · Full Stack Engineer',
+  title: 'Muhammad Hassan · AI Engineer',
   description:
-    'Full Stack Engineer building scalable web products and AI-powered systems. Explore projects, experience, and writing by Muhammad Hassan.',
+    'AI Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents. Explore projects, experience, and writing by Muhammad Hassan.',
   authors: [{ name: 'Muhammad Hassan' }],
   manifest: '/site.webmanifest',
   icons: {
@@ -80,6 +80,6 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     creator: '@hassan_dev31',
-    images: ['/og-image.png'],
+    images: ['/opengraph-image'],
   },
 }

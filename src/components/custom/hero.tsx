@@ -36,7 +36,7 @@ export default function Hero() {
           <RoleCycle roles={profile.roles} />
           <div className="mt-2 flex flex-wrap gap-2">
             <a
-              href="/resume.pdf"
+              href="/Resume%20-%20Hassan.pdf"
               download
               className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-2 py-1 text-xs font-medium text-primary transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
             >
@@ -54,9 +54,9 @@ export default function Hero() {
         </div>
       </div>
       <p className="mt-5 max-w-2xl text-sm leading-6 text-secondary">
-        I build scalable web products and AI-powered systems with{' '}
-        <strong className="font-medium text-primary">Next.js, TypeScript, and Node.js.</strong>{' '}
-        Currently a Full Stack Engineer at a US startup, turning ideas into products people use.
+        I build <strong className="font-medium text-primary">agents, RAG pipelines, and multimodal AI systems.</strong>{' '}
+        Currently an AI Engineer at Useryze, combining Python and LLM tooling with full-stack
+        product engineering to take AI workflows from source data to usable products.
       </p>
       <div className="mt-3 flex items-center gap-2" aria-label="Social links">
         {profile.socials.map((link) => {

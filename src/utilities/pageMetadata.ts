@@ -12,7 +12,7 @@ export function pageMetadata(title: string, description: string, path: string): 
       title,
       description,
       creator: '@hassan_dev31',
-      images: ['/og-image.png'],
+      images: ['/opengraph-image'],
     },
   }
 }

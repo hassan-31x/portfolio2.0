@@ -10,7 +10,7 @@ export default function StructuredData() {
         '@id': `${url}/#person`,
         name: 'Muhammad Hassan',
         url,
-        jobTitle: 'Full Stack Engineer',
+        jobTitle: 'AI Engineer',
         sameAs: [
           'https://github.com/hassan-31x',
           'https://www.linkedin.com/in/mhassan31x',
@@ -20,7 +20,7 @@ export default function StructuredData() {
       {
         '@type': 'WebSite',
         '@id': `${url}/#website`,
-        name: 'Muhammad Hassan · Full Stack Engineer',
+        name: 'Muhammad Hassan · AI Engineer',
         url,
         inLanguage: 'en',
         author: { '@id': `${url}/#person` },

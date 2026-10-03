@@ -21,12 +21,22 @@ export const Timeline = () => {
 
   const data: Data = [
     {
-      title: '2025',
+      title: '2024–Present',
       content: [
         {
-          title: 'Got hired at a US Startup as a Full Stack Engineer',
+          title: 'AI Engineer at Useryze',
           description:
-            'Currently working as a fullstack engineer for a US startup creating internal products',
+            'Joined in December 2024. Built a RAG content system connecting source ingestion, semantic retrieval, generation, editing, and export.',
+        },
+      ],
+    },
+    {
+      title: '2024–2025',
+      content: [
+        {
+          title: 'Full-Stack Engineer at GT Solutions USA',
+          description:
+            'Built role-based CRM and mobile systems for US daycares serving 1,000+ staff, alongside tools for Aga Khan Hospital’s food survey research.',
         },
       ],
     },
@@ -34,14 +44,14 @@ export const Timeline = () => {
       title: '2024',
       content: [
         {
-          title: 'Got hired as a Full Stack Engineer',
+          title: 'Full-Stack Hackathon Winner, Zabefest ’24',
           description:
-            'Worked as a junior fullstack engineer for 1 year for a service based company',
+            'Won at SZABIST in May with a cashier-less checkout app built in 48 hours, including QR and manual product entry, location verification, authentication, and protected routes.',
         },
         {
-          title: 'Completed 15+ projects as a freelancer',
+          title: 'Web Development Runner-Up, Developer’s Day ’24',
           description:
-            'Worked on a wide range of client projects including ecommerce stores, landing pages, and more.',
+            'Placed at FAST–NUCES in April with a version-control platform supporting repositories, organizations, commits, history tracking, and admin rollback.',
         },
       ],
     },
@@ -49,25 +59,9 @@ export const Timeline = () => {
       title: '2023',
       content: [
         {
-          title: 'Left the job to persue freelance work',
-          description: 'Started working as a freelancer for ecommerce stores',
-        },
-        {
-          title: 'Got my first internship',
-          description: 'Worked as a fullstack intern for 3 months converting into a junior role',
-        },
-      ],
-    },
-    {
-      title: '2022',
-      content: [
-        {
-          title: 'Assigned to create college website',
-          description: "Created a website for college's olympiad with 500+ registrations",
-        },
-        {
-          title: 'Started learning web development ',
-          description: 'Began my journey into programming with JavaScript, HTML, and CSS.',
+          title: 'Junior Full-Stack Developer at Xeverse.io',
+          description:
+            'Worked from June to November on the responsive DataPlus frontend, communicating the quality and model readiness of AI training datasets.',
         },
       ],
     },

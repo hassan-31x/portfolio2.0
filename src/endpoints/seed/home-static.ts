@@ -80,8 +80,8 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
     },
   },
   meta: {
-    description: 'Full Stack Engineer with a passion for building scalable and efficient systems.',
-    title: 'Muhammad Hassan - Software Engineer',
+    description: 'AI Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents.',
+    title: 'Muhammad Hassan · AI Engineer',
   },
   title: 'Home',
   layout: [],

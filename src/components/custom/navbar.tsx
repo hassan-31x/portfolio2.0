@@ -55,7 +55,7 @@ export function Navbar() {
         <div className="flex shrink-0 items-center gap-1">
           <PortfolioSearch />
           <a
-            href="/resume.pdf"
+            href="/Resume%20-%20Hassan.pdf"
             download
             aria-label="Download resume"
             title="Download resume"

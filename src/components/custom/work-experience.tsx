@@ -10,7 +10,7 @@ const WorkExperience = () => {
   const reduceMotion = useReducedMotion()
   return (
     <div className="portfolio-section my-4 border-y border-neutral-100 px-4 py-3 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
-      <SectionHeading delay={0.2}>Worked at Reputed Firms</SectionHeading>
+      <SectionHeading delay={0.2}>Work experience</SectionHeading>
       <div className="py-2 flex flex-col gap-5">
         {workExperience.map((work: WorkExperience, idx: number) => (
           <motion.div

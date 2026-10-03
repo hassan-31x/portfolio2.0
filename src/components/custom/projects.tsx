@@ -16,13 +16,13 @@ export default function Projects({ projects, showAllLink = false }: Props) {
   return (
     <section className="portfolio-section" aria-label="Selected projects">
       <div className="px-4 pt-2">
-        <SectionHeading>I love building things</SectionHeading>
+        <SectionHeading>Selected projects</SectionHeading>
       </div>
       <div className="project-grid grid grid-cols-1 sm:grid-cols-2">
-        {projects.map((project, index) => {
+        {projects.slice(0, 4).map((project, index) => {
           const live = project.href !== '#'
           const primaryHref = live ? project.href : project.repository
-          const preview = (
+          const preview = project.src ? (
             <Image
               src={project.src}
               alt={project.imageAlt || `${project.title} preview`}
@@ -31,7 +31,7 @@ export default function Projects({ projects, showAllLink = false }: Props) {
               sizes="(max-width: 639px) 100vw, 324px"
               className="h-44 w-full object-cover object-top transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03] sm:h-48"
             />
-          )
+          ) : null
           return (
             <motion.article
               key={project.title}
@@ -42,7 +42,7 @@ export default function Projects({ projects, showAllLink = false }: Props) {
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: (index % 2) * 0.08 }}
             >
-              {primaryHref ? (
+              {preview && (primaryHref ? (
                 <a
                   href={primaryHref}
                   target="_blank"
@@ -56,7 +56,7 @@ export default function Projects({ projects, showAllLink = false }: Props) {
                 <div className="overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
                   {preview}
                 </div>
-              )}
+              ))}
               <div className="flex items-center justify-between gap-3">
                 <h3 className="min-w-0 text-[15px] font-semibold leading-snug text-primary">
                   {primaryHref ? (
@@ -101,7 +101,7 @@ export default function Projects({ projects, showAllLink = false }: Props) {
               </div>
               <p
                 title={project.description}
-                className="truncate text-[13px] leading-snug text-secondary"
+                className="line-clamp-2 text-[13px] leading-snug text-secondary"
               >
                 {project.description}
               </p>
@@ -112,7 +112,7 @@ export default function Projects({ projects, showAllLink = false }: Props) {
                   ))}
                 </LayoutGroup>
               </div>
-              {project.details && (
+              {/* {project.details && (
                 <details className="text-[13px] leading-relaxed text-secondary">
                   <summary
                     aria-label={`Details about ${project.title}`}
@@ -126,7 +126,7 @@ export default function Projects({ projects, showAllLink = false }: Props) {
                     ))}
                   </div>
                 </details>
-              )}
+              )} */}
             </motion.article>
           )
         })}

@@ -41,8 +41,8 @@ export default async function Page() {
       <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Blog Posts</Heading>
         <Subheading>
-          Sharing my thoughts, experiences, and insights on software development, technology trends,
-          and lessons learned throughout my journey as a developer.
+          Notes from building AI systems and software products, with lessons from experiments,
+          implementation, and the work behind them.
         </Subheading>
 
         {/* <div className="mb-8 px-4">
@@ -69,7 +69,7 @@ export default async function Page() {
 export function generateMetadata(): Metadata {
   return pageMetadata(
     'Blogs | Muhammad Hassan',
-    'Software development articles, engineering insights, and lessons learned by Muhammad Hassan.',
+    'Writing on AI systems, software products, and engineering lessons by Muhammad Hassan.',
     '/blogs',
   )
 }

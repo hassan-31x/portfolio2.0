@@ -31,7 +31,7 @@ export const createAnimation = (
         ::view-transition-old(root) { z-index: 1; }
         ::view-transition-new(root) {
           z-index: 2;
-          animation: theme-reveal 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation: theme-reveal 750ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         @keyframes theme-reveal {
           from { clip-path: circle(0px at ${origins[start]}); }
@@ -59,7 +59,7 @@ export const createAnimation = (
       ::view-transition-new(root) {
         z-index: 2;
         ${variant === 'gif' && url ? `mask: url('${encodeURI(url).replace(/'/g, '%27')}') center / 0 no-repeat;` : ''}
-        animation: theme-reveal 450ms ease-out both;
+        animation: theme-reveal 750ms ease-out both;
       }
       ${reveal}
     `,

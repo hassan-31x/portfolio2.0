@@ -11,10 +11,10 @@ export default function Contact() {
         id="contact-heading"
         className="text-sm font-semibold text-gray-900 md:text-base dark:text-gray-100"
       >
-        Have a project in mind? Let&apos;s discuss.
+        Building something with AI? Let&apos;s talk.
       </h2>
       <p className="mt-1 text-sm text-gray-800 dark:text-gray-200">
-        I&apos;m open to freelance work. Tell me what you&apos;re building.
+        From RAG pipelines to voice agents, tell me about your project or AI engineering opportunity.
       </p>
       <div className="mt-3 flex flex-wrap gap-3">
         <Link

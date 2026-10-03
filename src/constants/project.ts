@@ -1,9 +1,11 @@
+import type { Technology } from './technology'
+
 export type ProjectTypes = {
   title: string
   src: string
   href: string
   description: string
-  stack: string[]
+  stack: Technology[]
   repository?: string
   imageAlt?: string
   details?: string[]
@@ -18,19 +20,41 @@ export const featuredProjects: ProjectTypes = [
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'MongoDB', 'OpenAI'],
   },
   {
-    title: 'AI-Powered Restaurant Agent',
+    title: 'Restaurant Voice and Ordering Agent',
     src: '/images/restaurant.png',
     href: '#',
-    description: 'An AI Assistant to manage inbound calls for a restaurant.',
-    stack: ['Next.js', 'TypeScript', 'Tailwind', 'OpenAI', 'Vapi'],
+    description: 'A real-time voice agent that takes orders and manages restaurant conversations.',
+    stack: ['OpenAI', 'Vapi', 'WebRTC', 'Socket.IO', 'Next.js', 'Node.js'],
+    details: [
+      'Maintains conversation context and calls structured tools to inspect menus, validate items, create and modify orders, calculate bills, and track order status.',
+      'Integrates Vapi and WebRTC with live transcripts, microphone controls, call-state recovery, and responsive speech feedback in the browser.',
+      'Personal project.',
+    ],
+  },
+  {
+    title: 'Khaata360',
+    src: '/images/projects/khaata-360.webp',
+    href: '#',
+    repository: 'https://github.com/hassan-31x/khaata360',
+    description: 'A bilingual AI personal finance assistant for WhatsApp and web.',
+    stack: ['OpenRouter', 'FastAPI', 'Next.js', 'Twilio', 'MongoDB', 'Docker'],
+    details: [
+      'Classifies intent, extracts transaction entities, manages multi-turn conversations, and answers natural-language questions over user financial data.',
+      'Includes vision-based receipt extraction, AI-generated financial charts, analytics dashboards, and verified phone linking.',
+      'Academic project with containerized FastAPI and Next.js services and MongoDB persistence.',
+    ],
   },
   {
     title: 'Conduit',
     src: '/images/conduit.png',
     href: 'https://main.dgn90on8wqij9.amplifyapp.com',
     description:
-      'A GPT-powered tool that scrapes viral LinkedIn posts & help users generate high-performance content.',
-    stack: ['Next.js', 'TypeScript', 'Tailwind', 'OpenAI', 'PineconeDB'],
+      'A RAG-powered content workflow that turns source material into editable drafts.',
+    stack: ['Python', 'LangChain', 'OpenAI', 'Pinecone', 'Next.js', 'Prisma'],
+    details: [
+      'Connects scraped social content to document ingestion, embeddings, semantic retrieval, and AI-generated drafts.',
+      'Supports an authenticated workflow for editing, saving, and exporting content.',
+    ],
   },
   {
     title: 'Website Builder',
@@ -39,10 +63,6 @@ export const featuredProjects: ProjectTypes = [
     description: 'A website builder having drag & drop functionality for creating websites.',
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'Shadcn', 'Firebase'],
   },
-]
-
-// Curated from the latest 40 public repositories; see docs/PROJECT-CURATION.md.
-export const githubProjects: ProjectTypes = [
   {
     title: 'TensorForge',
     src: '/images/projects/tensorforge.webp',
@@ -159,20 +179,6 @@ export const githubProjects: ProjectTypes = [
     ],
   },
   {
-    title: 'PFAB Security Lab',
-    src: '/images/projects/pfab-vulnerability-app.webp',
-    href: 'https://pfab-dusky.vercel.app',
-    repository: 'https://github.com/hassan-31x/pfab-vulnerability-app',
-    description: 'A finance app built as a deliberate web-security testing lab.',
-    stack: ['Python', 'FastAPI', 'Next.js', 'TypeScript', 'MongoDB', 'Prisma', 'OpenAI', 'Twilio'],
-    imageAlt: "PFAB's live finance assistant frontend, used as an educational security lab",
-    details: [
-      'Combines a Next.js finance interface, authentication and role-based flows with a Python FastAPI backend for WhatsApp integration.',
-      'Includes transaction handling, AI-assisted message processing, MongoDB access, Docker configuration, and documented security exercises.',
-      'Intentionally vulnerable for education and testing; this is not presented as a production-secure financial product.',
-    ],
-  },
-  {
     title: 'RISC-V Processor',
     src: '/images/projects/risc-v-processor.webp',
     href: '#',
@@ -188,4 +194,4 @@ export const githubProjects: ProjectTypes = [
   },
 ]
 
-export const projects: ProjectTypes = [...featuredProjects, ...githubProjects]
+export const projects: ProjectTypes = featuredProjects

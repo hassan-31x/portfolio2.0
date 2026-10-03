@@ -6,7 +6,7 @@ import { getServerSideURL } from './getURL'
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
   const source = image && typeof image === 'object' ? image.sizes?.og?.url || image.url : null
-  return new URL(source || '/og-image.png', serverUrl).href
+  return new URL(source || '/opengraph-image', serverUrl).href
 }
 
 export const generateMeta = async ({
@@ -18,14 +18,14 @@ export const generateMeta = async ({
 }): Promise<Metadata> => {
   const path = requestedPath || (doc?.slug && doc.slug !== 'home' ? `/${doc.slug}` : '/')
   const image = getImageURL(doc?.meta?.image)
-  const sourceTitle = doc?.meta?.title || doc?.title || 'Muhammad Hassan · Full Stack Engineer'
+  const sourceTitle = doc?.meta?.title || doc?.title || 'Muhammad Hassan · AI Engineer'
   const title = sourceTitle.includes('Muhammad Hassan')
     ? sourceTitle
     : `${sourceTitle} | Muhammad Hassan`
   const description =
     doc?.meta?.description ||
     (doc && 'description' in doc ? doc.description : '') ||
-    'Projects and software engineering writing by Muhammad Hassan.'
+    'AI projects and engineering writing by Muhammad Hassan.'
   const article = path.startsWith('/blogs/') ? (doc as Partial<Post> | null) : null
 
   return {

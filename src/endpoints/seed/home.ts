@@ -666,9 +666,9 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       },
     ],
     meta: {
-      description: 'Full Stack Engineer with a passion for building scalable and efficient systems.',
+      description: 'AI Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents.',
       image: heroImage.id,
-      title: 'Muhammad Hassan - Software Engineer',
+      title: 'Muhammad Hassan · AI Engineer',
     },
     title: 'Home',
   }
