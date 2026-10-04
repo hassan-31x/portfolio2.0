@@ -19,7 +19,7 @@ export default function Projects({ projects, showAllLink = false }: Props) {
         <SectionHeading>Selected projects</SectionHeading>
       </div>
       <div className="project-grid grid grid-cols-1 sm:grid-cols-2">
-        {projects.slice(0, 4).map((project, index) => {
+        {projects.map((project, index) => {
           const live = project.href !== '#'
           const primaryHref = live ? project.href : project.repository
           const preview = project.src ? (

@@ -15,8 +15,9 @@ export const featuredProjects: ProjectTypes = [
   {
     title: 'Snap AI',
     src: '/images/snapai.png',
-    href: 'https://snapai.studio',
-    description: 'A platform for creating AI-powered images & video Ad Creatives.',
+    href: 'https://snap-ai-studio.vercel.app',
+    repository: 'https://github.com/hassan-31x/snapai-studio',
+    description: 'AI-powered product photography and ad creative studio with image generation, campaign formats & canvas editing',
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'MongoDB', 'OpenAI'],
   },
   {
@@ -45,8 +46,8 @@ export const featuredProjects: ProjectTypes = [
     ],
   },
   {
-    title: 'Conduit',
-    src: '/images/conduit.png',
+    title: 'Postloom',
+    src: '/images/postloom.png',
     href: 'https://main.dgn90on8wqij9.amplifyapp.com',
     description:
       'A RAG-powered content workflow that turns source material into editable drafts.',
@@ -57,11 +58,26 @@ export const featuredProjects: ProjectTypes = [
     ],
   },
   {
-    title: 'Website Builder',
-    src: '/images/builder.png',
-    href: 'https://website-builder-tawny-nine.vercel.app/editor',
+    title: 'Forma',
+    src: '/images/forma.png',
+    href: 'http://buildwithforma.vercel.app',
+    repository: 'https://github.com/hassan-31x/forma-builder',
     description: 'A website builder having drag & drop functionality for creating websites.',
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'Shadcn', 'Firebase'],
+  },
+  {
+    title: 'Inspectr',
+    src: '/images/inspectr.png',
+    href: 'https://web-inspectr.vercel.app',
+    repository: 'https://github.com/hassan-31x/web-inspectr',
+    description: 'Check website metadata, social cards, and publishing essentials.',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Cheerio', 'JSDOM'],
+    imageAlt: "Inspectr's live website analysis form and publishing checklist introduction",
+    details: [
+      "Fetches a page's HTML through a Next.js API route and inspects title tags, descriptions, canonicals, viewport settings, and structured data.",
+      'Checks Open Graph/Twitter metadata and response headers, then presents categorized findings in the interface.',
+      'Provides HTML and header-based checks, rather than a browser performance benchmark or real-user Core Web Vitals measurement.',
+    ],
   },
   {
     title: 'TensorForge',
@@ -89,21 +105,6 @@ export const featuredProjects: ProjectTypes = [
       'Crawls HTML and PDFs, prioritizes admissions links, and extracts evidence candidates; Playwright renders JavaScript-only pages.',
       'Validates agent-produced records against JSON Schema and publishes them to a searchable admissions dashboard.',
       'Keeps citations, verification status, conflicting information, and unresolved questions attached to the records.',
-    ],
-  },
-  {
-    title: 'Visual QA Benchmarks',
-    src: '/images/projects/semeval-model-eval.webp',
-    href: '#',
-    repository: 'https://github.com/hassan-31x/semeval-model-eval',
-    description: 'Compare vision-language models on multilingual image questions.',
-    stack: ['Python', 'PyTorch', 'Transformers', 'Hugging Face Datasets', 'Pillow', 'BERTScore'],
-    imageAlt:
-      'Concept illustration of an image passing through parallel model evaluation pipelines',
-    details: [
-      'A SemEval cultural visual question-answering research pipeline with separate question-answering and image-evidence requests.',
-      'Supports Hugging Face inference and a local LM Studio runner, resumable predictions, image variants, and per-language comparisons.',
-      'Reports BERTScore, exact match, coverage, latency, and structured visual-output checks; no benchmark placement is claimed.',
     ],
   },
   {
@@ -151,34 +152,6 @@ export const featuredProjects: ProjectTypes = [
     ],
   },
   {
-    title: 'Blood Donation Manager',
-    src: '/images/projects/blood-donation-system.webp',
-    href: '#',
-    repository: 'https://github.com/hassan-31x/blood-donation-system',
-    description: 'Coordinate donors, hospitals, appointments, and blood-bank inventory.',
-    stack: ['Python', 'Streamlit', 'SQL Server', 'pyodbc', 'Matplotlib'],
-    imageAlt: 'Concept illustration connecting donors, a hospital, and blood-bank inventory',
-    details: [
-      'A database-management course project with separate donor, hospital, and administrator workflows.',
-      'Handles donor registration, appointments, donation history, blood requests, inventory, dispatch, and blood-drive management.',
-      'Includes a SQL Server schema and local setup instructions; requires a configured database to run.',
-    ],
-  },
-  {
-    title: 'Inspectr',
-    src: '/images/projects/web-analyzer.webp',
-    href: 'https://web-inspectr.vercel.app',
-    repository: 'https://github.com/hassan-31x/web-analyzer',
-    description: 'Check website metadata, social cards, and publishing essentials.',
-    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Cheerio', 'JSDOM'],
-    imageAlt: "Inspectr's live website analysis form and publishing checklist introduction",
-    details: [
-      "Fetches a page's HTML through a Next.js API route and inspects title tags, descriptions, canonicals, viewport settings, and structured data.",
-      'Checks Open Graph/Twitter metadata and response headers, then presents categorized findings in the interface.',
-      'Provides HTML and header-based checks, rather than a browser performance benchmark or real-user Core Web Vitals measurement.',
-    ],
-  },
-  {
     title: 'RISC-V Processor',
     src: '/images/projects/risc-v-processor.webp',
     href: '#',
@@ -190,6 +163,35 @@ export const featuredProjects: ProjectTypes = [
       'Implements instruction decoding, register files, ALU operations, data memory, and control logic across two processor designs.',
       'The pipelined design includes forwarding and load-use hazard detection; the repository contains simulation testbenches and Vivado artifacts.',
       'An educational hardware implementation; no physical chip fabrication or hardware performance result is claimed.',
+    ],
+  },
+  {
+    title: 'Visual QA Benchmarks',
+    src: '/images/projects/semeval-model-eval.webp',
+    href: '#',
+    repository: 'https://github.com/hassan-31x/semeval-model-eval',
+    description: 'Compare vision-language models on multilingual image questions.',
+    stack: ['Python', 'PyTorch', 'Transformers', 'Hugging Face Datasets', 'Pillow', 'BERTScore'],
+    imageAlt:
+      'Concept illustration of an image passing through parallel model evaluation pipelines',
+    details: [
+      'A SemEval cultural visual question-answering research pipeline with separate question-answering and image-evidence requests.',
+      'Supports Hugging Face inference and a local LM Studio runner, resumable predictions, image variants, and per-language comparisons.',
+      'Reports BERTScore, exact match, coverage, latency, and structured visual-output checks; no benchmark placement is claimed.',
+    ],
+  },
+  {
+    title: 'Blood Donation Manager',
+    src: '/images/projects/blood-donation-system.webp',
+    href: '#',
+    repository: 'https://github.com/hassan-31x/blood-donation-system',
+    description: 'Coordinate donors, hospitals, appointments, and blood-bank inventory.',
+    stack: ['Python', 'Streamlit', 'SQL Server', 'pyodbc', 'Matplotlib'],
+    imageAlt: 'Concept illustration connecting donors, a hospital, and blood-bank inventory',
+    details: [
+      'A database-management course project with separate donor, hospital, and administrator workflows.',
+      'Handles donor registration, appointments, donation history, blood requests, inventory, dispatch, and blood-drive management.',
+      'Includes a SQL Server schema and local setup instructions; requires a configured database to run.',
     ],
   },
 ]

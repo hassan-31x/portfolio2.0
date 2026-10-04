@@ -28,7 +28,7 @@ export default async function Home() {
       <Container className="min-h-screen md:pt-2 md:pb-10">
         <Hero />
 
-        <Projects projects={featuredProjects} showAllLink />
+        <Projects projects={featuredProjects.slice(0, 4)} showAllLink />
 
         <Blogs blogs={posts?.docs} />
 
