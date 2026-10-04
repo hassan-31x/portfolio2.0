@@ -21,15 +21,36 @@ export const featuredProjects: ProjectTypes = [
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'MongoDB', 'OpenAI'],
   },
   {
+    title: 'Forma',
+    src: '/images/forma.png',
+    href: 'http://buildwithforma.vercel.app',
+    repository: 'https://github.com/hassan-31x/forma-builder',
+    description: 'A website builder having drag & drop functionality for creating websites.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind', 'Shadcn', 'Firebase'],
+  },
+  {
     title: 'Restaurant Voice and Ordering Agent',
     src: '/images/restaurant.png',
-    href: '#',
+    href: 'https://food-ai-gilt.vercel.app',
     description: 'A real-time voice agent that takes orders and manages restaurant conversations.',
     stack: ['OpenAI', 'Vapi', 'WebRTC', 'Socket.IO', 'Next.js', 'Node.js'],
     details: [
       'Maintains conversation context and calls structured tools to inspect menus, validate items, create and modify orders, calculate bills, and track order status.',
       'Integrates Vapi and WebRTC with live transcripts, microphone controls, call-state recovery, and responsive speech feedback in the browser.',
       'Personal project.',
+    ],
+  },
+  {
+    title: 'Postloom',
+    src: '/images/postloom.png',
+    href: 'https://postloom-ai-writer.vercel.app',
+    repository: 'https://github.com/hassan-31x/postloom-ai-writer',
+    description:
+      'A RAG-powered content workflow that turns source material into editable drafts.',
+    stack: ['Python', 'LangChain', 'OpenAI', 'Pinecone', 'Next.js', 'Prisma'],
+    details: [
+      'Connects scraped social content to document ingestion, embeddings, semantic retrieval, and AI-generated drafts.',
+      'Supports an authenticated workflow for editing, saving, and exporting content.',
     ],
   },
   {
@@ -46,28 +67,8 @@ export const featuredProjects: ProjectTypes = [
     ],
   },
   {
-    title: 'Postloom',
-    src: '/images/postloom.png',
-    href: 'https://main.dgn90on8wqij9.amplifyapp.com',
-    description:
-      'A RAG-powered content workflow that turns source material into editable drafts.',
-    stack: ['Python', 'LangChain', 'OpenAI', 'Pinecone', 'Next.js', 'Prisma'],
-    details: [
-      'Connects scraped social content to document ingestion, embeddings, semantic retrieval, and AI-generated drafts.',
-      'Supports an authenticated workflow for editing, saving, and exporting content.',
-    ],
-  },
-  {
-    title: 'Forma',
-    src: '/images/forma.png',
-    href: 'http://buildwithforma.vercel.app',
-    repository: 'https://github.com/hassan-31x/forma-builder',
-    description: 'A website builder having drag & drop functionality for creating websites.',
-    stack: ['Next.js', 'TypeScript', 'Tailwind', 'Shadcn', 'Firebase'],
-  },
-  {
     title: 'Inspectr',
-    src: '/images/inspectr.png',
+    src: '/images/projects/inspectr.png',
     href: 'https://web-inspectr.vercel.app',
     repository: 'https://github.com/hassan-31x/web-inspectr',
     description: 'Check website metadata, social cards, and publishing essentials.',
