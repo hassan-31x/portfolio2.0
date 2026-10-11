@@ -2,7 +2,7 @@
 
 **AI Product Engineer | Agentic and Multimodal Systems**
 
-+92 313 2508277 | mh08951@st.habib.edu.pk | linkedin.com/in/mhassan31x | github.com/hassan-31x
++92 313 2508277 | mohammadhassanrizwan@gmail.com | linkedin.com/in/mhassan31x | github.com/hassan-31x
 
 ## Technical Skills
 
