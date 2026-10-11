@@ -5,6 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "articles:build": "node scripts/build-articles.mjs",
+    "articles:check": "node scripts/build-articles.mjs --check",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build --webpack",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --webpack",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",

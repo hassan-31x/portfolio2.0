@@ -9,6 +9,10 @@ import { getClientSideURL } from '@/utilities/getURL'
 export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | null): string => {
   if (!url) return ''
 
+  // Repository-owned article covers are static assets, not mutable CMS uploads.
+  // Keep them relative and query-free for Next's static-image allowlist.
+  if (url.startsWith('/images/articles/')) return url
+
   // Check if URL already has http/https protocol
   if (url.startsWith('http://') || url.startsWith('https://')) {
     return cacheTag ? `${url}?${cacheTag}` : url

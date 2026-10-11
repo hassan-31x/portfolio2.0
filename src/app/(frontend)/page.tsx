@@ -2,8 +2,7 @@ import { pageMetadata } from '@/utilities/pageMetadata'
 import Projects from '@/components/custom/projects'
 import { Suspense } from 'react'
 
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+import { getArticles } from '@/utilities/getArticles'
 
 import { Container } from '@/components/custom/container'
 import Hero from '@/components/custom/hero'
@@ -15,14 +14,7 @@ import Contact from '@/components/custom/contact-form'
 import Blogs from '@/components/custom/blogs'
 
 export default async function Home() {
-  const payload = await getPayload({ config: configPromise })
-
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 5,
-    overrideAccess: false,
-  })
+  const posts = await getArticles()
   return (
     <div className="min-h-screen flex items-start justify-start">
       <Container className="min-h-screen md:pt-2 md:pb-10">
@@ -30,7 +22,7 @@ export default async function Home() {
 
         <Projects projects={featuredProjects.slice(0, 4)} showAllLink />
 
-        <Blogs blogs={posts?.docs} />
+        <Blogs blogs={posts.slice(0, 3)} showAllLink />
 
         <WorkExperience />
 

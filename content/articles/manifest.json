@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "bpe-merge-order",
+    "title": "BPE Encoding Has to Remember the Order",
+    "description": "Building a byte-level tokenizer in Python: merge ranks, overlapping pairs, and why round-trip checks aren't enough.",
+    "category": "Model fundamentals",
+    "image": "bpe-merge-order.webp",
+    "alt": "Separate byte tiles combining into larger tokens through ordered pair merges"
+  },
+  {
+    "slug": "training-memory-budget",
+    "title": "Why Model Weights Don't Tell You the Training Memory",
+    "description": "The memory arithmetic behind TensorForge, from Adam state to attention tensors, and where a simulator's assumptions stop.",
+    "category": "Training systems",
+    "image": "training-memory-budget.webp",
+    "alt": "A GPU memory tray holding separate blocks for weights, gradients, optimizer state, and activations"
+  },
+  {
+    "slug": "evidence-backed-extraction",
+    "title": "A Scraped Value Needs Its Evidence Attached",
+    "description": "How I structure admissions data in UniScrape so every assertion keeps its scope, citations, and unresolved questions.",
+    "category": "Data pipelines",
+    "image": "evidence-backed-extraction.webp",
+    "alt": "Highlighted source passages connected to structured record fields, with one unknown field left empty"
+  },
+  {
+    "slug": "vision-evaluation-coverage",
+    "title": "A Vision Model's Score Needs a Denominator",
+    "description": "Why I track coverage, failures, language groups, and scorer settings alongside BERTScore in visual question answering.",
+    "category": "Model evaluation",
+    "image": "vision-evaluation-coverage.webp",
+    "alt": "An image passing through two evaluation tracks with different successful-answer coverage"
+  },
+  {
+    "slug": "restaurant-agent-tool-boundary",
+    "title": "The Restaurant Agent Shouldn't Invent the Bill",
+    "description": "Lessons from my restaurant assistant: named tool arguments, application-owned totals, and handling repeated order requests.",
+    "category": "Agent engineering",
+    "image": "restaurant-agent-tool-boundary.webp",
+    "alt": "A voice request passing through a validation gate before becoming a restaurant order"
+  }
+]

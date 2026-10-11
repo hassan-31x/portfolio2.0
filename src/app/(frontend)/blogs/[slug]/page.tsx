@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 
 import { Container } from "@/components/custom/container"
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -9,30 +8,15 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import BlogContent from './blog-content'
 
-import type { Post } from '@/payload-types'
+import { getArticles } from '@/utilities/getArticles'
 
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const posts = await payload.find({
-    collection: 'posts',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
-
-  const params = posts.docs.map(({ slug }) => {
-    return { slug }
-  })
-
-  return params
+  const posts = await getArticles()
+  return posts.filter((post) => post.slug).map((post) => ({ slug: post.slug! }))
 }
 
 type Args = {
@@ -74,6 +58,8 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
+  if (!draft) return (await getArticles()).find((post) => post.slug === slug) || null
+  // Authenticated CMS previews keep their existing draft behavior.
 
   const payload = await getPayload({ config: configPromise })
 
@@ -90,5 +76,5 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     },
   })
 
-  return result.docs?.[0] || null
+  return result.docs?.[0] || (await getArticles()).find((post) => post.slug === slug) || null
 })

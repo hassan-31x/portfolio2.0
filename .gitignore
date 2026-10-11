@@ -6,6 +6,7 @@ portfolio-insp
 .env
 .next
 .vercel
+skills/
 
 # Payload default media upload directory
 # public/media/

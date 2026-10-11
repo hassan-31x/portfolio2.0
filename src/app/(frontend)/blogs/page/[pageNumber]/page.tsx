@@ -4,8 +4,7 @@ import type { Metadata } from 'next/types'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+import { getArticles } from '@/utilities/getArticles'
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
@@ -20,19 +19,14 @@ type Args = {
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber } = await paramsPromise
-  const payload = await getPayload({ config: configPromise })
 
   const sanitizedPageNumber = Number(pageNumber)
 
   if (!Number.isInteger(sanitizedPageNumber) || sanitizedPageNumber < 1) notFound()
 
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 12,
-    page: sanitizedPageNumber,
-    overrideAccess: false,
-  })
+  const posts = await getArticles()
+  const totalPages = Math.max(1, Math.ceil(posts.length / 12))
+  if (sanitizedPageNumber > totalPages) notFound()
 
   return (
     <div className="pt-6 pb-10">
@@ -46,17 +40,17 @@ export default async function Page({ params: paramsPromise }: Args) {
       <div className="px-4 mb-4">
         <PageRange
           collection="posts"
-          currentPage={posts.page}
+          currentPage={sanitizedPageNumber}
           limit={12}
-          totalDocs={posts.totalDocs}
+          totalDocs={posts.length}
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      <CollectionArchive posts={posts.slice((sanitizedPageNumber - 1) * 12, sanitizedPageNumber * 12)} />
 
       <div className="px-4">
-        {posts?.page && posts?.totalPages > 1 && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
+        {totalPages > 1 && (
+          <Pagination page={sanitizedPageNumber} totalPages={totalPages} />
         )}
       </div>
     </div>
@@ -73,13 +67,8 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 }
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const { totalDocs } = await payload.count({
-    collection: 'posts',
-    overrideAccess: false,
-  })
-
-  const totalPages = Math.ceil(totalDocs / 12)
+  const posts = await getArticles()
+  const totalPages = Math.ceil(posts.length / 12)
 
   const pages: { pageNumber: string }[] = []
 

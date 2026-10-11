@@ -1,20 +1,10 @@
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+import { getArticles } from '@/utilities/getArticles'
 import { unstable_cache } from 'next/cache'
 
 const publishedArticles = unstable_cache(
   async () => {
-    const payload = await getPayload({ config: configPromise })
-    const posts = await payload.find({
-      collection: 'posts',
-      depth: 0,
-      limit: 200,
-      pagination: false,
-      overrideAccess: false,
-      where: { _status: { equals: 'published' } },
-      select: { title: true, slug: true, meta: { description: true } },
-    })
-    return posts.docs
+    const posts = await getArticles()
+    return posts
       .filter((post) => post.slug)
       .map((post) => ({
         title: post.title,

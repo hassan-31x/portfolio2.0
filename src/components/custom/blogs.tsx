@@ -6,16 +6,30 @@ import { motion, useReducedMotion } from 'motion/react'
 import type { Post } from '@/payload-types'
 import Link from 'next/link'
 import SectionHeading from './section-heading'
+import { ArrowUpRight } from 'lucide-react'
 
 type Props = {
   blogs: Pick<Post, 'id' | 'title' | 'slug' | 'description' | 'heroImage' | 'publishedAt'>[]
+  showAllLink?: boolean
 }
 
-const Blogs = ({ blogs }: Props) => {
+const Blogs = ({ blogs, showAllLink = false }: Props) => {
   const reduceMotion = useReducedMotion()
   return (
     <div className="portfolio-section my-4 border-y border-neutral-100 px-4 py-3 shadow-[0px_1px_4px_0px_var(--color-neutral-100)_inset,0px_-1px_4px_0px_var(--color-neutral-100)_inset]">
-      <SectionHeading delay={0.2}>Sharing knowledge as I learn</SectionHeading>
+      <div className="flex items-center justify-between gap-3">
+        <SectionHeading delay={0.2}>Sharing knowledge as I learn</SectionHeading>
+        {showAllLink && (
+          <Link
+            href="/blogs"
+            aria-label="View all articles"
+            className="inline-flex shrink-0 items-center gap-1 rounded-sm py-2 text-xs text-secondary underline-offset-4 hover:text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+          >
+            View all
+            <ArrowUpRight className="size-3" aria-hidden />
+          </Link>
+        )}
+      </div>
       <div className="py-2 flex flex-col gap-3">
         {blogs.length === 0 && (
           <p className="text-sm text-secondary">New articles are on the way.</p>

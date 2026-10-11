@@ -1,0 +1,2542 @@
+[
+  {
+    "id": "article-bpe-merge-order",
+    "title": "BPE Encoding Has to Remember the Order",
+    "slug": "bpe-merge-order",
+    "description": "Building a byte-level tokenizer in Python: merge ranks, overlapping pairs, and why round-trip checks aren't enough.",
+    "content": {
+      "root": {
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "I built a byte-level BPE tokenizer in Python to understand what happens before text reaches a language model. Counting pairs was straightforward. The more interesting detail was encoding new text: the tokenizer has to reuse the order it learned during training. Choosing the most frequent pair again would quietly define a different tokenizer.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Start with bytes",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "My implementation starts with ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "list(text.encode('utf-8'))",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ". That gives me 256 possible base tokens, one for each byte value. A character can occupy several bytes, so a token does not have to be a whole character or a readable word.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Training repeatedly counts adjacent pairs, picks the most frequent one, and replaces its non-overlapping occurrences with a new token ID. The first learned ID is 256. A target vocabulary of 512 leaves room for 256 learned merges, assuming the corpus still contains pairs to merge.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Here's a small worked example, independent of the training corpus in the repository:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "python",
+              "code": "ids = list(b\"ababab\")\n# [97, 98, 97, 98, 97, 98]\n\n# Learn (97, 98) -> 256\nids = [256, 256, 256]\n\n# Learn (256, 256) -> 257\nids = [257, 256]"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The six initial byte tokens become three, then two. The second pair occurs at two overlapping positions, but replacement can consume only one of them. Counting a pair and applying a merge are different operations.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Frequency learns the rules. Rank applies them.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "During inference, I don't learn anything new. I look at adjacent pairs in the input and select the one with the earliest learned merge rank:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "python",
+              "code": "pair = min(\n    stats,\n    key=lambda p: self.merges.get(p, float('inf')),\n)\nif pair not in self.merges:\n    break\nids = self.merge(ids, pair, self.merges[pair])"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "In this implementation, merge IDs increase with training order, so the smallest eligible ID also represents the earliest rule. Think of the merge table as an ordered recipe: later steps can depend on ingredients made by earlier steps.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "For a deliberately constructed example, suppose ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "(a, b)",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " has rank 0 and ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "(b, c)",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " has rank 1. In ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "abcbcbc",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ", the second pair occurs three times and the first only once. A frequency-based encoder would start with ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "(b, c)",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ". The trained encoder starts with ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "(a, b)",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ", which removes the first opportunity to merge ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "(b, c)",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ". Those choices produce different token boundaries.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Decode after joining the bytes",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "I store vocabulary entries as byte strings. Decoding concatenates those bytes first, then decodes the complete sequence as UTF-8. Decoding individual tokens separately can corrupt a character whose bytes span token boundaries.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "That also explains why my readable ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".vocab",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " export isn't the file I load back. It uses replacement characters to display partial UTF-8 sequences. The ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".model",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " file preserves the merge rules needed to reconstruct the byte vocabulary.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "For valid input text, I check that ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "decode(encode(text)) == text",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ", including non-ASCII text. But round-trip correctness alone doesn't prove that merge ordering is right: two different segmentations can both reconstruct the same bytes. I would also test expected IDs for a fixed merge table.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "This is a small educational tokenizer. It rescans the sequence on every merge and doesn't implement the full pre-tokenization or special-token behavior of a production tokenizer. My next improvement would be a tiny set of ordering and overlap tests before trying to make that loop faster.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "Implementation: training and encoding",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/hassan-31x/gpt-tokenizer/blob/main/bpe.py",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ". ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "Vocabulary persistence and decoding helpers",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/hassan-31x/gpt-tokenizer/blob/main/base.py",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0
+      }
+    },
+    "heroImage": {
+      "id": "article-cover-bpe-merge-order",
+      "alt": "Separate byte tiles combining into larger tokens through ordered pair merges",
+      "url": "/images/articles/bpe-merge-order.webp",
+      "filename": "bpe-merge-order.webp",
+      "mimeType": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "createdAt": "2026-10-11T00:00:00.000Z",
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    "categories": [
+      {
+        "id": "Model fundamentals",
+        "title": "Model fundamentals",
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    ],
+    "meta": {
+      "title": "BPE Encoding Has to Remember the Order",
+      "description": "Building a byte-level tokenizer in Python: merge ranks, overlapping pairs, and why round-trip checks aren't enough.",
+      "image": {
+        "id": "article-cover-bpe-merge-order",
+        "alt": "Separate byte tiles combining into larger tokens through ordered pair merges",
+        "url": "/images/articles/bpe-merge-order.webp",
+        "filename": "bpe-merge-order.webp",
+        "mimeType": "image/webp",
+        "width": 1536,
+        "height": 1024,
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    },
+    "populatedAuthors": [
+      {
+        "name": "Muhammad Hassan"
+      }
+    ],
+    "publishedAt": "2026-10-11T00:00:00.000Z",
+    "createdAt": "2026-10-11T00:00:00.000Z",
+    "updatedAt": "2026-10-11T00:00:00.000Z",
+    "_status": "published"
+  },
+  {
+    "id": "article-training-memory-budget",
+    "title": "Why Model Weights Don't Tell You the Training Memory",
+    "slug": "training-memory-budget",
+    "description": "The memory arithmetic behind TensorForge, from Adam state to attention tensors, and where a simulator's assumptions stop.",
+    "content": {
+      "root": {
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "In TensorForge, I built a simulator for exploring model architectures and their training costs. One calculation deserves its own explanation: parameter count multiplied by bytes per weight. It tells me how much space the weights occupy. Training needs several more allocations, and some grow without adding a single parameter.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Put every allocation on the bill",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "I split the simulator's memory estimate into parameters, gradients, optimizer state, activations, temporary buffers, and runtime overhead. It is a packing problem: knowing the size of one suitcase doesn't tell me whether everything fits in the boot.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Take a hypothetical one-billion-parameter model. With two-byte weights, two-byte gradients, and two FP32 Adam moment tensors, the persistent tensors alone need:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "python",
+              "code": "parameters = 1_000_000_000\nweights = parameters * 2\ngradients = parameters * 2\nadam_moments = parameters * 8\n\nprint(weights / 1e9)  # 2.0 GB\nprint((weights + gradients + adam_moments) / 1e9)  # 12.0 GB"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "That is six times the weight storage, before activations or workspace. These are decimal GB; dividing by ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "1024 ** 3",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " would give GiB. TensorForge uses that binary divisor internally, so I need to pay attention to units when comparing estimates.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The assumptions matter too. Some mixed-precision training setups keep an additional FP32 master copy of the weights. In that case, this example gains another 4 GB. Gradient dtype and optimizer implementation can change the total. Twelve bytes per parameter is the arithmetic for this example, not a universal training constant.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Sequence length changes the problem",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Activations depend on the work performed during the forward pass. Increasing the microbatch or sequence length can increase memory even when the model architecture stays identical.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "A straightforward attention implementation materializes a score tensor with shape ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "[batch, heads, sequence, sequence]",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ". For one sequence, 32 heads, and two-byte elements, its storage looks like this:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "python",
+              "code": "def attention_scores_gib(sequence):\n    return 1 * 32 * sequence * sequence * 2 / 1024**3\n\nprint(attention_scores_gib(2048))  # 0.25\nprint(attention_scores_gib(4096))  # 1.0"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Doubling the sequence quadruples this particular tensor. That is one attention-score allocation, not the full model's peak memory. Memory-efficient attention implementations avoid storing the complete matrix in GPU memory, so I wouldn't apply this estimate unchanged to every kernel.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Activation checkpointing addresses a different part of the budget: it saves fewer intermediate tensors and recomputes them during backward. It trades extra computation for lower saved-activation memory, as described in ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "PyTorch's checkpointing explanation",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://pytorch.org/blog/activation-checkpointing-techniques/",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Where the simulator stops",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "TensorForge makes these categories visible, but its output is an educational estimate. The activation multipliers and efficiency factors are heuristics. Its training animation doesn't execute a training run.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "There is also a useful limitation in the current memory calculation: it divides parameter-related storage across connected GPUs. Ordinary replicated data parallelism keeps a full model copy on each GPU. That division only makes sense under an appropriate sharding assumption, and real sharding introduces its own communication and temporary-memory costs.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Before choosing hardware for an actual run, I would measure peak memory through forward, backward, and an optimizer step with the intended precision and sequence length. The simulator helps me identify which allocation to investigate. The measured run tells me whether it fits.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "TensorForge's memory and throughput estimator",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/hassan-31x/tensorforge/blob/main/src/sim/engine.ts",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0
+      }
+    },
+    "heroImage": {
+      "id": "article-cover-training-memory-budget",
+      "alt": "A GPU memory tray holding separate blocks for weights, gradients, optimizer state, and activations",
+      "url": "/images/articles/training-memory-budget.webp",
+      "filename": "training-memory-budget.webp",
+      "mimeType": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "createdAt": "2026-10-11T00:00:00.000Z",
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    "categories": [
+      {
+        "id": "Training systems",
+        "title": "Training systems",
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    ],
+    "meta": {
+      "title": "Why Model Weights Don't Tell You the Training Memory",
+      "description": "The memory arithmetic behind TensorForge, from Adam state to attention tensors, and where a simulator's assumptions stop.",
+      "image": {
+        "id": "article-cover-training-memory-budget",
+        "alt": "A GPU memory tray holding separate blocks for weights, gradients, optimizer state, and activations",
+        "url": "/images/articles/training-memory-budget.webp",
+        "filename": "training-memory-budget.webp",
+        "mimeType": "image/webp",
+        "width": 1536,
+        "height": 1024,
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    },
+    "populatedAuthors": [
+      {
+        "name": "Muhammad Hassan"
+      }
+    ],
+    "publishedAt": "2026-10-11T00:00:00.000Z",
+    "createdAt": "2026-10-11T00:00:00.000Z",
+    "updatedAt": "2026-10-11T00:00:00.000Z",
+    "_status": "published"
+  },
+  {
+    "id": "article-evidence-backed-extraction",
+    "title": "A Scraped Value Needs Its Evidence Attached",
+    "slug": "evidence-backed-extraction",
+    "description": "How I structure admissions data in UniScrape so every assertion keeps its scope, citations, and unresolved questions.",
+    "content": {
+      "root": {
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "I built UniScrape to turn university websites into structured admissions records. A deadline looks easy to extract until the same site contains last year's prospectus, a department page, and a different date for international applicants. Getting a date-shaped string is easy. Knowing what it applies to takes more work.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Keep discovery separate from assertion",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "My crawler collects HTML and PDFs, normalizes their text, and discovers candidate evidence. A Playwright helper handles pages that need JavaScript rendering. Those candidates are leads for investigation, not final admissions facts.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "An agent then reads the collected material, investigates gaps, and fills a structured record. I keep the value together with its scope, source IDs, evidence excerpts, and verification status. A citation is the receipt for the assertion: it gives the next person something concrete to inspect.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Here's an illustrative fact object using the project's schema. The institution and deadline are invented for this example:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "json",
+              "code": "{\n  \"value\": \"15 January 2027\",\n  \"status\": \"verified\",\n  \"scope\": \"2027 undergraduate intake, domestic applicants\",\n  \"source_ids\": [\"admissions-page\"],\n  \"evidence\": [{\n    \"source_id\": \"admissions-page\",\n    \"excerpt\": \"Domestic undergraduate applications close 15 January 2027.\",\n    \"location\": \"Application deadlines\"\n  }],\n  \"notes\": null\n}"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The date alone cannot distinguish undergraduate from postgraduate admissions, or this cycle from the previous one. The scope makes those distinctions explicit. I can normalize the date for filtering while retaining the original wording as evidence.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Valid JSON is only the first check",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "I validate the record with JSON Schema, then run additional checks over its citations. The validator checks that source IDs are unique, references point to existing sources, and a verified fact includes evidence. It also checks that an evidence item's source appears in that fact's source list.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "A simplified version of that last rule is:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "python",
+              "code": "for fact in facts:\n    cited = set(fact[\"source_ids\"])\n    for evidence in fact[\"evidence\"]:\n        assert evidence[\"source_id\"] in cited\n        assert evidence[\"source_id\"] in known_source_ids"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "These checks catch broken references. They don't establish that an excerpt actually proves the value, or that the agent selected the right academic cycle. That still requires reading the source in context. A perfectly shaped record can contain a perfectly wrong deadline (annoyingly tidy).",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Conflicts deserve their own place",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "If two sources disagree, I preserve the competing values and source references in a conflict entry. I first check whether they describe different applicant groups or cycles. If they really contradict each other and I can't resolve it, the disagreement stays visible.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Missing information stays explicit too. The record supports unresolved questions with reasons such as ambiguous information, a crawl limit, or a requirement to contact the institution. An empty field should tell me where research stopped, rather than invite a plausible guess.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The publishing command validates the record before copying it into the dashboard's data directory and updating the registry. That gives me a clean boundary between unfinished research and a record the interface can display. Publication here means it passed the implemented validation, not that every assertion has been independently audited.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "For the next iteration, I would add review cases that deliberately pair a real excerpt with the wrong scope. That would test the part structural validation cannot: whether the evidence supports this particular claim.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "Record schema",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/hassan-31x/college-scraper/blob/main/schema/admissions.schema.json",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ", ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "citation validation",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/hassan-31x/college-scraper/blob/main/uni_scrape/validation.py",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ", and ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "publication boundary",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/hassan-31x/college-scraper/blob/main/uni_scrape/registry.py",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0
+      }
+    },
+    "heroImage": {
+      "id": "article-cover-evidence-backed-extraction",
+      "alt": "Highlighted source passages connected to structured record fields, with one unknown field left empty",
+      "url": "/images/articles/evidence-backed-extraction.webp",
+      "filename": "evidence-backed-extraction.webp",
+      "mimeType": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "createdAt": "2026-10-11T00:00:00.000Z",
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    "categories": [
+      {
+        "id": "Data pipelines",
+        "title": "Data pipelines",
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    ],
+    "meta": {
+      "title": "A Scraped Value Needs Its Evidence Attached",
+      "description": "How I structure admissions data in UniScrape so every assertion keeps its scope, citations, and unresolved questions.",
+      "image": {
+        "id": "article-cover-evidence-backed-extraction",
+        "alt": "Highlighted source passages connected to structured record fields, with one unknown field left empty",
+        "url": "/images/articles/evidence-backed-extraction.webp",
+        "filename": "evidence-backed-extraction.webp",
+        "mimeType": "image/webp",
+        "width": 1536,
+        "height": 1024,
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    },
+    "populatedAuthors": [
+      {
+        "name": "Muhammad Hassan"
+      }
+    ],
+    "publishedAt": "2026-10-11T00:00:00.000Z",
+    "createdAt": "2026-10-11T00:00:00.000Z",
+    "updatedAt": "2026-10-11T00:00:00.000Z",
+    "_status": "published"
+  },
+  {
+    "id": "article-vision-evaluation-coverage",
+    "title": "A Vision Model's Score Needs a Denominator",
+    "slug": "vision-evaluation-coverage",
+    "description": "Why I track coverage, failures, language groups, and scorer settings alongside BERTScore in visual question answering.",
+    "content": {
+      "root": {
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "In my multilingual visual question-answering evaluation project, I separate generating predictions from scoring them. That lets me rerun evaluation without paying for inference again. It also makes an uncomfortable question visible: which examples actually made it into the average?",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Successful answers are a subset",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The pipeline records predictions and errors in JSONL. Evaluation selects the latest record for each combination of track, split, example ID, image variant, and task. That keeps retries from being counted as new examples.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Before scoring, it treats an empty or special-token-only prediction as an error, even if the request was marked successful. A completed request isn't necessarily an answer.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Consider this hypothetical comparison, not a result from my benchmark:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "python",
+              "code": "runs = {\n    \"A\": {\"attempted\": 100, \"successful\": 60, \"mean_f1\": 0.84},\n    \"B\": {\"attempted\": 100, \"successful\": 100, \"mean_f1\": 0.80},\n}\nfor name, run in runs.items():\n    coverage = run[\"successful\"] / run[\"attempted\"]\n    print(name, coverage, run[\"mean_f1\"])\n# A 0.6 0.84\n# B 1.0 0.8"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "A has a higher score over its successful answers. B answered every attempted example. I can't call A the better system from those two averages alone. The failed examples could be systematically harder, or concentrated in one language. It's the same problem as grading a class after quietly removing the unfinished exam papers.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "My evaluator reports attempted and successful counts, errors, and latency alongside answer scores. For QA, I also need to distinguish successful requests from scored rows: scoring requires a reference answer and the selected split and image variant.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Similarity doesn't establish correctness",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Exact match is easy to interpret but sensitive to wording. My implementation strips surrounding whitespace and case-folds strings; it doesn't normalize every punctuation difference or paraphrase.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "BERTScore compares contextual token embeddings and reports precision, recall, and F1. It can recognize similarity that exact match misses, but it isn't a factual verifier. A fluent answer about the wrong cultural object can still share substantial language with the reference. The ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "BERTScore implementation",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/Tiiiger/bert_score",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " also documents why model and tokenizer choices affect scores.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "I record the scoring model, tokenizer setting, IDF setting, baseline rescaling, and package version where available. My evaluator uses ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "bert-base-multilingual-cased",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " and labels the result a local estimate. Those settings don't establish equivalence with an official competition scorer.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Keep language tracks visible",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The evaluator calculates a micro average over scored examples and a macro average over language-track means. Micro gives larger tracks more influence. Macro gives each included track equal weight.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Neither average tells me everything about a missing track. The code excludes tracks with no score from the macro calculation, so I need to inspect per-track counts rather than interpret that macro value as complete multilingual coverage.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The project also makes separate image-evidence requests. Their output includes visible details, image text, location clues, and uncertain inferences. Parsing those fields checks structure. Human review is still needed to judge whether the details are actually visible and whether the cultural claims are supported.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Before comparing two models, I would fix the same example set, inspect failures by track, and review a sample of answers against their images. A slightly higher F1 is interesting. Knowing exactly what it was calculated over makes it useful.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "Prediction selection, scoring, and review-sheet generation",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "https://github.com/hassan-31x/semeval-model-eval/blob/main/evaluate_run.py",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0
+      }
+    },
+    "heroImage": {
+      "id": "article-cover-vision-evaluation-coverage",
+      "alt": "An image passing through two evaluation tracks with different successful-answer coverage",
+      "url": "/images/articles/vision-evaluation-coverage.webp",
+      "filename": "vision-evaluation-coverage.webp",
+      "mimeType": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "createdAt": "2026-10-11T00:00:00.000Z",
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    "categories": [
+      {
+        "id": "Model evaluation",
+        "title": "Model evaluation",
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    ],
+    "meta": {
+      "title": "A Vision Model's Score Needs a Denominator",
+      "description": "Why I track coverage, failures, language groups, and scorer settings alongside BERTScore in visual question answering.",
+      "image": {
+        "id": "article-cover-vision-evaluation-coverage",
+        "alt": "An image passing through two evaluation tracks with different successful-answer coverage",
+        "url": "/images/articles/vision-evaluation-coverage.webp",
+        "filename": "vision-evaluation-coverage.webp",
+        "mimeType": "image/webp",
+        "width": 1536,
+        "height": 1024,
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    },
+    "populatedAuthors": [
+      {
+        "name": "Muhammad Hassan"
+      }
+    ],
+    "publishedAt": "2026-10-11T00:00:00.000Z",
+    "createdAt": "2026-10-11T00:00:00.000Z",
+    "updatedAt": "2026-10-11T00:00:00.000Z",
+    "_status": "published"
+  },
+  {
+    "id": "article-restaurant-agent-tool-boundary",
+    "title": "The Restaurant Agent Shouldn't Invent the Bill",
+    "slug": "restaurant-agent-tool-boundary",
+    "description": "Lessons from my restaurant assistant: named tool arguments, application-owned totals, and handling repeated order requests.",
+    "content": {
+      "root": {
+        "type": "root",
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "In my restaurant assistant prototype, I gave the model tools for reading the menu, creating orders, adding items, and checking the bill. The useful boundary is between a conversational request and an application action. The model can ask to add a coffee. The application has to decide what that means for the stored order.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Make the tool result the source of truth",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The prototype keeps a map of callable functions. The model produces an action containing a function name and input. The dispatcher looks up the function, executes it, and returns an observation to the conversation. The model then uses that observation to respond.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "For order creation, my code looks up each requested item in the menu, separates valid from invalid items, computes the total, and saves an order record. The result contains both item lists. If a customer asks for a burger and something the restaurant doesn't sell, the response can explain the partial result instead of pretending the whole request succeeded.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The current menu prices a burger at $10.99 and coffee at $3.99, so adding them gives $14.98. That number comes from application data and arithmetic. I don't need a language model to rediscover addition during a phone call.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "JSON doesn't validate the action",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "My early dispatcher passes object values into positional function arguments:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "javascript",
+              "code": "output = fn(...Object.values(parsed.input))"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "That's a fragile contract. JSON objects represent named fields, but the function expects an argument order. Swapping the property order can swap the arguments without making the JSON invalid.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "For a more reliable version, I would validate each tool's input and explicitly select its named fields. Here's a proposed replacement for the ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "createOrder",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " branch, not code the prototype already ships:",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "block",
+            "version": 2,
+            "format": "",
+            "fields": {
+              "blockType": "code",
+              "language": "javascript",
+              "code": "function dispatchCreateOrder(input) {\n  if (\n    !input ||\n    typeof input.customerName !== 'string' ||\n    !Array.isArray(input.items) ||\n    input.items.length === 0 ||\n    !input.items.every(item => typeof item === 'string')\n  ) {\n    return { ok: false, error: 'Invalid order input' }\n  }\n  return createOrder(input.customerName, input.items)\n}"
+            }
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "That catches shape errors at the boundary. Domain checks still belong inside the application: allowed status transitions, item availability, order ownership, and whether an empty order should ever be saved. My current prototype filters invalid items but can still create an empty order when every item is invalid.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "heading",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Retrying a mutation changes the problem",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "tag": "h2"
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Reading a menu twice is harmless. Creating an order twice isn't. A network interruption can leave a caller unsure whether an action succeeded, even when the server already saved it.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "The prototype creates IDs with ",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Date.now()",
+                "format": 16,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": " and writes JSON files. It doesn't provide durable idempotency or transactional updates. For a deployed version, I would assign a stable request key to each confirmed order action, persist it with the order under a uniqueness constraint, and return the existing result when that action is retried. That is a claim ticket: presenting it twice should retrieve the same order.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "I would also store money in integer minor units and use transactional persistence for modifications. Rounding floating-point totals for display doesn't solve concurrent updates.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "text",
+                "version": 1,
+                "text": "Voice adds another reason to be careful about mutations. A customer can interrupt or correct an item mid-sentence. I would keep draft order changes separate from confirmed submission, then speak the actual tool result. The next test I want is simple: interrupt, reconnect, and repeat a request while checking that only one intended order exists.",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          },
+          {
+            "type": "paragraph",
+            "version": 1,
+            "children": [
+              {
+                "type": "link",
+                "version": 1,
+                "children": [
+                  {
+                    "type": "text",
+                    "version": 1,
+                    "text": "Restaurant Voice and Ordering Agent in my portfolio",
+                    "format": 0,
+                    "mode": "normal",
+                    "style": "",
+                    "detail": 0
+                  }
+                ],
+                "direction": "ltr",
+                "format": "",
+                "indent": 0,
+                "fields": {
+                  "linkType": "custom",
+                  "url": "/projects#restaurant-voice-and-ordering-agent",
+                  "newTab": false
+                }
+              },
+              {
+                "type": "text",
+                "version": 1,
+                "text": ".",
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "detail": 0
+              }
+            ],
+            "direction": "ltr",
+            "format": "",
+            "indent": 0,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0
+      }
+    },
+    "heroImage": {
+      "id": "article-cover-restaurant-agent-tool-boundary",
+      "alt": "A voice request passing through a validation gate before becoming a restaurant order",
+      "url": "/images/articles/restaurant-agent-tool-boundary.webp",
+      "filename": "restaurant-agent-tool-boundary.webp",
+      "mimeType": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "createdAt": "2026-10-11T00:00:00.000Z",
+      "updatedAt": "2026-10-11T00:00:00.000Z"
+    },
+    "categories": [
+      {
+        "id": "Agent engineering",
+        "title": "Agent engineering",
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    ],
+    "meta": {
+      "title": "The Restaurant Agent Shouldn't Invent the Bill",
+      "description": "Lessons from my restaurant assistant: named tool arguments, application-owned totals, and handling repeated order requests.",
+      "image": {
+        "id": "article-cover-restaurant-agent-tool-boundary",
+        "alt": "A voice request passing through a validation gate before becoming a restaurant order",
+        "url": "/images/articles/restaurant-agent-tool-boundary.webp",
+        "filename": "restaurant-agent-tool-boundary.webp",
+        "mimeType": "image/webp",
+        "width": 1536,
+        "height": 1024,
+        "createdAt": "2026-10-11T00:00:00.000Z",
+        "updatedAt": "2026-10-11T00:00:00.000Z"
+      }
+    },
+    "populatedAuthors": [
+      {
+        "name": "Muhammad Hassan"
+      }
+    ],
+    "publishedAt": "2026-10-11T00:00:00.000Z",
+    "createdAt": "2026-10-11T00:00:00.000Z",
+    "updatedAt": "2026-10-11T00:00:00.000Z",
+    "_status": "published"
+  }
+]
