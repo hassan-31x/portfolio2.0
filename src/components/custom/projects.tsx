@@ -9,14 +9,19 @@ import { ProjectTypes } from '@/constants/project'
 import StackItem from './stack-item'
 import { projectAnchor } from '@/utilities/projectAnchor'
 
-type Props = { projects: ProjectTypes; showAllLink?: boolean }
+type Props = { projects: ProjectTypes; showAllLink?: boolean; heading?: string; id?: string }
 
-export default function Projects({ projects, showAllLink = false }: Props) {
+export default function Projects({
+  projects,
+  showAllLink = false,
+  heading = 'Selected projects',
+  id,
+}: Props) {
   const reduceMotion = useReducedMotion()
   return (
-    <section className="portfolio-section" aria-label="Selected projects">
+    <section id={id} className="portfolio-section scroll-mt-20" aria-label={heading}>
       <div className="px-4 pt-2">
-        <SectionHeading>Selected projects</SectionHeading>
+        <SectionHeading>{heading}</SectionHeading>
       </div>
       <div className="project-grid grid grid-cols-1 sm:grid-cols-2">
         {projects.map((project, index) => {
@@ -42,21 +47,22 @@ export default function Projects({ projects, showAllLink = false }: Props) {
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: (index % 2) * 0.08 }}
             >
-              {preview && (primaryHref ? (
-                <a
-                  href={primaryHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${live ? 'Visit' : 'Source code for'} ${project.title}`}
-                  className="group block overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800"
-                >
-                  {preview}
-                </a>
-              ) : (
-                <div className="overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
-                  {preview}
-                </div>
-              ))}
+              {preview &&
+                (primaryHref ? (
+                  <a
+                    href={primaryHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${live ? 'Visit' : 'Source code for'} ${project.title}`}
+                    className="group block overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800"
+                  >
+                    {preview}
+                  </a>
+                ) : (
+                  <div className="overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
+                    {preview}
+                  </div>
+                ))}
               <div className="flex items-center justify-between gap-3">
                 <h3 className="min-w-0 text-[15px] font-semibold leading-snug text-primary">
                   {primaryHref ? (

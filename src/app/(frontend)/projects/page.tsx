@@ -4,6 +4,7 @@ import { Heading } from '@/components/custom/heading'
 import Projects from '@/components/custom/projects'
 import { Subheading } from '@/components/custom/subheading'
 import { projects } from '@/constants/project'
+import ClientProjects from '@/components/custom/client-projects'
 
 export default function ProjectsPage() {
   return (
@@ -11,10 +12,11 @@ export default function ProjectsPage() {
       <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Projects</Heading>
         <Subheading>
-          AI agents, RAG systems, multimodal applications, and the engineering behind them.
-          Explore the live demos, source code, and details behind each one.
+          Personal experiments and real business work. Explore AI applications, dealership
+          platforms, commerce, and the websites I’ve built for clients.
         </Subheading>
-        <Projects projects={projects} />
+        <Projects projects={projects} heading="Personal projects" id="personal-projects" />
+        <ClientProjects />
       </Container>
     </div>
   )
@@ -22,6 +24,6 @@ export default function ProjectsPage() {
 
 export const metadata = pageMetadata(
   'Projects | Muhammad Hassan',
-  'Explore Muhammad Hassan’s voice agents, RAG systems, multimodal AI applications, and engineering projects, with demos and source code where available.',
+  'Explore Muhammad Hassan’s personal AI projects and client work, including dealership platforms, business applications, jewelry storefronts, and freelance websites.',
   '/projects',
 )
