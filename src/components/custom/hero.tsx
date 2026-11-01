@@ -54,9 +54,11 @@ export default function Hero() {
         </div>
       </div>
       <p className="mt-5 max-w-2xl text-sm leading-6 text-secondary">
-        I build <strong className="font-medium text-primary">agents, RAG pipelines, and multimodal AI systems.</strong>{' '}
-        Currently an AI Product Engineer at Useryze, combining Python and LLM tooling with full-stack
-        product engineering to take AI workflows from source data to usable products.
+        I build{' '}
+        <strong className="font-medium text-primary">AI agents and intelligent systems</strong> that
+        can reason, use tools, and execute complex workflows to solve real world problems. My work
+        spans core LLM engineering, including model fine tuning, multimodal learning, speech AI,
+        RAG, and evaluation.
       </p>
       <div className="mt-3 flex items-center gap-2" aria-label="Social links">
         {profile.socials.map((link) => {

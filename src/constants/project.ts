@@ -1,4 +1,5 @@
 import type { Technology } from './technology'
+import { researchProjects } from './research-projects'
 
 export type ProjectTypes = {
   title: string
@@ -11,13 +12,14 @@ export type ProjectTypes = {
   details?: string[]
 }[]
 
-export const featuredProjects: ProjectTypes = [
+const applicationProjects: ProjectTypes = [
   {
     title: 'Snap AI',
     src: '/images/snapai.png',
     href: 'https://snap-ai-studio.vercel.app',
     repository: 'https://github.com/hassan-31x/snapai-studio',
-    description: 'AI-powered product photography and ad creative studio with image generation, campaign formats & canvas editing',
+    description:
+      'AI-powered product photography and ad creative studio with image generation, campaign formats & canvas editing',
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'MongoDB', 'OpenAI'],
   },
   {
@@ -45,8 +47,7 @@ export const featuredProjects: ProjectTypes = [
     src: '/images/postloom.png',
     href: 'https://postloom-ai-writer.vercel.app',
     repository: 'https://github.com/hassan-31x/postloom-ai-writer',
-    description:
-      'A RAG-powered content workflow that turns source material into editable drafts.',
+    description: 'A RAG-powered content workflow that turns source material into editable drafts.',
     stack: ['Python', 'LangChain', 'OpenAI', 'Pinecone', 'Next.js', 'Prisma'],
     details: [
       'Connects scraped social content to document ingestion, embeddings, semantic retrieval, and AI-generated drafts.',
@@ -110,42 +111,29 @@ export const featuredProjects: ProjectTypes = [
   },
   {
     title: 'Crosswalk RL',
-    src: '/images/projects/road-crossing-rl.webp',
+    src: '/images/projects/posters/road-crossing-rl-refined.webp',
     href: '#',
     repository: 'https://github.com/hassan-31x/road-crossing-rl',
     description: 'A DQN pedestrian agent learning to navigate simulated traffic.',
     stack: ['Python', 'PyTorch', 'Gymnasium', 'PyBullet', 'NumPy', 'Matplotlib'],
     imageAlt:
-      'Concept illustration of a pedestrian agent following a route across a simulated intersection',
+      'Violet Crosswalk concept poster with a miniature traffic environment, occupancy cells, and an agent trajectory',
     details: [
       'A collaborative reinforcement-learning project with a custom traffic simulation, coordinated signals, collision-aware rewards, and sequential crossings.',
       'Includes a PyTorch DQN agent, replay buffer, training/evaluation scripts, checkpoint save/load support, and a training-progress plot.',
       'Built with @AbdullahShheik and @aanasakhtar. My contributions include environment improvements, zebra-crossing support, and multi-round navigation.',
     ],
   },
-  {
-    title: 'BytePair Tokenizer',
-    src: '/images/projects/gpt-tokenizer.webp',
-    href: '#',
-    repository: 'https://github.com/hassan-31x/gpt-tokenizer',
-    description: 'Train, save, and inspect a byte-level BPE tokenizer from scratch.',
-    stack: ['Python'],
-    imageAlt: 'Concept illustration of individual byte tiles merging into larger subword tokens',
-    details: [
-      'Learns frequent byte-pair merges from a text corpus and builds a configurable vocabulary without a tokenizer library.',
-      'Supports UTF-8 encoding and decoding, model save/load, human-readable vocabulary export, and round-trip checks.',
-      "Includes an example trained vocabulary and merge summary; the implementation uses Python's standard library.",
-    ],
-  },
+
   {
     title: 'Pattern Search Benchmarks',
-    src: '/images/projects/string-matching-algo-comparison.webp',
+    src: '/images/projects/posters/string-matching-algo-comparison-refined.webp',
     href: '#',
     repository: 'https://github.com/hassan-31x/string-matching-algo-comparison',
     description: 'Benchmark five search algorithms across text, DNA, and adversarial inputs.',
     stack: ['Python', 'NumPy', 'Matplotlib'],
     imageAlt:
-      'Concept illustration of five parallel search tracks highlighting matching subsequences',
+      'Mint Pattern Search concept poster with encoded sequences aligned beneath a precision scanner',
     details: [
       'Implements Naive, Rabin–Karp, KMP, Boyer–Moore–Horspool, and frequency-based anchor selection (FBAS).',
       'Measures character comparisons and runtime across natural text, DNA, synthetic inputs, and varying text/pattern lengths.',
@@ -154,41 +142,29 @@ export const featuredProjects: ProjectTypes = [
   },
   {
     title: 'RISC-V Processor',
-    src: '/images/projects/risc-v-processor.webp',
+    src: '/images/projects/posters/risc-v-processor-refined.webp',
     href: '#',
     repository: 'https://github.com/hassan-31x/risc_v_processor',
     description: 'Explore single-cycle and pipelined processor designs in Verilog.',
     stack: ['Verilog', 'Vivado'],
-    imageAlt: 'Concept illustration of a processor chip and five connected pipeline stages',
+    imageAlt:
+      'Terracotta RISC V concept poster with a detailed processor package and etched silicon functional regions',
     details: [
       'Implements instruction decoding, register files, ALU operations, data memory, and control logic across two processor designs.',
       'The pipelined design includes forwarding and load-use hazard detection; the repository contains simulation testbenches and Vivado artifacts.',
       'An educational hardware implementation; no physical chip fabrication or hardware performance result is claimed.',
     ],
   },
-  {
-    title: 'Visual QA Benchmarks',
-    src: '/images/projects/semeval-model-eval.webp',
-    href: '#',
-    repository: 'https://github.com/hassan-31x/semeval-model-eval',
-    description: 'Compare vision-language models on multilingual image questions.',
-    stack: ['Python', 'PyTorch', 'Transformers', 'Hugging Face Datasets', 'Pillow', 'BERTScore'],
-    imageAlt:
-      'Concept illustration of an image passing through parallel model evaluation pipelines',
-    details: [
-      'A SemEval cultural visual question-answering research pipeline with separate question-answering and image-evidence requests.',
-      'Supports Hugging Face inference and a local LM Studio runner, resumable predictions, image variants, and per-language comparisons.',
-      'Reports BERTScore, exact match, coverage, latency, and structured visual-output checks; no benchmark placement is claimed.',
-    ],
-  },
+
   {
     title: 'Blood Donation Manager',
-    src: '/images/projects/blood-donation-system.webp',
+    src: '/images/projects/posters/blood-donation-system-refined.webp',
     href: '#',
     repository: 'https://github.com/hassan-31x/blood-donation-system',
     description: 'Coordinate donors, hospitals, appointments, and blood-bank inventory.',
     stack: ['Python', 'Streamlit', 'SQL Server', 'pyodbc', 'Matplotlib'],
-    imageAlt: 'Concept illustration connecting donors, a hospital, and blood-bank inventory',
+    imageAlt:
+      'Steel blue Blood Bank concept poster with tracked specimen cartridges on an inventory rack',
     details: [
       'A database-management course project with separate donor, hospital, and administrator workflows.',
       'Handles donor registration, appointments, donation history, blood requests, inventory, dispatch, and blood-drive management.',
@@ -197,4 +173,7 @@ export const featuredProjects: ProjectTypes = [
   },
 ]
 
-export const projects: ProjectTypes = featuredProjects
+// Keep the original personal project order and homepage selection.
+export const mainProjects: ProjectTypes = applicationProjects
+export const featuredProjects: ProjectTypes = mainProjects
+export const projects: ProjectTypes = [...mainProjects, ...researchProjects]

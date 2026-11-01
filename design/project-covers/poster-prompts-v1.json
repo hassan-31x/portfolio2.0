@@ -1,0 +1,58 @@
+[
+  {
+    "name": "gpt-2",
+    "prompt": "Use case: ads-marketing. Create a premium, playful art directed launch poster as a LANDSCAPE portfolio project thumbnail, roughly 8:5. Project: a GPT-2 language model built from scratch. Bright saturated tangerine orange background, gigantic beautifully typeset cream text 'GPT-2', and one striking sculptural stack of polished chrome and electric blue blocks suggesting a language machine. Make this feel like a creative technology festival announcement or high end product launch poster, not a lecture slide or textbook diagram. Bold asymmetric composition, tactile 3D forms with beautiful studio shadows, sophisticated bold typography, ample negative space, very legible at only 320 pixels wide. The ONLY text is 'GPT-2'. No other words, no tiny type, no code, no charts, no diagram, no panels, no borders, no mock browser, no watermark. Keep the important content inside a generous crop-safe margin. Full bleed color, professional graphic design, energetic and memorable.",
+    "sourceFile": "exec-6f0b501c-185a-4de0-8cb4-1368c74dc824.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/gpt-2.webp"
+  },
+  {
+    "name": "gpt-tokenizer",
+    "prompt": "Use case: ads-marketing. Create a landscape 8:5 poster for a professional engineering portfolio project. It must feel like a playful, beautifully art directed product announcement, not a lecture slide, technical diagram, icon on dark background, or UI screenshot. Color is the hero: full bleed bold vivid backdrop, tactile sculptural materials, clever composition and beautiful lighting. One dominant visual idea, very few elements, broad negative space. Huge crisp intentional typography, immediately readable at 320 pixels wide. No small text, no secondary copy, no code, no labels, no panels, no charts, no borders, no watermark. Keep important content within generous crop safe margins. Project: byte pair encoding. An exuberant electric pink and cobalt blue graphic poster: four oversized glossy candy-like letter blocks B Y T E playfully snapping together like a satisfying tactile word puzzle, with a few sculptural rounded parts. Type and physical blocks interact confidently rather than a diagram. ONLY title text 'BYTE PAIR' and the letters on the four blocks. High end design toy meets creative coding festival. Distinctive bold layout, not an educational chart.",
+    "sourceFile": "exec-809706bb-5453-48bc-97dc-5a7a727efffb.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/gpt-tokenizer.webp"
+  },
+  {
+    "name": "orpheus-urdu",
+    "prompt": "Use case: ads-marketing. Create a landscape 8:5 poster for a professional engineering portfolio project. It must feel like a playful, beautifully art directed product announcement, not a lecture slide, technical diagram, icon on dark background, or UI screenshot. Color is the hero: full bleed bold vivid backdrop, tactile sculptural materials, clever composition and beautiful lighting. One dominant visual idea, very few elements, broad negative space. Huge crisp intentional typography, immediately readable at 320 pixels wide. No small text, no secondary copy, no code, no labels, no panels, no charts, no borders, no watermark. Keep important content within generous crop safe margins. Project: Urdu speech AI. A bold teal and warm coral orange announcement poster. A single sculptural glossy coral speech ribbon twisting into a flowing sound shape, with one large soft metallic audio orb. Huge expressive title text 'URDU' integrates with the flowing form. Cinematic yet cheerful, tactile contemporary 3D art, strong studio shadows, confident spacious composition. ONLY text 'URDU'. No waveform charts or technical lines.",
+    "sourceFile": "exec-8a3b1864-f03e-41ce-a392-094ba8d9587e.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/orpheus-urdu.webp"
+  },
+  {
+    "name": "semeval-model-eval",
+    "prompt": "Use case: ads-marketing. Create a landscape 8:5 poster for a professional engineering portfolio project. It must feel like a playful, beautifully art directed product announcement, not a lecture slide, technical diagram, icon on dark background, or UI screenshot. Color is the hero: full bleed bold vivid backdrop, tactile sculptural materials, clever composition and beautiful lighting. One dominant visual idea, very few elements, broad negative space. Huge crisp intentional typography, immediately readable at 320 pixels wide. No small text, no secondary copy, no code, no labels, no panels, no charts, no borders, no watermark. Keep important content within generous crop safe margins. Project: culturally grounded multimodal visual question answering. A sunny yellow and vivid ultramarine graphic poster. A playful oversized blue glass camera-eye sculpture and one coral speech bubble orbiting a simple small globe, two or three bold sculptural forms with real depth and cast shadows. Huge elegant condensed poster text 'CULTURE QA' in deep blue, integrated into the composition. Warm, curious, polished art direction. ONLY text 'CULTURE QA'. No scientific diagrams or connecting lines.",
+    "sourceFile": "exec-92fc80cb-308f-4e4c-8b8c-1f4de4dd4986.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/semeval-model-eval.webp"
+  },
+  {
+    "name": "road-crossing-rl",
+    "prompt": "Use case: ads-marketing. Create a landscape 8:5 poster for a professional engineering portfolio project. It must feel like a playful, beautifully art directed product announcement, not a lecture slide, technical diagram, icon on dark background, or UI screenshot. Color is the hero: full bleed bold vivid backdrop, tactile sculptural materials, clever composition and beautiful lighting. One dominant visual idea, very few elements, broad negative space. Huge crisp intentional typography, immediately readable at 320 pixels wide. No small text, no secondary copy, no code, no labels, no panels, no charts, no borders, no watermark. Keep important content within generous crop safe margins. Project: reinforcement learning pedestrian traffic crossing. A charming sophisticated game launch poster: a single little rounded lime green pedestrian character confidently stepping onto a chunky stylized zebra crossing on a saturated violet background, one orange toy car at the edge. Beautiful tactile 3D collectible toy style, strong shadows and dramatic perspective, simple close composition, not a detailed city scene. Bold giant title text 'CROSSWALK' in cream. ONLY text 'CROSSWALK'. Fun, smart, refined, minimal.",
+    "sourceFile": "exec-c1256f33-fb58-44ea-88bd-a07ab9dffef3.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/road-crossing-rl.webp"
+  },
+  {
+    "name": "risc-v-processor",
+    "prompt": "Use case: ads-marketing. Create a landscape 8:5 poster for a professional engineering portfolio project. It must feel like a playful, beautifully art directed product announcement, not a lecture slide, technical diagram, icon on dark background, or UI screenshot. Color is the hero: full bleed bold vivid backdrop, tactile sculptural materials, clever composition and beautiful lighting. One dominant visual idea, very few elements, broad negative space. Huge crisp intentional typography, immediately readable at 320 pixels wide. No small text, no secondary copy, no code, no labels, no panels, no charts, no borders, no watermark. Keep important content within generous crop safe margins. Project: RISC V processor architecture. Bold fiery vermilion background and a single oversized playful ice blue translucent processor chip floating diagonally like a glossy design collectible, beautiful metallic pins, an orange acrylic base and tactile highlights. Huge cream poster typography 'RISC-V' balanced in a daring asymmetrical composition. Premium technology launch announcement meets design toy. ONLY text 'RISC-V'. No diagrams, no circuit maps, no technical microtext.",
+    "sourceFile": "exec-d0dbf5d2-aa67-4287-b3b4-d05de72fc1ca.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/risc-v-processor.webp"
+  },
+  {
+    "name": "string-matching-algo-comparison",
+    "prompt": "Use case: ads-marketing. Create a landscape 8:5 poster for a professional engineering portfolio project. It must feel like a playful, beautifully art directed product announcement, not a lecture slide, technical diagram, icon on dark background, or UI screenshot. Color is the hero: full bleed bold vivid backdrop, tactile sculptural materials, clever composition and beautiful lighting. One dominant visual idea, very few elements, broad negative space. Huge crisp intentional typography, immediately readable at 320 pixels wide. No small text, no secondary copy, no code, no labels, no panels, no charts, no borders, no watermark. Keep important content within generous crop safe margins. Project: pattern matching algorithms. A punchy mint green and coral red poster with a single oversized glossy coral magnifying glass lifting one brilliant cobalt blue letter-shaped puzzle piece from a short chunky row of pale cream letter-like pieces. A playful visual metaphor for finding a match, with excellent studio shadows, tactile plastic forms and broad space. Huge dark green title 'PATTERN SEARCH'. ONLY text 'PATTERN SEARCH'. Sophisticated contemporary campaign art, not a classroom illustration or chart.",
+    "sourceFile": "exec-b235acce-fee8-48f2-80ee-41b3b62b1336.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/string-matching-algo-comparison.webp"
+  },
+  {
+    "name": "blood-donation-system",
+    "prompt": "Use case: ads-marketing. Create a landscape 8:5 poster for a professional engineering portfolio project. It must feel like a playful, beautifully art directed product announcement, not a lecture slide, technical diagram, icon on dark background, or UI screenshot. Color is the hero: full bleed bold vivid backdrop, tactile sculptural materials, clever composition and beautiful lighting. One dominant visual idea, very few elements, broad negative space. Huge crisp intentional typography, immediately readable at 320 pixels wide. No small text, no secondary copy, no code, no labels, no panels, no charts, no borders, no watermark. Keep important content within generous crop safe margins. Project: blood donation coordination software. A warm playful health campaign poster with saturated sky blue background and one large glossy cherry red blood drop sculpture, a small cream heart cutout embossed inside it, softly rounded tactile plastic with bold realistic studio shadow. Giant creamy poster type 'GIVE LIFE' arranged with confident art direction and broad negative space. A joyful refined design object, not a stock medical icon or slide. ONLY text 'GIVE LIFE'.",
+    "sourceFile": "exec-702c74dc-0d9e-4dc9-be50-d610199fb503.png",
+    "generator": "Built-in image_gen",
+    "output": "public/images/projects/posters/blood-donation-system.webp"
+  }
+]

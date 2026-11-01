@@ -2,13 +2,36 @@ export const profile = {
   name: 'Muhammad Hassan',
   email: 'mohammadhassanrizwan@gmail.com',
   github: 'hassan-31x',
-  roles: ['AI Product Engineer', 'Agentic Systems', 'Full Stack'],
+  roles: ['AI Product Engineer', 'Model Engineering', 'Multimodal Systems', 'Agentic Systems'],
   skills: [
     { label: 'Languages', value: 'Python, C/C++, TypeScript, JavaScript, HTML/CSS' },
-    { label: 'Agents & automation', value: 'LangChain, LangGraph, LangSmith, OpenRouter, AI APIs & SDKs' },
-    { label: 'Product engineering', value: 'Next.js, React, Zustand, Tailwind CSS, Node.js, Express.js, Socket.IO, WebRTC, Cypress' },
-    { label: 'Databases & CMS', value: 'Pinecone, Weaviate, PostgreSQL, MongoDB, Firebase, Supabase, Strapi, Sanity, Payload, Prisma' },
-    { label: 'Infrastructure', value: 'Redis, Kafka, Docker, AWS (EC2, S3, Amplify, Lambda), Kubernetes, Jenkins' },
+    {
+      label: 'Models & training',
+      value:
+        'PyTorch, Transformers, causal language modeling, BPE tokenization, LoRA, SNAC speech tokens',
+    },
+    {
+      label: 'AI evaluation',
+      value: 'Multilingual visual QA, BERTScore, vision ablations, WER/CER, checkpoint analysis',
+    },
+    {
+      label: 'Agents & automation',
+      value: 'LangChain, LangGraph, LangSmith, OpenRouter, AI APIs & SDKs',
+    },
+    {
+      label: 'Product engineering',
+      value:
+        'Next.js, React, Zustand, Tailwind CSS, Node.js, Express.js, Socket.IO, WebRTC, Cypress',
+    },
+    {
+      label: 'Databases & CMS',
+      value:
+        'Pinecone, Weaviate, PostgreSQL, MongoDB, Firebase, Supabase, Strapi, Sanity, Payload, Prisma',
+    },
+    {
+      label: 'Infrastructure',
+      value: 'Redis, Kafka, Docker, AWS (EC2, S3, Amplify, Lambda), Kubernetes, Jenkins',
+    },
   ],
   socials: [
     { name: 'X', href: 'https://x.com/hassan_dev31', icon: 'x' },

@@ -1,10 +1,18 @@
 import type { MetadataRoute } from 'next'
 
 import { getServerSideURL } from '@/utilities/getURL'
+import { researchProjects } from '@/constants/research-projects'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getServerSideURL()
-  const routes = ['', '/projects', '/about', '/blogs', '/contact']
+  const routes = [
+    '',
+    '/projects',
+    '/about',
+    '/blogs',
+    '/contact',
+    ...researchProjects.map(({ slug }) => `/projects/${slug}`),
+  ]
 
   return routes.map((route, index) => ({
     url: `${siteUrl}${route}`,

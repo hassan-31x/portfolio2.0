@@ -46,6 +46,7 @@ export const portfolioEntries: SearchEntry[] = [
         project.description,
         ...project.stack,
         ...(project.details || []),
+        ...('evidence' in project && Array.isArray(project.evidence) ? project.evidence : []),
         project.repository || '',
       ].join(' '),
     }),

@@ -49,6 +49,6 @@ export default async function Home() {
 
 export const metadata = pageMetadata(
   'Muhammad Hassan · AI Product Engineer',
-  'AI Product Engineer specializing in agentic and multimodal systems. Explore RAG pipelines, voice agents, AI products, work experience, and engineering projects.',
+  'AI Product Engineer specializing in agentic and multimodal systems. Explore model adaptation, multimodal research, autonomous agents, and AI products.',
   '/',
 )

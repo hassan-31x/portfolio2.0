@@ -9,12 +9,19 @@ import { ProjectTypes } from '@/constants/project'
 import StackItem from './stack-item'
 import { projectAnchor } from '@/utilities/projectAnchor'
 
-type Props = { projects: ProjectTypes; showAllLink?: boolean; heading?: string; id?: string }
+type Props = {
+  projects: ProjectTypes
+  showAllLink?: boolean
+  heading?: string
+  id?: string
+  detailed?: boolean
+}
 
 export default function Projects({
   projects,
   showAllLink = false,
   heading = 'Selected projects',
+  detailed = false,
   id,
 }: Props) {
   const reduceMotion = useReducedMotion()
@@ -34,7 +41,7 @@ export default function Projects({
               width={600}
               height={340}
               sizes="(max-width: 639px) 100vw, 324px"
-              className="h-44 w-full object-cover object-top transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03] sm:h-48"
+              className={`${project.src.includes('/posters/') ? 'aspect-[8/5]' : 'h-44 sm:h-48'} w-full object-cover object-top transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]`}
             />
           ) : null
           return (
@@ -107,7 +114,11 @@ export default function Projects({
               </div>
               <p
                 title={project.description}
-                className="line-clamp-2 text-[13px] leading-snug text-secondary"
+                className={
+                  detailed
+                    ? 'text-sm leading-6 text-secondary'
+                    : 'line-clamp-2 text-[13px] leading-snug text-secondary'
+                }
               >
                 {project.description}
               </p>
@@ -118,7 +129,7 @@ export default function Projects({
                   ))}
                 </LayoutGroup>
               </div>
-              {/* {project.details && (
+              {detailed && project.details && (
                 <details className="text-[13px] leading-relaxed text-secondary">
                   <summary
                     aria-label={`Details about ${project.title}`}
@@ -132,7 +143,7 @@ export default function Projects({
                     ))}
                   </div>
                 </details>
-              )} */}
+              )}
             </motion.article>
           )
         })}

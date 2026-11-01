@@ -3,7 +3,9 @@ import { Container } from '@/components/custom/container'
 import { Heading } from '@/components/custom/heading'
 import Projects from '@/components/custom/projects'
 import { Subheading } from '@/components/custom/subheading'
-import { projects } from '@/constants/project'
+import { mainProjects } from '@/constants/project'
+import { researchProjects } from '@/constants/research-projects'
+import ResearchProjects from '@/components/custom/research-projects'
 import ClientProjects from '@/components/custom/client-projects'
 
 export default function ProjectsPage() {
@@ -12,10 +14,13 @@ export default function ProjectsPage() {
       <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Projects</Heading>
         <Subheading>
-          Personal experiments and real business work. Explore AI applications, dealership
-          platforms, commerce, and the websites I’ve built for clients.
+          From transformer internals and speech adaptation to multimodal evaluation and deployed AI
+          products. Alongside the research, a selection of software and client work.
         </Subheading>
-        <Projects projects={projects} heading="Personal projects" id="personal-projects" />
+        <section id="personal-projects" className="scroll-mt-20" aria-label="Personal projects">
+          <Projects projects={mainProjects} heading="Personal projects" detailed />
+          <ResearchProjects projects={researchProjects} />
+        </section>
         <ClientProjects />
       </Container>
     </div>
@@ -24,6 +29,6 @@ export default function ProjectsPage() {
 
 export const metadata = pageMetadata(
   'Projects | Muhammad Hassan',
-  'Explore Muhammad Hassan’s personal AI projects and client work, including dealership platforms, business applications, jewelry storefronts, and freelance websites.',
+  'Explore Urdu speech adaptation, MMCultureQA research for SemEval 2027, GPT 2 and BPE implementations, applied AI systems, and client projects.',
   '/projects',
 )
