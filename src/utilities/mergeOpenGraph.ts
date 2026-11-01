@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
 import { getServerSideURL } from './getURL'
+import { socialImage } from '@/constants/social-image'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'AI Product Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents.',
+  description:
+    'AI Product Engineer building agentic and multimodal systems, RAG pipelines, and real-time voice agents.',
   images: [
     {
-      url: `${getServerSideURL()}/opengraph-image`,
-      width: 1200,
-      height: 630,
-      alt: 'Muhammad Hassan, AI Product Engineer',
+      ...socialImage,
+      url: new URL(socialImage.url, getServerSideURL()).href,
+      type: 'image/png',
     },
   ],
   siteName: 'Muhammad Hassan',

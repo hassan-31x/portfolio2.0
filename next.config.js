@@ -23,10 +23,19 @@ const nextConfig = {
       {
         hostname: 'images.unsplash.com',
         protocol: 'https',
-      }
+      },
     ],
   },
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        // Older cached cards still request this URL.
+        source: '/opengraph-image',
+        destination: '/social/portfolio-card-v2.png',
+      },
+    ]
+  },
   redirects,
 }
 

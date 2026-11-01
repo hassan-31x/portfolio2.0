@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import type { Media, Page, Post, Config } from '../payload-types'
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
+import { socialImage } from '@/constants/social-image'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
   const source = image && typeof image === 'object' ? image.sizes?.og?.url || image.url : null
-  return new URL(source || '/opengraph-image', serverUrl).href
+  return new URL(source || socialImage.url, serverUrl).href
 }
 
 export const generateMeta = async ({

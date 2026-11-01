@@ -5,6 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "social:build": "node scripts/build-social-card.mjs",
+    "social:check": "node scripts/check-social-cards.mjs",
     "articles:build": "node scripts/build-articles.mjs",
     "articles:check": "node scripts/build-articles.mjs --check",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build --webpack",

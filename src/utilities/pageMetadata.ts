@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { mergeOpenGraph } from './mergeOpenGraph'
+import { socialImage } from '@/constants/social-image'
 
 export function pageMetadata(title: string, description: string, path: string): Metadata {
   return {
@@ -12,7 +13,7 @@ export function pageMetadata(title: string, description: string, path: string): 
       title,
       description,
       creator: '@hassan_dev31',
-      images: ['/opengraph-image'],
+      images: [socialImage],
     },
   }
 }

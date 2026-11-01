@@ -17,6 +17,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { Navbar } from '@/components/custom/navbar'
 import Footer from '@/components/custom/footer'
 import StructuredData from '@/components/custom/structured-data'
+import { socialImage } from '@/constants/social-image'
 
 const satoshi = localFont({
   src: '../../../public/fonts/Satoshi-Variable.woff2',
@@ -80,6 +81,6 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     creator: '@hassan_dev31',
-    images: ['/opengraph-image'],
+    images: [socialImage],
   },
 }
