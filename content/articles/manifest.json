@@ -1,124 +1,82 @@
 [
   {
     "slug": "urdu-tts-adaptation",
-    "title": "Adapting Orpheus to Urdu: The Data Contract Was Half the Training System",
-    "description": "The actual Orpheus adaptation run: SNAC serialization, context-filtered Urdu data, recoverable T4 training, and the limits of checkpoint CER.",
+    "title": "Teaching a Model to Speak Urdu with Emotion",
+    "description": "Building toward an expressive Urdu voice for a Pakistani audience: language adaptation, emotional conditioning, SNAC tokens, and what the completed T4 run actually demonstrates.",
     "category": "Speech AI",
-    "image": "/images/projects/posters/orpheus-urdu-refined.webp",
-    "alt": "Urdu Orpheus research project poster with a restrained technical speech illustration",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
+    "image": "/images/articles/covers/urdu-tts-adaptation.webp",
+    "alt": "An illustrated speech synthesis instrument turning acoustic token tiles into expressive waveform ribbons",
+    "publishedAt": "2026-11-01T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "slug": "vision-evaluation-coverage",
-    "title": "MMCultureQA: Changing the Scorer Changed Which Model I Would Choose",
-    "description": "Four vision-language models, two scoring backbones, an image-grouped selector that did not beat Pangea, and the SFT work still awaiting results.",
+    "title": "Fine-Tuning, Routing, and Ensembling Vision-Language Models",
+    "description": "SFT label masking, image-grouped model routing, MBR, cascades, and fusion in my culturally grounded multilingual QA experiments.",
     "category": "Model evaluation",
-    "image": "/images/projects/posters/semeval-model-eval-refined.webp",
-    "alt": "MMCultureQA research poster showing a technical multimodal evaluation motif",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
+    "image": "/images/articles/covers/vision-evaluation-coverage.webp",
+    "alt": "Three illustrated neural processing modules feeding candidate answers into a model selection gate",
+    "publishedAt": "2026-10-28T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "slug": "gabor-loss-landscape",
     "title": "A Two-Parameter Gabor Model Is Enough to Expose a Difficult Loss Surface",
     "description": "A two-parameter regression experiment with an analytic gradient check and three initializations that reach different fits.",
     "category": "Optimization",
-    "image": "/images/articles/technical/gabor-landscape.png",
-    "alt": "Three fitted Gabor curves and their gradient-descent paths across a two-parameter loss surface",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
-  },
-  {
-    "slug": "gradient-descent-curvature",
-    "title": "Gradient Descent: The Learning Rate Is a Curvature Constraint",
-    "description": "Deriving the stability boundary from Hessian eigenvalues, then testing learning rates just below and above it.",
-    "category": "Optimization",
-    "image": "/images/articles/technical/gradient-descent-stability.png",
-    "alt": "Loss trajectories for learning rates below and above the quadratic stability boundary",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
+    "image": "/images/articles/covers/gabor-loss-landscape.webp",
+    "alt": "An illustrated undulating loss landscape with beads following distinct optimization paths",
+    "publishedAt": "2026-09-19T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "slug": "stochastic-gradient-noise",
-    "title": "SGD Noise Depends on How the Batch Was Sampled",
-    "description": "An exhaustive mini-batch experiment: unbiased gradients, finite-population corrections, shuffling, and accumulation.",
+    "title": "Why SGD Learns Through Small, Frequent Updates",
+    "description": "Why mini-batches let a model learn through frequent updates, how gradients change between steps, and why a useful SGD step need not lower every batch loss.",
     "category": "Optimization",
-    "image": "/images/articles/technical/sgd-variance.png",
-    "alt": "Exact batch-gradient variance from exhaustive subsets compared with the finite-population formula",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
+    "image": "/images/articles/covers/stochastic-gradient-noise.webp",
+    "alt": "Sample tiles and a sequence of short update steps descending a sculpted surface",
+    "publishedAt": "2026-10-03T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "slug": "momentum-as-gradient-filter",
-    "title": "Momentum Remembers Gradients, Including the Ones You No Longer Want",
-    "description": "The velocity recurrence, its memory timescale, quadratic stability, and why optimizer state belongs in a checkpoint.",
+    "title": "Why Momentum Helps SGD Keep Moving in the Right Direction",
+    "description": "Why noisy, zigzagging gradients need memory, how consistent directions accumulate, and where momentum can still overshoot.",
     "category": "Optimization",
-    "image": "/images/articles/technical/momentum-dynamics.png",
-    "alt": "Parameter paths and losses for gradient descent with and without momentum on an ill-conditioned quadratic",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
+    "image": "/images/articles/covers/momentum-as-gradient-filter.webp",
+    "alt": "An amber sphere tracing a smooth path through a teal valley with fading zigzag trails",
+    "publishedAt": "2026-10-08T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "slug": "adam-moments-bias-correction",
-    "title": "Adam's Second Moment Is Not a Variance Estimate",
-    "description": "A constant-gradient experiment exposing what bias correction changes, what the second moment measures, and why betas specify a timescale.",
+    "title": "Why Adam Adds Adaptive Step Sizes to Momentum",
+    "description": "From momentum to adaptive optimization: why Adam tracks squared gradients, rescales each coordinate, and corrects its initial moments.",
     "category": "Optimization",
-    "image": "/images/articles/technical/adam-bias-correction.png",
-    "alt": "Adam update magnitudes with and without bias correction under a constant unit gradient",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
+    "image": "/images/articles/covers/adam-moments-bias-correction.webp",
+    "alt": "A technical illustration of two memory mechanisms regulating adaptive parameter steps",
+    "publishedAt": "2026-10-17T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "slug": "he-initialization-second-moment",
-    "title": "He Initialization Preserves a Second Moment, Not the Mean-Centered Variance",
-    "description": "Deriving the ReLU second-moment rule, testing forty-layer signal propagation, and explaining where the assumptions stop.",
+    "title": "Why Initialization Matters: Random Weights, Zero Biases, and the Right Scale",
+    "description": "Why identical weights fail, zero biases can work, and fan-in determines the random scale a deep ReLU network needs.",
     "category": "Model fundamentals",
-    "image": "/images/articles/technical/he-signal-propagation.png",
-    "alt": "Activation second moments across forty ReLU layers under three weight initialization scales",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
-  },
-  {
-    "slug": "expectation-in-machine-learning",
-    "title": "Before Taking an Expectation, Name the Distribution",
-    "description": "From discrete moments to multilingual evaluation: conditioning, weighting, coverage, and averages of ratios.",
-    "category": "Probability",
-    "image": "/images/articles/technical/expectation-moments.png",
-    "alt": "A discrete probability distribution with its mean, second moment, and centered variance",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
+    "image": "/images/articles/covers/he-initialization-second-moment.webp",
+    "alt": "Layered neural lattices carrying evenly scaled amber signals through random connections",
+    "publishedAt": "2026-09-26T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   },
   {
     "slug": "bias-variance-noise",
     "title": "Bias, Variance, and Noise Describe Repeated Training Sets",
     "description": "Four hundred synthetic training sets make the squared-error decomposition concrete, including the instability a tidy U-shaped diagram hides.",
     "category": "Generalization",
-    "image": "/images/articles/technical/bias-variance-noise.png",
-    "alt": "Repeated polynomial fits and estimated squared bias, variance, and test error by polynomial degree",
-    "publishedAt": "2026-11-02T00:00:00.000Z"
-  },
-  {
-    "slug": "bpe-merge-order",
-    "title": "BPE Encoding Has to Remember the Order",
-    "description": "Building a byte-level tokenizer in Python: merge ranks, overlapping pairs, and why round-trip checks aren't enough.",
-    "category": "Model fundamentals",
-    "image": "bpe-merge-order.webp",
-    "alt": "Separate byte tiles combining into larger tokens through ordered pair merges"
-  },
-  {
-    "slug": "training-memory-budget",
-    "title": "Why Model Weights Don't Tell You the Training Memory",
-    "description": "The memory arithmetic behind TensorForge, from Adam state to attention tensors, and where a simulator's assumptions stop.",
-    "category": "Training systems",
-    "image": "training-memory-budget.webp",
-    "alt": "A GPU memory tray holding separate blocks for weights, gradients, optimizer state, and activations"
-  },
-  {
-    "slug": "evidence-backed-extraction",
-    "title": "A Scraped Value Needs Its Evidence Attached",
-    "description": "How I structure admissions data in UniScrape so every assertion keeps its scope, citations, and unresolved questions.",
-    "category": "Data pipelines",
-    "image": "evidence-backed-extraction.webp",
-    "alt": "Highlighted source passages connected to structured record fields, with one unknown field left empty"
-  },
-  {
-    "slug": "restaurant-agent-tool-boundary",
-    "title": "The Restaurant Agent Shouldn't Invent the Bill",
-    "description": "Lessons from my restaurant assistant: named tool arguments, application-owned totals, and handling repeated order requests.",
-    "category": "Agent engineering",
-    "image": "restaurant-agent-tool-boundary.webp",
-    "alt": "A voice request passing through a validation gate before becoming a restaurant order"
+    "image": "/images/articles/covers/bias-variance-noise.webp",
+    "alt": "Three target sculptures with clustered and scattered points illustrating prediction error patterns",
+    "publishedAt": "2026-10-22T09:00:00.000Z",
+    "updatedAt": "2026-11-02T00:00:00.000Z"
   }
 ]

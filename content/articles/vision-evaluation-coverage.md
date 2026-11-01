@@ -1,8 +1,18 @@
-# MMCultureQA: Changing the Scorer Changed Which Model I Would Choose
+# Fine-Tuning, Routing, and Ensembling Vision-Language Models
 
 My culturally aware multimodal QA project is built around [MMCultureQA, SemEval 2027 Task 6](https://mmcultureqa-semeval27.github.io/tasks/). The task asks models to answer culturally grounded questions about images across languages and dialects. My current work focuses on the textual track: English, Modern Standard Arabic, Egyptian Arabic, and Levantine Arabic.
 
-The most useful result so far was not a larger model winning. It was finding that the evaluator, answer format, and grouping of examples could change the conclusion. This post follows my saved model comparisons, a new grouped selection experiment, and the fine-tuning and ensemble code that is implemented but does not yet have measured training results.
+I am comparing three ways to improve a multimodal system: choose a stronger single model, adapt a model with supervised fine-tuning, or combine complementary candidate answers. Those approaches introduce different failure modes. Fine-tuning depends on correct multimodal labels and masking; routing depends on generalizing a selection policy; fusion depends on candidate quality and ordering.
+
+The implemented techniques sit beside measured baseline comparisons. The completed results are saved model predictions, rescoring and formatting probes, and an image-grouped routing experiment. Adapter training and the more complex MBR, cascade, and fusion paths are implemented work awaiting measured outcomes.
+
+## Decide what each technique is allowed to learn
+
+Supervised fine-tuning changes parameters using training examples. A router chooses which system to trust from information available at inference time, such as the language track or question features. An answer ensemble chooses or synthesizes an answer from several candidates. None can consult the gold answer for a new question.
+
+This distinction is why an oracle is useful only as an upper bound. If different systems get different items right, there may be complementary information to exploit. A selector still has to recover that advantage without reference access. My simple per-track selector did not outperform the strongest single system in the grouped development analysis below.
+
+The task is culturally grounded multilingual image QA, but the engineering questions apply more widely: how to mask an assistant response for SFT, split parallel data without leakage, evaluate model routing, and separate metric sensitivity from a change in factual quality.
 
 ## Freeze the comparison population
 
@@ -92,3 +102,5 @@ The cascade passes same-track hints. Fusion balances candidate positions using a
 I do not have completed adapter or MBR/cascade/fusion results to report. The measured outcomes here are baseline predictions, rescoring and format probes, and the newly executed grouped selector. Keeping that boundary explicit is more useful than presenting an ensemble architecture as a result.
 
 The [score extract](/experiments/research/mmcqa-development-scores.csv), [analysis script](/experiments/research/analyze.py), and [analysis output](/experiments/research/analysis.json) reproduce the new selection study without including images, questions, or reference answers. The next meaningful milestone is a frozen, image-disjoint evaluation protocol for tuned adapters and reference-free selection, followed by a single final test evaluation.
+
+For the optimizer behind adapter training, my [SGD](/blogs/stochastic-gradient-noise), [momentum](/blogs/momentum-as-gradient-filter), and [Adam](/blogs/adam-moments-bias-correction) articles build the intuition in order. The [bias-variance discussion](/blogs/bias-variance-noise) explains why model diversity alone does not guarantee that an ensemble will help.

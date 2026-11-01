@@ -22,7 +22,7 @@ const getPostsSitemap = unstable_cache(
 
     return sitemap
   },
-  ['posts-sitemap'],
+  ['posts-sitemap-curated-ai-v2'],
   {
     tags: ['posts-sitemap'],
   },

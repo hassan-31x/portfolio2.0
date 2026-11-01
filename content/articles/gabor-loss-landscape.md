@@ -51,7 +51,9 @@ np.testing.assert_allclose(analytic, numerical, atol=1e-7)
 
 ## Same optimizer, different basin
 
-I used full-batch gradient descent, learning rate 0.5, and 2,000 updates for each initialization. The figure above plots both fitted functions and the parameter trajectories. The objective and data are identical across runs.
+I used full-batch gradient descent, learning rate 0.5, and 2,000 updates for each initialization. The figure below plots both fitted functions and the parameter trajectories. The objective and data are identical across runs.
+
+![Fitted Gabor functions and their optimization paths](/images/articles/technical/gabor-landscape.png "Three fixed initializations, the same observations, and the same full-batch update rule produce different fits.")
 
 | Initial parameters | Final parameters, rounded | Training MSE |
 | --- | --- | --- |
@@ -67,6 +69,6 @@ A learning-rate sweep could change these endpoints. It would not remove the need
 
 This example separates three questions that are often collapsed into “training worked”: is the derivative correct, did the update rule reduce the specified objective, and did the resulting function solve the intended problem? Each needs a different check.
 
-The numerical result is deliberately modest. It does not establish that one optimizer is best for transformers. It gives me an inspectable reference when thinking about initialization, curvature, and optimizer state in larger training code. In the [gradient descent article](/blogs/gradient-descent-curvature), I replace the oscillating objective with a quadratic so the stability boundary can be derived exactly.
+The numerical result is deliberately modest. It does not establish that one optimizer is best for transformers. It gives me an inspectable reference when thinking about initialization, curvature, and optimizer state in larger training code. The [SGD article](/blogs/stochastic-gradient-noise) explains what changes when each update uses a subset of examples. The [initialization article](/blogs/he-initialization-second-moment) extends the starting-point question to deep networks.
 
 The complete experiment, seeds, figures, and numerical assertions are in [core_ai.py](/experiments/core-ai/core_ai.py); the values above are recorded in [results.json](/experiments/core-ai/results.json).

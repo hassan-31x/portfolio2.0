@@ -13,7 +13,7 @@ const publishedArticles = unstable_cache(
         keywords: post.meta?.description || '',
       }))
   },
-  ['portfolio-search-articles'],
+  ['portfolio-search-articles-curated-ai-v2'],
   { revalidate: 60, tags: ['portfolio-search-articles'] },
 )
 

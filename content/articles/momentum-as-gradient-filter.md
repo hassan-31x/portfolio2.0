@@ -1,8 +1,14 @@
-# Momentum Remembers Gradients, Including the Ones You No Longer Want
+# Why Momentum Helps SGD Keep Moving in the Right Direction
 
-Momentum is often described as a ball rolling downhill. I find the recurrence more useful. It explains the memory length, exposes a learning-rate convention that changes between implementations, and shows why momentum can continue moving in an unhelpful direction after the gradient changes sign.
+A mini-batch gradient tells me which direction looks useful for the examples I just sampled. It does not remember that the previous several batches agreed on a direction, or that alternating gradients have been sending the parameters back and forth across a narrow valley. Momentum adds that missing memory.
 
-I use the same ill-conditioned quadratic as in my [gradient descent experiment](/blogs/gradient-descent-curvature). Keeping the objective fixed lets me attribute differences to the update rule, rather than to a new dataset or initialization.
+In the [SGD article](/blogs/stochastic-gradient-noise), I separate step size from batch size: frequent, controlled updates use fresh gradient estimates, but those estimates can vary substantially. Momentum combines them over time. Consistent components accumulate; rapidly alternating components partly cancel. That can make progress along a shallow direction more effective while reducing some zigzagging.
+
+## Why a smaller learning rate is not the whole answer
+
+Consider a quadratic with Hessian diag(1, 20). Along the steep direction, a large update can cross the valley and point back on the next iteration. Reducing the learning rate helps keep that direction stable, but also makes progress along the shallow direction slow. One scalar learning rate must serve both.
+
+Momentum does not estimate the Hessian. It uses recent directions to change the dynamics. On a noisy objective it can smooth variation, and on this deterministic quadratic it can accelerate a persistently useful component. These are related benefits, but neither guarantees that every update improves the loss.
 
 ## State the convention first
 
@@ -48,9 +54,11 @@ The characteristic roots determine whether this direction decays smoothly, oscil
 
 This is a more precise explanation of “overshoot” than the rolling-ball analogy. The previous displacement remains in the recurrence even when the new gradient points back toward the minimum.
 
-## The controlled comparison
+## Compare the paths, not just the final loss
 
 My figure uses H = diag(1, 20), starting point (−4, 2), α = 0.04, and 120 updates. I compare β = 0 with β = 0.9 under the same unnormalized convention. The trajectory panel makes the oscillations visible; the loss panel shows how they affect progress.
+
+![Momentum and ordinary gradient trajectories](/images/articles/technical/momentum-dynamics.png "A fixed-rate comparison on the same quadratic and starting point. Momentum changes both the path and transient oscillations; rates are not independently tuned here.")
 
 ```python
 velocity = np.zeros_like(w)
@@ -66,6 +74,6 @@ This is an illustrative same-rate comparison, not a claim that I found the best 
 
 The recurrence has a practical consequence for my training pipelines: restoring weights without restoring momentum does not resume the same trajectory. It initializes a different dynamical system at the same parameter vector. The same applies to Adam's two moment buffers and step count.
 
-That is why the Urdu training recovery logic records optimizer and scheduler state alongside adapter weights and RNG state. A checkpoint is more than the artifact needed for inference. Conversely, starting a fresh schedule intentionally can be reasonable, but it should be recorded as a new training phase rather than an exact continuation.
+That is why my [Urdu training recovery logic](/blogs/urdu-tts-adaptation) records optimizer and scheduler state alongside adapter weights and RNG state. A checkpoint is more than the artifact needed for inference. Conversely, starting a fresh schedule intentionally can be reasonable, but it should be recorded as a new training phase rather than an exact continuation.
 
 The optimizer treatment in [Understanding Deep Learning](https://udlbook.github.io/udlbook/) provides the theoretical background. My [script](/experiments/core-ai/core_ai.py) generates the trajectories. The next article examines [Adam](/blogs/adam-moments-bias-correction), where remembering both a signed gradient and its squared magnitude introduces another set of assumptions.

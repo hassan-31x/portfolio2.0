@@ -44,6 +44,8 @@ Degree one cannot represent the target's curvature well. Degrees three and five 
 
 The estimated bias also rises at degree nine. I would not turn this finite Monte Carlo observation into a theorem that increasing polynomial degree increases population bias. A finite ensemble mean is itself sensitive to extreme fits. The error bars on the decomposition estimates would matter for that claim. The plotted example fits and logarithmic scale make this sensitivity visible rather than hiding it behind a smooth schematic curve.
 
+![Repeated polynomial fits and their error decomposition](/images/articles/technical/bias-variance-noise.png "Four hundred synthetic datasets expose fitting variability. Finite Monte Carlo estimates can be sensitive to extreme high-degree fits.")
+
 ## Noise is conditional on the information available
 
 Calling a term irreducible does not mean nothing could ever reduce it. In the assumed experiment, ε is independent noise added after the input is generated. In an application, unexplained variation may become predictable after adding relevant information, improving labels, or changing the target.
@@ -54,4 +56,6 @@ For Urdu speech, ambiguity in a transcript-only conditioning signal may include 
 
 A single train-validation gap is not an estimate of these three terms. Cross-validation estimates risk under its splitting assumptions; it does not reveal the unknown target function. Likewise, an ensemble can reduce variance when errors differ, but averaging correlated mistakes may accomplish little.
 
-That is why my MMQA model-selection experiment uses grouped folds and reports a paired uncertainty interval. It measures a limited development-set comparison rather than declaring that an ensemble “solves variance.” The theoretical background is developed in [An Introduction to Statistical Learning](https://www.statlearning.com/) and [Stanford's bias-variance notes](https://cs229.stanford.edu/notes2022fall/bias-variance.pdf). The [complete experiment](/experiments/core-ai/core_ai.py) and [numeric output](/experiments/core-ai/results.json) make every synthetic assumption inspectable.
+That is why my [MMQA model-selection experiment](/blogs/vision-evaluation-coverage) uses grouped folds and reports a paired uncertainty interval. It measures a limited development-set comparison rather than declaring that an ensemble “solves variance.” The theoretical background is developed in [An Introduction to Statistical Learning](https://www.statlearning.com/) and [Stanford's bias-variance notes](https://cs229.stanford.edu/notes2022fall/bias-variance.pdf). The [complete experiment](/experiments/core-ai/core_ai.py) and [numeric output](/experiments/core-ai/results.json) make every synthetic assumption inspectable.
+
+For a concrete training pipeline where multiple sources of variation interact, see my [Urdu speech work](/blogs/urdu-tts-adaptation). [SGD](/blogs/stochastic-gradient-noise) adds sampling variation to optimization, which is a different random quantity from the across-dataset prediction variance derived here.

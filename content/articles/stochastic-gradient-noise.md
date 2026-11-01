@@ -1,70 +1,88 @@
-# SGD Noise Depends on How the Batch Was Sampled
+# Why SGD Learns Through Small, Frequent Updates
 
-In my training code, “batch size” is not just a throughput setting. It determines which gradient estimator I use and how much variation that estimator introduces. Before comparing optimizers or accumulation settings, I want to know what is random, what objective is being estimated, and whether the implementation gives each example the intended weight.
+A training loop does not have to wait until it has processed an entire dataset before changing the model. That is the practical idea behind stochastic gradient descent: estimate a useful direction from a small amount of data, take a controlled step, then estimate the direction again at the new parameters.
 
-The word stochastic can hide several different experiments. Sampling examples with replacement, shuffling once per epoch, and sampling a subset without replacement have related but different variance properties. This article makes those differences concrete with a tiny population whose batches can all be enumerated.
+This matters in my Urdu adaptation pipeline, where a microbatch contains one example and eight microbatches contribute to an optimizer update. The important questions are how frequently parameters change, how the gradients are averaged, and how much each update should be trusted. “Use smaller steps” needs to distinguish the learning rate from the batch size.
 
-## Start with the finite-data objective
+## The full gradient waits for everyone
 
-For N examples, define the empirical objective as the average of their individual losses. At a fixed parameter vector, each example has a gradient vector. The full gradient is their average:
-
-```math
-L(w)=\frac{1}{N}\sum_i\ell_i(w),\qquad g=\frac{1}{N}\sum_i g_i,\qquad g_i=\nabla\ell_i(w).
-```
-
-If a batch contains B independently sampled uniform indices, the average batch gradient is unbiased. Its covariance is the population covariance divided by B:
+For an empirical objective averaging N examples, the full gradient is:
 
 ```math
-\mathbb{E}[\hat g]=g,\qquad \operatorname{Cov}(\hat g)=\frac{\Sigma}{B},\qquad \Sigma=\frac{1}{N}\sum_i(g_i-g)(g_i-g)^\top.
+L(w)=\frac{1}{N}\sum_{i=1}^{N}\ell_i(w),\qquad g(w)=\frac{1}{N}\sum_{i=1}^{N}\nabla\ell_i(w).
 ```
 
-This expectation is conditional on the current parameters being held fixed. During optimization those parameters change, so one cannot treat all gradients along a trajectory as independent samples from a stationary distribution.
+Full-batch gradient descent evaluates every example at the same parameters, averages those gradients, and updates once. This gives the exact gradient of the finite training objective, apart from numerical effects. It can be expensive to compute before every update, and neural-network activations make processing everything simultaneously impractical.
 
-## Sampling without replacement changes the answer
+Mini-batch SGD replaces that average with an estimate from B examples. Strict single-example SGD has B = 1; in deep learning, the name is also commonly used for mini-batch updates.
 
-If the batch is a uniformly chosen subset of B distinct examples, the finite-population correction gives:
+```math
+\hat g_t=\frac{1}{B}\sum_{i\in\mathcal B_t}\nabla\ell_i(w_t),\qquad w_{t+1}=w_t-\alpha\hat g_t.
+```
+
+The learning rate α controls the displacement for a given gradient. Reducing B changes the estimator and the update frequency; it does not automatically make the parameter step smaller.
+
+## Why the loss can rise after a useful step
+
+For a sufficiently small displacement, a first-order expansion gives:
+
+```math
+L(w-\alpha\hat g)\approx L(w)-\alpha\nabla L(w)^\top\hat g.
+```
+
+Using the exact full gradient makes the first-order change negative unless that gradient is zero. A sampled gradient can point against the full gradient on a particular update. The loss of the sampled batch may fall while another batch's loss rises. Curvature adds a second-order term, so even the full-gradient argument requires a sufficiently controlled learning rate.
+
+If the sampled gradient is conditionally unbiased at the current parameters, the expected first-order change is −α times the squared norm of the full gradient. That is a local statement. It does not guarantee that the realized full loss decreases after every SGD step.
+
+This is why I inspect a smoothed training curve and a fixed evaluation population rather than demand that consecutive batch losses fall. Different batches are different measurements.
+
+## Recomputing the direction changes the trajectory
+
+Suppose two examples provide gradients g1 and g2. One update on their average evaluates both at the original parameters. Two sequential updates evaluate the second gradient after the first update:
+
+```math
+w'=w-\alpha g_1(w),\qquad w''=w'-\alpha g_2(w').
+```
+
+Even if I rescale learning rates to match the aggregate first-order displacement, these procedures are generally different: g2 at w′ is not g2 at w. Locally, the difference contains a curvature-dependent term of order α². Repeated modest updates let the direction adapt as parameters move, but introduce ordering effects and stochastic variation.
+
+Smaller learning rates reduce each displacement. They also require more updates for a comparable distance. Large rates can overshoot a narrow valley; tiny rates can spend the budget making negligible progress. Batch size, rate, and total optimizer steps therefore need to be reported together.
+
+## Measure the gradient noise directly
+
+At fixed parameters, let Σ be the population covariance of per-example gradients, using denominator N. Independent uniform sampling with replacement gives covariance Σ/B for the batch mean. Uniform subsets without replacement instead give:
 
 ```math
 \operatorname{Cov}(\hat g)=\frac{N-B}{B(N-1)}\Sigma.
 ```
 
-The normalization convention matters: Σ above uses a denominator of N. Using the sample covariance with denominator N − 1 changes the written prefactor. At B = N the variance is exactly zero, as it should be.
+I enumerated all subsets of eight scalar gradients: −4, −1, 0, 2, 3, 6, 7, 11. Their full mean is 3. Every batch-size distribution has that same mean, while its variance changes:
 
-I used eight scalar example gradients: −4, −1, 0, 2, 3, 6, 7, 11. Their mean is 3 and their population variance is 20.5. Enumerating every possible subset produces the following exact distribution of batch means, apart from floating-point rounding.
-
-| Batch size | Mean of batch means | Variance, without replacement |
+| Batch size | Expected batch gradient | Variance without replacement |
 | --- | --- | --- |
 | 1 | 3 | 20.500000 |
 | 2 | 3 | 8.785714 |
 | 4 | 3 | 2.928571 |
 | 8 | 3 | 0 |
 
+![Exact mini-batch gradient variance](/images/articles/technical/sgd-variance.png "An exhaustive finite-population calculation at fixed parameters. Smaller batches change gradient variability, not the expected gradient in this uniform sampling experiment.")
+
 ```python
-from itertools import combinations
-values = np.array([-4, -1, 0, 2, 3, 6, 7, 11])
-means = np.array([
-    np.mean(batch) for batch in combinations(values, 4)
-])
-assert np.isclose(means.mean(), values.mean())
-assert np.isclose(means.var(), 20.5 / 7)
+optimizer.zero_grad()
+for microbatch in accumulation_window:
+    loss = model_loss(microbatch) / accumulation_steps
+    loss.backward()
+# Clip the combined gradient, then update once.
+clip_grad_norm_(model.parameters(), max_norm)
+optimizer.step()
 ```
 
-For B = 4, the with-replacement variance would instead be 5.125. Both answers are correct for their respective sampling schemes. The figure above puts the empirical enumeration beside the finite-population formula.
+This schematic assumes equal microbatch weighting and a complete accumulation window. A shorter final window needs its own normalization. Token-weighted losses need additional care when valid token counts differ. Clipping each microbatch separately also changes the result because clipping is nonlinear.
 
-## Shuffling is not independent sampling
+## Why I use it, and what it does not solve
 
-A random permutation gives a uniformly distributed first batch. Once that batch is observed, the next batch comes from the remaining examples. Its conditional expectation need not equal the full gradient. Across an epoch, batches are coupled, and parameters also move between them.
+SGD makes learning possible without repeatedly processing all training data before every update. It offers a practical memory and compute tradeoff, and frequent estimates can make useful progress long before an epoch finishes. Noise can affect which solutions are reached, but it is not a guarantee of better generalization or escape from every poor basin.
 
-This does not make shuffling invalid. It means the simplest independent-noise derivation is an approximation to that training loop. Similarly, curriculum sampling, language balancing, and length bucketing can change the sampling distribution. If I oversample a language, I am generally changing the objective unless I introduce appropriate importance weights.
+The remaining problem is that a noisy gradient can zigzag across a steep valley while moving slowly along it. [Momentum](/blogs/momentum-as-gradient-filter) uses gradient history to retain consistent direction. [Adam](/blogs/adam-moments-bias-correction) adds coordinatewise scaling to that memory. Both still depend on a sensible starting point, which is the subject of [initialization](/blogs/he-initialization-second-moment).
 
-The same issue appears in my four-track MMQA work: balancing tracks is a deliberate choice about which errors matter, not merely a convenient data-loader option.
-
-## What accumulation does and does not reproduce
-
-Accumulating equally weighted gradients across microbatches at unchanged parameters can reproduce a larger batch gradient. It requires consistent loss normalization, one optimizer update after accumulation, and clipping after the accumulated gradient is formed. Clipping each microbatch separately is nonlinear and generally produces a different direction.
-
-Batch-dependent layers and random operations introduce further differences. BatchNorm sees the microbatch statistics; dropout draws different masks. Neither discrepancy is captured by saying “effective batch size equals microbatch size times accumulation steps.”
-
-Increasing B reduces this estimator's variance, but that alone does not prove improved generalization or a proportionate speedup. Compute per update, number of updates, data coverage, and learning-rate schedule all change the comparison. The clean question is which resource budget is held constant.
-
-The derivation follows the empirical-risk treatment in [Understanding Deep Learning](https://udlbook.github.io/udlbook/). My [experiment script](/experiments/core-ai/core_ai.py) checks the finite-population identity exhaustively. Next, [momentum](/blogs/momentum-as-gradient-filter) asks what happens when gradients are combined across time rather than across examples.
+The [reproduction script](/experiments/core-ai/core_ai.py) checks the batch-variance calculation. [Understanding Deep Learning](https://udlbook.github.io/udlbook/) develops the optimization background; my [Urdu training case study](/blogs/urdu-tts-adaptation) shows where accumulation enters an actual constrained run.

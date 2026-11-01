@@ -1,8 +1,18 @@
-# Adapting Orpheus to Urdu: The Data Contract Was Half the Training System
+# Teaching a Model to Speak Urdu with Emotion
 
-My longer-term project is an emotionally aware Urdu-speaking agent. The work described here is a narrower prerequisite: adapting a pretrained speech model to Urdu while keeping the data, tokenization, checkpoints, and evaluation auditable. I have not yet established emotion control or production-quality conversational speech.
+I want to build an Urdu-speaking agent for a Pakistani audience whose voice can sound reassuring, curious, or concerned when the conversation calls for it. Correct words are only one part of that experience. Rhythm, pauses, pitch, and emphasis carry meaning too, and a fluent transcript can still produce speech with the wrong emotional delivery.
+
+My project starts by adapting Orpheus to Urdu, then works toward explicit control of speaking style. The completed experiments below establish the language-adaptation stage. They do not yet demonstrate a trained emotion-conditioned Urdu voice. This is the implementation path toward that goal, including the representation, data contracts, and evaluation decisions it depends on.
 
 The completed run is `aslp50h-r32-lr1e4-seed3407-v2` in my [Urdu Orpheus repository](https://github.com/hassan-31x/orpheus-ft-urdu). It trained an adapter for 2,014 optimizer steps on one Tesla T4 in approximately 5.04 hours. This article follows the implementation and saved artifacts, including a later data-preparation run that stopped before optimization and a checkpoint diagnostic that got worse at the final step.
+
+## Separate learning the language from controlling the delivery
+
+A pretrained speech model needs to map Urdu text to plausible pronunciation and acoustic sequences before emotional control can be judged fairly. If a model skips words or produces a sustained tone, asking whether it sounds happy is premature.
+
+For the emotional stage, I would condition on a requested style and train on audio where that style is supported by annotations or a carefully audited labeling process. An ordinary text-audio pair does not tell the model which acoustic changes correspond to sadness, reassurance, or excitement. Adding an emotion tag to the prompt without training evidence would not establish controllability.
+
+The target is also more specific than changing pitch globally. Duration, phrase boundaries, energy, and intonation interact with pronunciation. I would compare the same held-out Urdu utterance across requested styles and multiple generation seeds, with human judgments for emotional appropriateness alongside intelligibility. A style that sounds expressive but changes the words is a failure.
 
 ## Turn audio into a sequence the model can learn
 
@@ -64,8 +74,10 @@ The report also calibrates ASR on 40 human-audio clips, yielding roughly 25.3% C
 
 ## What remains before the agent claim
 
-The next evaluation needs a larger fixed Urdu prompt set, multiple generation seeds, duration and termination checks, and human listening assessments separated into intelligibility, naturalness, and pronunciation. Emotion and speaker control need their own conditioning design and held-out tests; neither follows from lower language-adaptation loss.
+For the language stage, the next evaluation needs a larger fixed Urdu prompt set, multiple generation seeds, duration and termination checks, and human listening assessments separated into intelligibility, naturalness, and pronunciation. Emotion and speaker control need their own conditioning design and held-out tests; neither follows from lower language-adaptation loss.
 
 I would select a checkpoint with a declared protocol rather than pick the lowest number from two repeatedly inspected prompts. The saved diagnostics suggest which failures to investigate, but do not support a deployment-quality claim.
 
 The [numeric extracts](/experiments/research/evidence.json), [checkpoint CSV](/experiments/research/urdu-checkpoints.csv), [validation CSV](/experiments/research/urdu-validation.csv), and [plotting script](/experiments/research/analyze.py) reproduce the figures without redistributing source audio. They preserve the distinction between the completed ASLP run, later preparation work, and the emotionally aware agent still to be built.
+
+The optimization choices connect to my notes on [mini-batch updates](/blogs/stochastic-gradient-noise) and [Adam state](/blogs/adam-moments-bias-correction). The distinction between data variability and irreducible uncertainty also matters when designing a [speech evaluation protocol](/blogs/bias-variance-noise).
