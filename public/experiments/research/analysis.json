@@ -1,0 +1,56 @@
+{
+  "scope": "100 shared development images, four parallel language tracks; exploratory re-analysis, not held-out test results",
+  "seed": 3107,
+  "folds": 5,
+  "bootstrap_draws": 5000,
+  "resampling_unit": "image id, preserving all four languages",
+  "models": {
+    "qwen3_5_9b": {
+      "mbert_macro": 0.7322995580732823,
+      "official_macro": 0.7037472596019506,
+      "track_f1": {
+        "en": 0.7915790590643883,
+        "msa": 0.6897253364324569,
+        "arz": 0.6614201986789703,
+        "ajp": 0.672264444231987
+      }
+    },
+    "qwen3_5_4b": {
+      "mbert_macro": 0.7309384928643703,
+      "official_macro": 0.7182222033292055,
+      "track_f1": {
+        "en": 0.7861438038945198,
+        "msa": 0.7181381326913834,
+        "arz": 0.683941345512867,
+        "ajp": 0.684665531218052
+      }
+    },
+    "gemma_4_12b": {
+      "mbert_macro": 0.7331092430651188,
+      "official_macro": 0.7213079161942005,
+      "track_f1": {
+        "en": 0.7926331299543381,
+        "msa": 0.7248200488090515,
+        "arz": 0.6800763475894928,
+        "ajp": 0.6877021384239197
+      }
+    },
+    "culturalpangea_7b": {
+      "mbert_macro": 0.7459524837136269,
+      "official_macro": 0.730330388918519,
+      "track_f1": {
+        "en": 0.7894300580024719,
+        "msa": 0.7365836435556412,
+        "arz": 0.68447659522295,
+        "ajp": 0.710831258893013
+      }
+    }
+  },
+  "cv_per_track_selection_macro": 0.7260758823901415,
+  "cv_delta_vs_pangea": -0.004254506528377533,
+  "cv_delta_group_bootstrap_ci95": [
+    -0.010524137176573276,
+    0.0018376764506101543
+  ],
+  "oracle_upper_bound_macro": 0.7655429047346115
+}

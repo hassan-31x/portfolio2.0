@@ -1,7 +1,10 @@
 import { pageMetadata } from '@/utilities/pageMetadata'
 import type { Metadata } from 'next/types'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
+import Blogs from '@/components/custom/blogs'
+import { Container } from '@/components/custom/container'
+import { Heading } from '@/components/custom/heading'
+import { Subheading } from '@/components/custom/subheading'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import { getArticles } from '@/utilities/getArticles'
@@ -29,30 +32,26 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (sanitizedPageNumber > totalPages) notFound()
 
   return (
-    <div className="pt-6 pb-10">
+    <div className="flex min-h-screen items-start justify-start">
       <PageClient />
-      <div className="px-4 mb-6">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1 className="text-xl font-medium md:text-2xl">Blogs</h1>
+      <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
+        <Heading>Blog Posts</Heading>
+        <Subheading>
+          Training notes, research experiments, and the mathematics behind the systems I build.
+        </Subheading>
+        <div className="px-4 mt-4">
+          <PageRange
+            collection="posts"
+            currentPage={sanitizedPageNumber}
+            limit={12}
+            totalDocs={posts.length}
+          />
         </div>
-      </div>
-
-      <div className="px-4 mb-4">
-        <PageRange
-          collection="posts"
-          currentPage={sanitizedPageNumber}
-          limit={12}
-          totalDocs={posts.length}
-        />
-      </div>
-
-      <CollectionArchive posts={posts.slice((sanitizedPageNumber - 1) * 12, sanitizedPageNumber * 12)} />
-
-      <div className="px-4">
-        {totalPages > 1 && (
-          <Pagination page={sanitizedPageNumber} totalPages={totalPages} />
-        )}
-      </div>
+        <Blogs blogs={posts.slice((sanitizedPageNumber - 1) * 12, sanitizedPageNumber * 12)} />
+        <div className="px-4 mt-8">
+          {totalPages > 1 && <Pagination page={sanitizedPageNumber} totalPages={totalPages} />}
+        </div>
+      </Container>
     </div>
   )
 }

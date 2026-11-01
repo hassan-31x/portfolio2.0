@@ -1,0 +1,37 @@
+{
+  "urdu": {
+    "run": "aslp50h-r32-lr1e4-seed3407-v2",
+    "training_clips": 16111,
+    "training_hours": 26.09,
+    "validation_clips": 1965,
+    "validation_hours": 3.18,
+    "optimizer_steps": 2014,
+    "full_validation_loss": 5.568429470062256,
+    "runtime_hours": 5.038644333333334,
+    "diagnostic_urdu_prompts": 2,
+    "samples_per_prompt_per_checkpoint": 1
+  },
+  "mmcqa": {
+    "items_per_track": 100,
+    "tracks": [
+      "en",
+      "msa",
+      "arz",
+      "ajp"
+    ],
+    "unique_images": 100,
+    "scorer": {
+      "model": "jhu-clsp/mmBERT-base",
+      "revision": "c5955035435e2bf121cde7f3c8863ef52ff35d82",
+      "layer": 17,
+      "official_repo_commit": "7ec66a47acb82195a288525560c4acb26cb8b7ba"
+    },
+    "format_cleanup_macro": {
+      "qwen3_5_9b": 0.7042749500274659,
+      "qwen3_5_4b": 0.7219007299095391,
+      "gemma_4_12b": 0.7321504355967045,
+      "culturalpangea_7b": 0.7303724081069232,
+      "official_baseline": 0.7169571495056152
+    }
+  }
+}

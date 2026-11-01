@@ -13,6 +13,7 @@ import { draftMode } from 'next/headers'
 import localFont from 'next/font/local'
 
 import './globals.css'
+import 'katex/dist/katex.min.css'
 import { getServerSideURL } from '@/utilities/getURL'
 import { Navbar } from '@/components/custom/navbar'
 import Footer from '@/components/custom/footer'

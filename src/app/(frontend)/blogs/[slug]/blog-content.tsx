@@ -12,7 +12,16 @@ interface BlogContentProps {
   post: Post
 }
 
+function articleText(value: unknown): string {
+  if (!value || typeof value !== 'object') return ''
+  const node = value as { text?: string; children?: unknown[]; root?: unknown }
+  return [node.text || '', ...(node.children || []).map(articleText), articleText(node.root)].join(
+    ' ',
+  )
+}
+
 export default function BlogContent({ post }: BlogContentProps) {
+  const minutes = Math.max(1, Math.ceil(articleText(post.content).trim().split(/\s+/).length / 200))
   return (
     <>
       <motion.div
@@ -37,7 +46,7 @@ export default function BlogContent({ post }: BlogContentProps) {
 
         {post.publishedAt && (
           <p className="px-4 mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-            Published on{' '}
+            Muhammad Hassan · {minutes} min read ·{' '}
             {new Date(post.publishedAt).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
@@ -48,9 +57,9 @@ export default function BlogContent({ post }: BlogContentProps) {
 
         {post.categories && post.categories.length > 0 && (
           <div className="px-4 mt-4 flex flex-wrap gap-2">
-            {post.categories.map((category: any) => (
+            {post.categories.map((category) => (
               <span
-                key={category.id || category}
+                key={typeof category === 'object' ? category.id : category}
                 className="inline-block px-3 py-1 text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-full"
               >
                 {typeof category === 'object' ? category.title : category}
@@ -72,8 +81,8 @@ export default function BlogContent({ post }: BlogContentProps) {
           }}
           className="mb-8 px-4"
         >
-          <div className="w-full h-64 md:h-96 rounded-xl overflow-hidden">
-            <Media resource={post.heroImage} imgClassName="w-full h-full object-cover" />
+          <div className="w-full rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+            <Media resource={post.heroImage} imgClassName="w-full h-auto" priority />
           </div>
         </motion.div>
       )}
@@ -87,7 +96,7 @@ export default function BlogContent({ post }: BlogContentProps) {
           delay: 0.2,
           ease: 'easeInOut',
         }}
-        className="px-4"
+        className="px-4 min-w-0"
       >
         <div className="prose prose-lg dark:prose-invert max-w-none">
           <RichText data={post.content} enableGutter={false} />

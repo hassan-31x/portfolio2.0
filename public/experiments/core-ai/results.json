@@ -1,0 +1,122 @@
+{
+  "seed": 3107,
+  "scope": "Synthetic teaching experiments; no claim about production model performance",
+  "gabor": {
+    "gradient_max_error": 3.392355840681205e-12,
+    "runs": [
+      {
+        "start": [
+          -5.0,
+          5.0
+        ],
+        "end": [
+          -6.145321502828652,
+          7.195014889070451
+        ],
+        "mse": 0.25351569552325415
+      },
+      {
+        "start": [
+          4.0,
+          24.0
+        ],
+        "end": [
+          0.7861487874514179,
+          15.931190171237613
+        ],
+        "mse": 0.006218401720584403
+      },
+      {
+        "start": [
+          0.2,
+          13.0
+        ],
+        "end": [
+          0.7836986640205414,
+          15.887335598967654
+        ],
+        "mse": 0.006210442846530603
+      }
+    ]
+  },
+  "sgd": {
+    "population_gradient_mean": 3.0,
+    "population_gradient_variance": 20.5,
+    "batch_sizes": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "exact_batch_mean_variance": [
+      20.5,
+      8.785714285714286,
+      2.9285714285714284,
+      0.0
+    ]
+  },
+  "adam": {
+    "first_uncorrected_step_over_lr": 3.1622766601686956,
+    "first_corrected_step_over_lr": 0.9999999900000008
+  },
+  "he": {
+    "Fixed standard deviation 0.01": {
+      "input_second_moment": 0.9995040674303665,
+      "layer40_second_moment": 2.3070043749418532e-76
+    },
+    "Variance 1 / fan-in": {
+      "input_second_moment": 0.9995040674303665,
+      "layer40_second_moment": 1.080064783233671e-12
+    },
+    "He: variance 2 / fan-in": {
+      "input_second_moment": 0.9995040674303665,
+      "layer40_second_moment": 1.1875437879167927
+    }
+  },
+  "expectation": {
+    "mean": 1.2999999999999998,
+    "second_moment": 6.1,
+    "variance": 4.41,
+    "micro_example": 0.8400000000000001,
+    "macro_example": 0.6
+  },
+  "bias_variance": {
+    "repeated_datasets": 400,
+    "training_rows": 32,
+    "noise_std": 0.15,
+    "evaluation_interval": [
+      -0.9,
+      0.9
+    ],
+    "statistics": [
+      {
+        "degree": 1,
+        "squared_bias": 0.15038953696474008,
+        "variance": 0.01391379318494428,
+        "noise": 0.0225,
+        "estimated_test_mse": 0.18680333014968437
+      },
+      {
+        "degree": 3,
+        "squared_bias": 0.003016392256244505,
+        "variance": 0.0033947576730182726,
+        "noise": 0.0225,
+        "estimated_test_mse": 0.028911149929262775
+      },
+      {
+        "degree": 5,
+        "squared_bias": 1.548409333097591e-05,
+        "variance": 0.0047074037713907765,
+        "noise": 0.0225,
+        "estimated_test_mse": 0.027222887864721754
+      },
+      {
+        "degree": 9,
+        "squared_bias": 0.009512776023262502,
+        "variance": 1.9383301434124744,
+        "noise": 0.0225,
+        "estimated_test_mse": 1.970342919435737
+      }
+    ]
+  }
+}

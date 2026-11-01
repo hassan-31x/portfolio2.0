@@ -1,5 +1,95 @@
 [
   {
+    "slug": "urdu-tts-adaptation",
+    "title": "Adapting Orpheus to Urdu: The Data Contract Was Half the Training System",
+    "description": "The actual Orpheus adaptation run: SNAC serialization, context-filtered Urdu data, recoverable T4 training, and the limits of checkpoint CER.",
+    "category": "Speech AI",
+    "image": "/images/projects/posters/orpheus-urdu-refined.webp",
+    "alt": "Urdu Orpheus research project poster with a restrained technical speech illustration",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "vision-evaluation-coverage",
+    "title": "MMCultureQA: Changing the Scorer Changed Which Model I Would Choose",
+    "description": "Four vision-language models, two scoring backbones, an image-grouped selector that did not beat Pangea, and the SFT work still awaiting results.",
+    "category": "Model evaluation",
+    "image": "/images/projects/posters/semeval-model-eval-refined.webp",
+    "alt": "MMCultureQA research poster showing a technical multimodal evaluation motif",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "gabor-loss-landscape",
+    "title": "A Two-Parameter Gabor Model Is Enough to Expose a Difficult Loss Surface",
+    "description": "A two-parameter regression experiment with an analytic gradient check and three initializations that reach different fits.",
+    "category": "Optimization",
+    "image": "/images/articles/technical/gabor-landscape.png",
+    "alt": "Three fitted Gabor curves and their gradient-descent paths across a two-parameter loss surface",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "gradient-descent-curvature",
+    "title": "Gradient Descent: The Learning Rate Is a Curvature Constraint",
+    "description": "Deriving the stability boundary from Hessian eigenvalues, then testing learning rates just below and above it.",
+    "category": "Optimization",
+    "image": "/images/articles/technical/gradient-descent-stability.png",
+    "alt": "Loss trajectories for learning rates below and above the quadratic stability boundary",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "stochastic-gradient-noise",
+    "title": "SGD Noise Depends on How the Batch Was Sampled",
+    "description": "An exhaustive mini-batch experiment: unbiased gradients, finite-population corrections, shuffling, and accumulation.",
+    "category": "Optimization",
+    "image": "/images/articles/technical/sgd-variance.png",
+    "alt": "Exact batch-gradient variance from exhaustive subsets compared with the finite-population formula",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "momentum-as-gradient-filter",
+    "title": "Momentum Remembers Gradients, Including the Ones You No Longer Want",
+    "description": "The velocity recurrence, its memory timescale, quadratic stability, and why optimizer state belongs in a checkpoint.",
+    "category": "Optimization",
+    "image": "/images/articles/technical/momentum-dynamics.png",
+    "alt": "Parameter paths and losses for gradient descent with and without momentum on an ill-conditioned quadratic",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "adam-moments-bias-correction",
+    "title": "Adam's Second Moment Is Not a Variance Estimate",
+    "description": "A constant-gradient experiment exposing what bias correction changes, what the second moment measures, and why betas specify a timescale.",
+    "category": "Optimization",
+    "image": "/images/articles/technical/adam-bias-correction.png",
+    "alt": "Adam update magnitudes with and without bias correction under a constant unit gradient",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "he-initialization-second-moment",
+    "title": "He Initialization Preserves a Second Moment, Not the Mean-Centered Variance",
+    "description": "Deriving the ReLU second-moment rule, testing forty-layer signal propagation, and explaining where the assumptions stop.",
+    "category": "Model fundamentals",
+    "image": "/images/articles/technical/he-signal-propagation.png",
+    "alt": "Activation second moments across forty ReLU layers under three weight initialization scales",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "expectation-in-machine-learning",
+    "title": "Before Taking an Expectation, Name the Distribution",
+    "description": "From discrete moments to multilingual evaluation: conditioning, weighting, coverage, and averages of ratios.",
+    "category": "Probability",
+    "image": "/images/articles/technical/expectation-moments.png",
+    "alt": "A discrete probability distribution with its mean, second moment, and centered variance",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
+    "slug": "bias-variance-noise",
+    "title": "Bias, Variance, and Noise Describe Repeated Training Sets",
+    "description": "Four hundred synthetic training sets make the squared-error decomposition concrete, including the instability a tidy U-shaped diagram hides.",
+    "category": "Generalization",
+    "image": "/images/articles/technical/bias-variance-noise.png",
+    "alt": "Repeated polynomial fits and estimated squared bias, variance, and test error by polynomial degree",
+    "publishedAt": "2026-11-02T00:00:00.000Z"
+  },
+  {
     "slug": "bpe-merge-order",
     "title": "BPE Encoding Has to Remember the Order",
     "description": "Building a byte-level tokenizer in Python: merge ranks, overlapping pairs, and why round-trip checks aren't enough.",
@@ -22,14 +112,6 @@
     "category": "Data pipelines",
     "image": "evidence-backed-extraction.webp",
     "alt": "Highlighted source passages connected to structured record fields, with one unknown field left empty"
-  },
-  {
-    "slug": "vision-evaluation-coverage",
-    "title": "A Vision Model's Score Needs a Denominator",
-    "description": "Why I track coverage, failures, language groups, and scorer settings alongside BERTScore in visual question answering.",
-    "category": "Model evaluation",
-    "image": "vision-evaluation-coverage.webp",
-    "alt": "An image passing through two evaluation tracks with different successful-answer coverage"
   },
   {
     "slug": "restaurant-agent-tool-boundary",

@@ -23,8 +23,7 @@ export default async function Page() {
       <Container className="min-h-screen pt-6 pb-10 md:pt-6 md:pb-10">
         <Heading>Blog Posts</Heading>
         <Subheading>
-          Notes from building AI systems and software products, with lessons from experiments,
-          implementation, and the work behind them.
+          Training notes, research experiments, and the mathematics behind the systems I build.
         </Subheading>
 
         <Blogs blogs={posts.slice(0, 12)} />
