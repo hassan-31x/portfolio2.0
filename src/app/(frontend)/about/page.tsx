@@ -31,7 +31,7 @@ const AboutPage = () => {
           Outside of engineering, I enjoy travel, cricket, and badminton.
         </p>
 
-        <Collage />
+        {/* <Collage /> */}
 
         <div className="px-4">
           <SectionHeading>Experience &amp; milestones</SectionHeading>
